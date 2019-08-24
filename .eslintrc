@@ -1,0 +1,24 @@
+{
+  "extends": ["airbnb", "eslint:recommended", "plugin:react/recommended"],
+  "plugins": ["react"],
+  "rules": {
+    "linebreak-style": 0,
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "max-len": ["error", { "code": 200 }],
+    "import/no-extraneous-dependencies": false,
+    "react/prop-types": 0,
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+  "env": {
+    "jest": true,
+    "browser": true
+  },
+  "parser": "babel-eslint"
+}

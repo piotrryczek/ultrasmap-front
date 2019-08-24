@@ -1,0 +1,61 @@
+
+$backgroundColor: #FBFEF9;
+$textColor: #191923;
+$standardColor: #0E79B2; // Agreement
+$errorColor: #ED254E;
+$correctColor: #248232; // Friendship
+
+$additionalColor1: #420039; // Satellite
+$additionalColor2: #80DED9; // Positive relation
+
+$lightHoverBackground: #f0f0f0;
+
+$borderRadius: 5px;
+
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  text-decoration: none;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+label,
+input[type="submit"],
+button
+{
+  cursor: pointer;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+img {
+  max-width: 100%!important;;
+  height: auto;
+}
+
+h1 {
+  margin: 0px;
+}
+
+body {
+  font-family: 'Roboto';
+}
+
+* {
+  outline: none;
+}
+
+@import "common/reset";
+@import "components/mapApp//mapApp";

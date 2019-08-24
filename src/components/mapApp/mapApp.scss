@@ -1,0 +1,267 @@
+$sidebarSize: 25rem;
+
+#map-app {
+  display: flex;
+
+  #map-wrapper {
+    height: 100vh;
+    flex: 0 0 calc(100% - #{$sidebarSize});
+    position: relative;
+
+    #search {
+      position: absolute;
+      width: 70%;
+      
+      left: 50%;
+      transform: translateX(-50%);
+      top: 1rem;
+      z-index: 100;
+      background: $backgroundColor;
+      box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.25);
+      border-radius: 20px;
+
+      .search-input-wrapper {
+        padding: 0px 1.5rem;
+        height: 3rem;
+        
+        .search-input {
+          width: 100%;
+          height: 3rem;
+          border-radius: 20px;
+        }
+      }
+
+      .search-clubs {
+        border-radius: 0px 0px 20px 20px;
+        background: $backgroundColor;
+
+        li {
+          width: 100%;
+          border-top: 1px solid #f0f0f0;
+
+          &:last-child {
+            .search-club {
+              border-radius: 0px 0px 20px 20px;
+            }
+          }
+
+          .search-club {
+            display: block;
+            width: 100%;
+            height: 4rem;
+            background: none;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
+            &:hover {
+              background-color: $lightHoverBackground;
+            }
+
+            .logo {
+              height: 3rem;
+              flex: 0 0 6rem;
+
+              &.icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+
+              img {
+                height: 100%;
+              }
+            }
+
+            .name {
+              color: $textColor;
+              font-size: 1.125em;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #sidebar {
+    height: 100vh;
+    flex: 0 0 $sidebarSize;
+    background-color: $backgroundColor;
+    padding: 2rem;
+    box-shadow: 0px 0px 30px 2px rgba(0, 0, 0, 0.25);
+    z-index: 2;
+    position: relative;
+    overflow-y: auto;
+
+    box-sizing: border-box;
+
+    .main-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      flex-direction: column;
+
+      img {
+        height: 8rem;
+        margin-bottom: 1rem;
+      }
+    }
+
+    .relations-header {
+      position: relative;
+      font-size: 1.25em;
+      color: $textColor;
+      font-weight: normal;
+      margin-bottom: 1rem;
+
+      .text {
+        background: $backgroundColor;
+        display: inline-block;
+        position: relative;
+        z-index: 2;
+        padding-right: 1rem;
+      }
+
+      &:after {
+        width: 100%;
+        height: 6px;
+        display: block;
+        content: '';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0px;
+      }
+
+      &.friendships-header {
+        &:after {
+          background: $correctColor;
+        }
+      }
+
+      &.agreements-header {
+        &:after {
+          background: $standardColor;
+        }
+      }
+
+      &.positives-header {
+        &:after {
+          background: $additionalColor2;
+        }
+      }
+
+      &.satellites-header {
+        &:after {
+          background: $additionalColor1;
+        }
+      }
+    }
+
+    .club-link {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      background: none;
+      width: 100%;
+      padding: 0.5rem 0px;
+
+      &:hover {
+        background: $lightHoverBackground;
+      }
+
+      .logo {
+        flex: 0 0 4rem;
+        
+        img {
+          height: 2.5rem;
+        }
+      }
+
+      .name {
+        font-size: 1em;
+        flex-grow: 1;
+        text-align: left;
+        color: $textColor;
+        transform: translateY(-2px);
+        font-weight: 500;
+      }
+    }
+
+    .relation-clubs {
+      .club {
+        
+      }
+    }
+  }
+
+  $margin: 0.5rem;
+  #languages-selection {
+    position: absolute;
+    z-index: 5;
+    bottom: 1rem;
+    left: 1rem;
+    opacity: 0.4;
+
+    transition: opacity 0.3s;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    .language {
+      background: none;
+      padding: 0px;
+      box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.25);
+      opacity: 0.7;
+      filter: grayscale(70%);
+
+      transition: opacity 0.3s, filter 0.3s;
+
+      &:hover {
+        opacity: 1;
+        filter: grayscale(0%);
+      }
+
+      &.current {
+        opacity: 1;
+        filter: grayscale(0%);
+      }
+
+      img {
+        display: block;
+      }
+    }
+
+    .languages {
+      padding-left: $margin;
+      pointer-events: none;
+      opacity: 0;
+      right: 0px;
+      position: absolute;
+      bottom: 0px;
+      width: 7rem;
+      transform: translateX(calc(100% - 4rem));
+
+      transition: opacity 0.3s, transform 0.3s;
+
+      &.show {
+        pointer-events: all;
+        opacity: 1;
+        transform: translateX(calc(100%));
+        pointer-events: auto;
+      }
+
+      li {
+        margin-right: $margin;
+        float: left;
+
+        &:last-child {
+          margin-right: $margin;
+        }
+      }
+    }
+  }
+}
