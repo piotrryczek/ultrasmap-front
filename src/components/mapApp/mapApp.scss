@@ -1,5 +1,7 @@
 $sidebarSize: 25rem;
 
+@import "./sidebar/sidebar";
+
 #map-app {
   display: flex;
 
@@ -8,6 +10,21 @@ $sidebarSize: 25rem;
     flex: 0 0 calc(100% - #{$sidebarSize});
     position: relative;
 
+    #suggest-add-new-club {
+      position: absolute;
+      left: calc(85% + 2rem);
+      top: 1rem;
+      z-index: 3;
+    }
+
+    #logout-button {
+      position: absolute;
+      left: calc(15% - 2rem);
+      transform: translateX(-100%);
+      top: 1rem;
+      z-index: 3;
+    }
+
     #search {
       position: absolute;
       width: 70%;
@@ -15,10 +32,25 @@ $sidebarSize: 25rem;
       left: 50%;
       transform: translateX(-50%);
       top: 1rem;
-      z-index: 100;
+      z-index: 3;
       background: $backgroundColor;
       box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.25);
       border-radius: 20px;
+
+      &.is-loading {
+        &:after {
+          width: 100px;
+          height: 100px;
+          background: url('/assets/loading_horizontal.gif') no-repeat center;
+          background-size: cover;
+          display: block;
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
 
       .search-input-wrapper {
         padding: 0px 1.5rem;
@@ -54,6 +86,7 @@ $sidebarSize: 25rem;
             align-items: center;
             justify-content: flex-start;
 
+            &.hovered,
             &:hover {
               background-color: $lightHoverBackground;
             }
@@ -82,117 +115,54 @@ $sidebarSize: 25rem;
         }
       }
     }
-  }
 
-  #sidebar {
-    height: 100vh;
-    flex: 0 0 $sidebarSize;
-    background-color: $backgroundColor;
-    padding: 2rem;
-    box-shadow: 0px 0px 30px 2px rgba(0, 0, 0, 0.25);
-    z-index: 2;
-    position: relative;
-    overflow-y: auto;
-
-    box-sizing: border-box;
-
-    .main-logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      flex-direction: column;
-
-      img {
-        height: 8rem;
-        margin-bottom: 1rem;
-      }
-    }
-
-    .relations-header {
-      position: relative;
-      font-size: 1.25em;
-      color: $textColor;
-      font-weight: normal;
-      margin-bottom: 1rem;
-
-      .text {
-        background: $backgroundColor;
-        display: inline-block;
-        position: relative;
-        z-index: 2;
-        padding-right: 1rem;
-      }
-
-      &:after {
-        width: 100%;
-        height: 6px;
-        display: block;
-        content: '';
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 0px;
-      }
-
-      &.friendships-header {
-        &:after {
-          background: $correctColor;
-        }
-      }
-
-      &.agreements-header {
-        &:after {
-          background: $standardColor;
-        }
-      }
-
-      &.positives-header {
-        &:after {
-          background: $additionalColor2;
-        }
-      }
-
-      &.satellites-header {
-        &:after {
-          background: $additionalColor1;
-        }
-      }
-    }
-
-    .club-link {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      background: none;
+    .map-overlay {
       width: 100%;
-      padding: 0.5rem 0px;
-
-      &:hover {
-        background: $lightHoverBackground;
-      }
-
-      .logo {
-        flex: 0 0 4rem;
-        
-        img {
-          height: 2.5rem;
-        }
-      }
-
-      .name {
-        font-size: 1em;
-        flex-grow: 1;
-        text-align: left;
-        color: $textColor;
-        transform: translateY(-2px);
-        font-weight: 500;
-      }
+      height: 100vh;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      background: rgba(255, 255, 255, 0.7);
+      z-index: 4;
     }
 
-    .relation-clubs {
-      .club {
-        
+    .page-over-map {
+      position: absolute;
+      z-index: 5;
+      width: 70%;
+      max-height: calc(100vh - 128px);
+      z-index: 100;
+      background: $backgroundColor;
+      box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.25);
+      border-radius: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 6rem;
+      padding: 2rem 0px;
+      box-sizing: border-box;
+
+      .track-vertical {
+        right: 12px;
+      }
+
+      .page-over-close {
+        position: absolute;
+        top: -1rem;
+        right: -1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        background: white;
+        border-radius: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 2px -1px 6px 1px rgba(0, 0, 0, 0.25);
+      }
+      
+      .inner {
+        padding: 0px 2rem;
+        height: 100%;
+        overflow: hidden;
       }
     }
   }
@@ -262,6 +232,161 @@ $sidebarSize: 25rem;
           margin-right: $margin;
         }
       }
+    }
+  }
+
+  .club-marker {
+    $opacity: 0.7;
+
+    border-style: solid;
+    border-width: 4px;
+    background: white;
+    border-radius: 100%;
+    box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.25);
+    border-color: rgba(#0D1B2A, $opacity);
+
+    transform: translate(-50%, -50%);
+
+    &:hover {
+      cursor: default;
+      
+      .name {
+        transform: translate(-50%, -1.5rem);
+        opacity: 1;
+      }
+    }
+
+    &.friendship,
+    &.agreement,
+    &.positive,
+    &.satellite,
+    &.satelliteOf {
+      &:hover {
+        border-color: #D72638;
+        cursor: pointer;
+      }
+    }
+
+    &.friendship {
+      border-color: rgba($correctColor, $opacity);
+    }
+
+    &.agreement {
+      border-color: rgba($standardColor, $opacity);
+    }
+
+    &.positive {
+      border-color: rgba($additionalColor2, $opacity);
+    }
+
+    &.satellite {
+      border-color: rgba($additionalColor1, $opacity);
+    }
+
+    &.satelliteOf {
+      border-color: rgba($additionalColor1, $opacity);
+    }
+
+    .name {
+      opacity: 0;
+      position: absolute;
+      white-space: nowrap;
+      left: 50%;
+      top: 0px;
+      transform: translate(-50%, 0px);
+      pointer-events: none;
+      background: white;
+      box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.25);
+      font-size: 1.25em;
+      border-radius: 10px;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      color: $textColor;
+
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+.club-option {
+  overflow: hidden;
+
+  .logo {
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    margin-right: 0.5rem;
+    box-sizing: border-box;
+
+    height: 36px;
+    padding: 6px 0px;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .name {
+    float: left;
+    display: block;
+    height: 36px;
+    line-height: 36px;
+    padding-right: 0.5rem;
+  }
+}
+
+.css-1hwfws3 {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.location-search-input {
+  @extend .input-styles;
+
+  
+}
+
+.autocomplete-dropdown-container {
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-radius: 0px 0px $borderRadius $borderRadius;
+  border-color: $borderLightColor;
+
+  li {
+    background: white;
+    height: 3rem;
+    line-height: 3rem;
+    overflow: hidden;
+    padding: 0px 1rem;
+    border-bottom: 1px solid $borderLightColor;
+
+    box-sizing: border-box;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.active {
+      background: $lightHoverBackground;
+    }
+
+    &:last-child {
+      border-bottom: 0px;
+      border-radius: 0px 0px $borderRadius $borderRadius;
     }
   }
 }

@@ -1,8 +1,11 @@
 import React from 'react';
+import PageOverlay from 'common/pageOverlay/pageOverlay.component';
 
 function Register() {
   return (
-    <p>Register</p>
+    <PageOverlay>
+      <p>Register</p>
+    </PageOverlay>
   );
 }
 

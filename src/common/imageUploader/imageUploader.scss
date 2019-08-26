@@ -1,0 +1,9 @@
+input[type="file"] {
+  &.hide {
+    display: none;
+  }
+}
+
+.preview-image {
+  max-height: 200px;
+}

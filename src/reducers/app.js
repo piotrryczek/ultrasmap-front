@@ -3,6 +3,7 @@ import update from 'immutability-helper';
 import {
   SET_MESSAGE,
   SET_IS_AUTHENTICATED,
+  SET_IS_LOADING_CLUB,
 } from 'components/app/app.actions';
 
 const getCredentialsFromLocalStorage = () => {
@@ -18,6 +19,7 @@ const initialState = {
   credentials: getCredentialsFromLocalStorage(),
   messageType: '', // error, success
   messageCode: '',
+  isLoadingClub: false,
 };
 
 const app = (state = initialState, { type, payload }) => {
@@ -40,6 +42,12 @@ const app = (state = initialState, { type, payload }) => {
       return update(state, {
         isAuthenticated: { $set: isAuthenticated },
         credentials: { $set: credentials },
+      });
+    }
+
+    case SET_IS_LOADING_CLUB: {
+      return update(state, {
+        isLoadingClub: { $set: payload },
       });
     }
 

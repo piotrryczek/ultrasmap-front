@@ -5,8 +5,6 @@ import { languages } from 'config/config';
 
 // Prawdopodobnie z reduxa zasysaj jezyk
 function Languages() {
-  console.log('Languages render')
-
   const [ifShowLanguages, setIfShowLanguages] = useState(false);
 
   const handleChangeLanguage = languageCode => () => {

@@ -1,5 +1,8 @@
 import Api from 'services/api';
 import history from 'config/history';
+import store from 'config/store';
+
+import { setIsAuthenticated } from 'components/app/app.actions';
 
 class Auth {
 
@@ -11,53 +14,31 @@ class Auth {
   }
 
   login = async (email, password) => {
-    try {
-      const {
-        data: jwtToken,
-        credentials,
-      } = await Api.post('/users/login', {
-        email,
-        password,
-      });
-  
-      localStorage.setItem('jwtToken', jwtToken);
-      localStorage.setItem('credentials', credentials);
-  
-      this.dispatch(setMessage('success', 'LOGIN_SUCCESS'));
-      this.dispatch(setIsAuthenticated(true, credentials));
-    } catch (error) {
-      const {
-        response: {
-          data: {
-            type,
-          },
-        },
-      } = error;
-      
-      this.dispatch(setMessage('error', type));
-    }
+    const {
+      data: jwtToken,
+      credentials,
+    } = await Api.post('/users/login', {
+      email,
+      password,
+    }, false);
+
+    localStorage.setItem('jwtToken', jwtToken);
+    localStorage.setItem('credentials', credentials);
+
+    this.dispatch(setIsAuthenticated(true));
   }
 
   logout = async () => {
-    this.clearAuth({
-      type: 'success',
-      code: 'LOGOUT_SUCCESS',
-    });
+    this.clearAuth();
   }
 
-  clearAuth = (message = null) => {
+  clearAuth = () => {
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('credentials');
 
-    history.push('/login');
+    history.push('/');
 
     this.dispatch(setIsAuthenticated(false));
-
-    if (message) {
-      const { type, code } = message;
-
-      this.dispatch(setMessage(type, code));
-    }
   }
 
   hasCredentialLocal = (credential) => {

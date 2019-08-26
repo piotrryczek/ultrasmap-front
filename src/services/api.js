@@ -1,5 +1,6 @@
 import axios from 'axios';
 import ApiError from 'util/apiError';
+import { reject } from 'q';
 
 class Api {
 
@@ -33,26 +34,32 @@ class Api {
     return config;
   }
 
-  post = (url, body) => this.doQuery(async () => await axios.post(`${this.apiUrl}${url}`, body, this.getConfig()));
+  post = (url, body, defaultErrorHandling = true) => this.doQuery(async () => await axios.post(`${this.apiUrl}${url}`, body, this.getConfig()), defaultErrorHandling);
 
-  put = (url, body) => this.doQuery(async () => await axios.put(`${this.apiUrl}${url}`, body, this.getConfig()));
+  put = (url, body, defaultErrorHandling = true) => this.doQuery(async () => await axios.put(`${this.apiUrl}${url}`, body, this.getConfig()), defaultErrorHandling);
 
-  patch = (url, body) => this.doQuery(async () => await axios.patch(`${this.apiUrl}${url}`, body, this.getConfig()));
+  patch = (url, body, defaultErrorHandling = true) => this.doQuery(async () => await axios.patch(`${this.apiUrl}${url}`, body, this.getConfig()), defaultErrorHandling);
 
-  delete = (url, body) =>  this.doQuery(async () => await axios.delete(`${this.apiUrl}${url}`, this.getConfig(body, 'body')));
+  delete = (url, body, defaultErrorHandling = true) =>  this.doQuery(async () => await axios.delete(`${this.apiUrl}${url}`, this.getConfig(body, 'body')), defaultErrorHandling);
 
-  get = (url, query = {}) => this.doQuery(async () => await axios.get(`${this.apiUrl}${url}`, this.getConfig(query, 'query')));
+  get = (url, query = {}, defaultErrorHandling = true) => this.doQuery(async () => await axios.get(`${this.apiUrl}${url}`, this.getConfig(query, 'query')), defaultErrorHandling);
 
-  doQuery = (queryFunc) => {
-    return new Promise(async (resolve) => {
-      try {
-        const { data } = await queryFunc();
-
-        resolve(data);
-      } catch (error) {
-        new ApiError(error);
-      }
-    });
+  doQuery = async (queryFunc, defaultErrorHandling) => {
+    if (defaultErrorHandling) {
+      return new Promise(async (resolve) => {
+        try {
+          const { data } = await queryFunc();
+  
+          resolve(data);
+        } catch (error) {
+          new ApiError(error);
+        }
+      });
+    } else {
+      const { data } = await queryFunc();
+  
+      return data;
+    }
   }
 }
 

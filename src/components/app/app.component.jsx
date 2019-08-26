@@ -1,24 +1,26 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import {
   Router,
   Route,
 } from 'react-router';
 
+import { MuiThemeProvider } from '@material-ui/core/styles';
+
+import theme from 'theme/muiTheme';
 import history from 'config/history';
 
 import MapApp from 'components/mapApp/mapApp.component';
-import Login from 'components/login/login.component';
-import Register from 'components/register/register.component';
+import ApiErrorMessage from 'components/apiErrorMessage/apiErrorMessage.component';
 
 
 function App() {
-
   return (
-    <Router history={history}>
-      <Route exact path="/" component={MapApp} />
-      <Route path="/login" component={Login} />
-      <Route path="/register" component={Register} />
-    </Router>
+    <MuiThemeProvider theme={theme}>
+      <Router history={history}>
+        <Route path="/" component={MapApp} />
+      </Router>
+      <ApiErrorMessage />
+    </MuiThemeProvider>
   );
 }
 
