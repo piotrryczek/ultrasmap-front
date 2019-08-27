@@ -1,4 +1,5 @@
 export const IMAGES_URL = `${process.env.REACT_APP_API_URL}/images`;
+export const DEFAULT_LANGUAGE = 'pl';
 export const languages = [{
   code: 'pl',
   flag: 'pl.png',

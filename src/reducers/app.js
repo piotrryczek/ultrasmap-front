@@ -5,6 +5,7 @@ import {
   SET_IS_AUTHENTICATED,
   SET_IS_LOADING_CLUB,
 } from 'components/app/app.actions';
+import { DEFAULT_LANGUAGE } from 'config/config';
 
 const getCredentialsFromLocalStorage = () => {
   const credentials = localStorage.getItem('credentials');
@@ -20,6 +21,7 @@ const initialState = {
   messageType: '', // error, success
   messageCode: '',
   isLoadingClub: false,
+  language: localStorage.getItem('language') || DEFAULT_LANGUAGE,
 };
 
 const app = (state = initialState, { type, payload }) => {

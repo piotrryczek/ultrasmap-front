@@ -7,13 +7,14 @@ import _get from 'lodash/get';
 
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 import Auth from 'services/auth';
 import history from 'config/history';
 import Errors from 'common/errors/errors.component';
 import ButtonLink from 'common/buttonLink/buttonLink.component';
-import { Typography } from '@material-ui/core';
 
 function Login() {
   const { t } = useTranslation();
@@ -90,6 +91,9 @@ function Login() {
       {loginBlur && isAuthenticated ? (
         <Grid container spacing={3}>
           <Grid item xs={12}>
+            <Typography variant="h5">Logowanie</Typography>
+          </Grid>
+          <Grid item xs={12}>
             <Typography>Zalogowałeś się pomyślnie. Wróc do mapy.</Typography>
           </Grid>
           <Grid item xs={12}>
@@ -109,6 +113,9 @@ function Login() {
           className={classNames('handle-loading', { 'loading': isLoading })}
         >
           <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Typography variant="h5">Logowanie</Typography>
+            </Grid>
             <Grid item xs={12}>
               <input
                 type="email"
@@ -131,14 +138,25 @@ function Login() {
             </Grid>
             <Grid item xs={12}>
               <Box display="flex" justifyContent="center">
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  size="large"
-                  type="submit"
-                >
-                  Login
-                </Button>
+                <ButtonGroup>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    size="large"
+                    type="submit"
+                  >
+                    Login
+                  </Button>
+                  <ButtonLink
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    type="submit"
+                    to="/register"
+                  >
+                    Nie masz konta? Zarejestruj się
+                  </ButtonLink>
+                </ButtonGroup>
               </Box>
             </Grid>
             {error && (

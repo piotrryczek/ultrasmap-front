@@ -1,10 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useRef, useCallback } from 'react';
-import { useSelector } from 'react-redux';
 import { Route } from 'react-router';
 import { GoogleMap, Marker, OverlayView, Polyline, withGoogleMap } from 'react-google-maps';
 import classNames from 'classnames';
-import _get from 'lodash/get';
 
 import { parseCoordinates } from 'util/helpers';
 import { IMAGES_URL } from 'config/config';
@@ -12,8 +10,9 @@ import { IMAGES_URL } from 'config/config';
 import Login from 'components/login/login.component';
 import Register from 'components/register/register.component';
 import Suggestion from 'components/mapApp/suggestion/suggestion.component';
+import EmailConfirm from 'components/emailConfirm/emailConfirm.component';
 import SuggestAddNewClubButton from 'components/mapApp/suggestAddNewClubButton/suggestAddNewClubButton.component';
-import LogoutButton from 'components/mapApp/logoutButton/logoutButton.component';
+import LoginLogoutButton from 'components/mapApp/loginLogoutButton/loginLogoutButton.component';
 import Search from 'components/mapApp/search/search.component';
 import Languages from 'components/mapApp/languages/languages.component';
 
@@ -184,11 +183,9 @@ function GoogleMapClubsHOC(props) {
     retrieveClub,
   } = props;
 
-  const { isAuthenticated } = useSelector(state => ({ isAuthenticated: _get(state, 'app.isAuthenticated', false) }));
-
   return (
     <div id="map-wrapper">
-      {isAuthenticated && <LogoutButton />}
+      <LoginLogoutButton />
       <Search retrieveClub={retrieveClub} />
       <SuggestAddNewClubButton />
       <GoogleMapClubs
@@ -205,6 +202,7 @@ function GoogleMapClubsHOC(props) {
       <Route path="/suggestion/:clubId" component={props => <Suggestion {...props} editType="edit" />} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+      <Route path="/confirm/:verificationCode" component={EmailConfirm} />
     </div>
   )
 }

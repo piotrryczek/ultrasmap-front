@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 
-import { languages } from 'config/config';
+import { languages, DEFAULT_LANGUAGE } from 'config/config';
+import i18n from 'config/i18n';
 
-// Prawdopodobnie z reduxa zasysaj jezyk
+//
 function Languages() {
   const [ifShowLanguages, setIfShowLanguages] = useState(false);
 
   const handleChangeLanguage = languageCode => () => {
     localStorage.setItem('language', languageCode);
+    i18n.changeLanguage(languageCode);
+    setIfShowLanguages(false);
   }
 
   const handleShowLanguages = () => {
@@ -19,7 +22,7 @@ function Languages() {
     setIfShowLanguages(false);
   }
 
-  const currentLanguageCode = 'pl'; //localStorage.getItem('language');
+  const currentLanguageCode = localStorage.getItem('language') || DEFAULT_LANGUAGE;
   const currentLanguage = languages.find(language => language.code === currentLanguageCode);
   const otherThanCurrentLanguages = languages.filter(language => language.code !== currentLanguageCode)
 

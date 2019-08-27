@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux';
 import classNames from 'classnames';
@@ -15,7 +16,7 @@ import { IMAGES_URL } from 'config/config';
 import ScrollbarsWrapper from 'common/scrollbarsWrapper/scrollbarsWrapper.component';
 import RelationClubs from './relationClubs/relationClubs.component';
 
-const renderClubContent = ({ club, retrieveClub }) => {
+const ClubContent = ({ club, retrieveClub }) => {
   const {
     name,
     logo,
@@ -109,10 +110,12 @@ const renderClubContent = ({ club, retrieveClub }) => {
   );
 }
 
-const renderWelcome = () => {
+const Welcome = () => {
+  const { t } = useTranslation();
+
   return (
     <>
-      <Typography variant="h5" gutterBottom>Witaj!</Typography>
+      <Typography variant="h5" gutterBottom>{t('welcome.header')}</Typography>
       <Typography gutterBottom>
         Celem aplikacji jest zobrazowanie relacji między grupami kibicowskimi rozsianymi na całym świecie. Jetem świadomy różnic w specyfice różnych regionów jak i skomplikowania wewnętrznych powiązań więc niestety nie unikniemy pewnych uproszczeń.
       </Typography>
@@ -149,7 +152,7 @@ function Sidebar(props) {
     >
       <ScrollbarsWrapper>
         <div className="inner">
-          {club ? renderClubContent(props) : renderWelcome()}
+          {club ? <ClubContent {...props} /> : <Welcome />}
         </div>
       </ScrollbarsWrapper>
       

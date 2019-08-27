@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  Router,
-  Route,
-} from 'react-router';
+import { Router, Route } from 'react-router';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 

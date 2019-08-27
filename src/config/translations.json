@@ -1,12 +1,23 @@
 {
   "pl": {
     "translation": {
-      
+      "welcome": {
+        "header": "Witaj"
+      }
     }
   },
   "en": {
     "translation": {
-      
+      "welcome": {
+        "header": "Welcome"
+      }
+    }
+  },
+  "ru": {
+    "translation": {
+      "welcome": {
+        "header": "Zdrastje"
+      }
     }
   }
 }
