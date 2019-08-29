@@ -18,7 +18,6 @@ const getCredentialsFromLocalStorage = () => {
 const initialState = {
   isAuthenticated: localStorage.getItem('jwtToken') || false,
   credentials: getCredentialsFromLocalStorage(),
-  messageType: '', // error, success
   messageCode: '',
   isLoadingClub: false,
   language: localStorage.getItem('language') || DEFAULT_LANGUAGE,
@@ -27,11 +26,8 @@ const initialState = {
 const app = (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_MESSAGE: {
-      const { messageCode, messageType } = payload;
-
       return update(state, {
-        messageCode: { $set: messageCode },
-        messageType: { $set: messageType },
+        messageCode: { $set: payload },
       });
     }
 

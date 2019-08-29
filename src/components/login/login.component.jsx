@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import PageOverlay from 'common/pageOverlay/pageOverlay.component';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
-import _get from 'lodash/get';
 
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -15,16 +14,17 @@ import Auth from 'services/auth';
 import history from 'config/history';
 import Errors from 'common/errors/errors.component';
 import ButtonLink from 'common/buttonLink/buttonLink.component';
+import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
 
 function Login() {
   const { t } = useTranslation();
 
-  const { isAuthenticated } = useSelector(state => ({ isAuthenticated: _get(state, 'app.isAuthenticated', false) }));
+  const isAuthenticated = useSelector(state => state.app.isAuthenticated);
 
   const [state, setState] = useState({
     email: '',
     password: '',
-    error: null,
+    apiError: null,
     isLoading: false,
     loginBlur: false,
   });
@@ -32,7 +32,7 @@ function Login() {
   const {
     email,
     password,
-    error,
+    apiError,
     isLoading,
     loginBlur,
   } = state;
@@ -79,7 +79,7 @@ function Login() {
 
       setState(prevState => ({
         ...prevState,
-        error: t(type),
+        apiError: t(type),
         isLoading: false,
       }));
     }
@@ -91,10 +91,10 @@ function Login() {
       {loginBlur && isAuthenticated ? (
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Typography variant="h5">Logowanie</Typography>
+            <Typography variant="h5">{t('login.header')}</Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography>Zalogowałeś się pomyślnie. Wróc do mapy.</Typography>
+            <Typography>{t('login.success')}</Typography>
           </Grid>
           <Grid item xs={12}>
             <ButtonLink
@@ -103,69 +103,68 @@ function Login() {
               size="large"
               to="/"
             >
-              Back to map
+              {t('global.backToMap')}
             </ButtonLink>
           </Grid>
         </Grid>
       ) : (
-        <form
-          onSubmit={handleSubmit}
-          className={classNames('handle-loading', { 'loading': isLoading })}
-        >
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Typography variant="h5">Logowanie</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <input
-                type="email"
-                name="email"
-                value={email}
-                placeholder="Email..."
-                onChange={handleChange}
-                className={classNames('styled-input', { 'error': error })}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <input
-                type="password"
-                name="password"
-                value={password}
-                placeholder="Password..."
-                onChange={handleChange}
-                className={classNames('styled-input', { 'error': error })}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Box display="flex" justifyContent="center">
-                <ButtonGroup>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    size="large"
-                    type="submit"
-                  >
-                    Login
-                  </Button>
-                  <ButtonLink
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    type="submit"
-                    to="/register"
-                  >
-                    Nie masz konta? Zarejestruj się
-                  </ButtonLink>
-                </ButtonGroup>
-              </Box>
-            </Grid>
-            {error && (
+        <LoadingWrapper isLoading={isLoading} type="small">
+          <form onSubmit={handleSubmit}>
+            <Grid container spacing={3}>
               <Grid item xs={12}>
-                <Errors errors={error} />
+                <Typography variant="h5">{t('login.header')}</Typography>
               </Grid>
-            )}
-          </Grid>
-        </form>
+              <Grid item xs={12}>
+                <input
+                  type="email"
+                  name="email"
+                  value={email}
+                  placeholder={t('login.emailPlaceholder')}
+                  onChange={handleChange}
+                  className={classNames('styled-input', { 'error': apiError })}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <input
+                  type="password"
+                  name="password"
+                  value={password}
+                  placeholder={t('login.passwordPlaceholder')}
+                  onChange={handleChange}
+                  className={classNames('styled-input', { 'error': apiError })}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Box display="flex" justifyContent="center">
+                  <ButtonGroup>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      size="large"
+                      type="submit"
+                    >
+                      {t('login.login')}
+                    </Button>
+                    <ButtonLink
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      type="submit"
+                      to="/register"
+                    >
+                      {t('login.register')}
+                    </ButtonLink>
+                  </ButtonGroup>
+                </Box>
+              </Grid>
+              {apiError && (
+                <Grid item xs={12}>
+                  <Errors errors={t(`messageCodes.${apiError}`)} />
+                </Grid>
+              )}
+            </Grid>
+          </form>
+        </LoadingWrapper>
       )}
     </PageOverlay>
   );

@@ -218,38 +218,6 @@ body {
   }
 }
 
-.handle-loading {
-  position: relative;
-
-  &:after {
-    width: 100px;
-    height: 100px;
-    background: url('/assets/loading_horizontal.gif') no-repeat center;
-    background-size: cover;
-    display: block;
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  &.loading {
-    pointer-events: none;
-
-    &:after {
-      opacity: 1;
-    }
-
-    > * {
-      opacity: 0.5;
-    }
-  }
-}
-
 .has-scrollbar {
   &:hover {
     .track-vertical {
@@ -295,6 +263,66 @@ body {
     color: $errorColor;
     top: -1rem;
     left: 0px;
+  }
+}
+
+.loading-wrapper {
+  position: relative;
+
+  > * {
+    transition: opacity 0.3s;
+  }
+
+  &:after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 11;
+    pointer-events: none;
+
+    transform: translate(-50%, -50%);
+
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  &.loading {
+    &:before,
+    &:after {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+
+  &.size-small {
+    &:after {
+      width: 100px;
+      height: 100px;
+      background: url('/assets/loading_horizontal.gif') no-repeat center;
+      background-size: cover;
+    }
+  }
+
+  &.size-big {
+    &:after {
+      width: 256px;
+      height: 256px;
+      background: url('/assets/loading.gif');
+    }
+  }
+
+  &.loading {
+    pointer-events: none;
+
+    &:after {
+      opacity: 1;
+    }
+
+    > * {
+      opacity: 0.5;
+    }
   }
 }
 

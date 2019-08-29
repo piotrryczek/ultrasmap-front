@@ -1,12 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import Auth from 'services/auth';
-import _get from 'lodash/get';
 
 function SuggestAddNewClubButton() {
-  const { isAuthenticated } = useSelector(state => ({ isAuthenticated: _get(state, 'app.isAuthenticated', false) }));
+  const { t } = useTranslation();
+  const isAuthenticated = useSelector(state => state.app.isAuthenticated);
 
   const handleLogout = async () => {
     await Auth.logout();
@@ -19,7 +20,7 @@ function SuggestAddNewClubButton() {
       className="standard-button button-blue"
       onClick={handleLogout}
     >
-      Logout
+      {t('global.logout')}
     </button>
   ): (
     <Link to="/login">
@@ -29,7 +30,7 @@ function SuggestAddNewClubButton() {
         className="standard-button button-green"
         onClick={handleLogout}
       >
-        Login
+        {t('global.login')}
       </button>
     </Link>
   );

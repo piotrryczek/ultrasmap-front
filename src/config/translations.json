@@ -1,22 +1,271 @@
 {
   "pl": {
     "translation": {
+      "messageCodes": {
+        "NOT_AUTHORIZED": "Nie jesteś zalogowany.",
+        "NETWORK_ERROR": "Problem z połączeniem.",
+        "UNKNOWN_ERROR": "Nieznany błąd.",
+        "INTERNAL": "Błąd wewnętrzny serwera.",
+        "JWT_TOKEN": "Błędna autoryzacja.",
+        "LOGIN_FAILED": "Błędne dane logowania.",
+        "USER_NOT_VERIFIED": "Nie jesteś zweryfikowany.",
+        "USER_WITH_EMAIL_EXISTS": "Błąd operacji.",
+        "USER_NOT_EXISTS": "Błąd operacji.",
+        "AUTHORIZATION_TOKEN_EXISTS": "Błąd operacji.",
+        "CLUB_WITH_NANE_EXISTS": "Błąd operacji.",
+        "RELATIONS_NOT_UNIQUE": "Błąd operacji.",
+        "INCOMPLETE_SUGGESTION_COMMENT": "Błąd operacji."
+      },
+      "global": {
+        "errorsOccured": "Wystąpiły błędy:",
+        "chooseImageToUpload": "Wybierz obrazek do wgrania",
+        "serverProblem": "Przepraszamy, serwer napotkał problem.",
+        "close": "Zamknij",
+        "login": "Zaloguj sie",
+        "logout": "Wyloguj się",
+        "register": "Zarejestruj się",
+        "suggestNewClub": "Zasugeruj nowy klub",
+        "friendships": "Zgody",
+        "agreements": "Układy",
+        "positives": "Pozytywne relacje",
+        "satellites": "Satelity / fankluby",
+        "satelliteOf": "Jest satelitą / fanklubem",
+        "suggestChange": "Zasugeruj zmianę",
+        "backToMap": "Wróc do mapy"
+      },
+      "formErrors": {
+        "email": "Niepoprawny adres email",
+        "required": "Pole jest wymagane",
+        "passwordsNotMatch": "Hasła muszą być identyczne",
+        "emailExists": "Na podany adres email jest już zarejestrowany użytkownik. Wybierz inny",
+        "fileSize": "Plik jest zbyt duży",
+        "fileType": "Nieodpowiedni format pliku",
+        "relationsNotUnique": "Relacje muszą być unikalne"
+      },
       "welcome": {
-        "header": "Witaj"
+        "header": "Witaj!",
+        "paragraph1": "Celem aplikacji jest zobrazowanie relacji między grupami kibicowskimi rozsianymi po całym świecie. Poziom ich skomplikowania i nierzadko niejasności powiązań sprawia, że niestety mimo szczerych chęci nie zawsze przedstawione dane będą w pełni poprawne. Jeśli dostrzeżesz błąd - zgłoś go w sugestii proponując własną zmianę.",
+        "paragraph2": "Pamiętajcie, że to Wy tworzycie tę mapę. To dzięki Waszym sugestiom ta cała układanka będzie mogła żyć swoim życiem. Nieważne czy Twój klub występuje w europejskich pucharach czy okręgówcę. Jeśli działa w kibicowskich klimatach - dodaj go! Jeśli jego dane są nieaktualne - zasugeruj ich aktualizację! Bez Was to tylko martwa aplikacja.",
+        "paragraph3": "Aplikacja jest nadal w bardzo wczesnej fazie. W razie uwag bądź dostrzeżenia nieprawidłowości w działaniu zawsze możesz zgłosić problem.",
+        "paragraph4": "Projekt został stworzony non profit i docelowo ma w takiej formie pozostać.",
+        "copyrights": "© Piotr Ryczek 2019"
+      },
+      "emailConfirm": {
+        "emailVerified": "Email został zweryfikowany. Możesz się teraz zalogować za pomocą danych podanych podczas rejestracji",
+        "login": "Przejdź do logowania",
+        "emailBeingVerified": "Prosimy zaczekać, Twój email jest w trakcie weryfikacji..."
+      },
+      "login": {
+        "header": "Logowanie",
+        "success": "Logowanie zakończone powodzeniem.",
+        "emailPlaceholder": "Adres email...",
+        "passwordPlaceholder": "Hasło...",
+        "login": "Zaloguj się",
+        "register": "Nie posiadasz konta? Zarejestruj się"
+      },
+      "register": {
+        "header": "Rejestracja",
+        "success": "Rejestracja udana, aby dokończyć proces kliknij weryfikujący link w wysłanej na podany email wiadomości.",
+        "emailPlaceholder": "Email...",
+        "passwordPlaceholder": "Hasło...",
+        "confirmPasswordPlaceholder": "Potwierdź hasło...",
+        "register": "Zarejestruj się",
+        "login": "Posiadasz już konto? Zaloguj się"
+      },
+      "search": {
+        "lackOfClub": "Brakuje klubu? Zasugeruj dodanie go...",
+        "searchPlaceholder": "Szukaj..."
+      },
+      "suggestion": {
+        "lackOfCredential": "Nie posiadasz uprawnień aby sugerować zmiany. Najprawdopodobniej zostały Ci one odebrane w efekcie licznych naruszeń.",
+        "needToBeLoggedin": "Aby móc sugerować zmiany musisz być zalogowany.",
+        "success": "Twoja sugestia została dodana. Postaramy się jak najszybciej ją przejrzeć. O tym czy sugestia została zaakceptowana bądź odrzucana zostaniesz poinformowany mailowo. Dzięki!",
+        "welcome": "Postaraj się możliwie precyzyjnie i obiektywnie uzupełnić formularz. Dzięki temu znacznie ułatwisz dalszą pracę, na której skorzystają także wszyscy inni użytkownicy. O tym czy sugestia została zaakceptowana bądź odrzucana zostaniesz poinformowany mailowo. Dzięki!",
+        "createNewClub": "Utwórz nowy klub: ",
+        "addSuggestion": "Dodaj",
+        "name": {
+          "header": "Nazwa",
+          "placeholder": "Nazwa...",
+          "tooltip": "Wpisz pełną nazwę klubu wraz z nazwą miejscowości."
+        },
+        "logo": {
+          "header": "Logo / Herb",
+          "tooltip": "Postaraj się wgrać logo dobrej jakości, bez obciętych krawędzi z przezroczystym tłem."
+        },
+        "tier": {
+          "header": "Znaczenie kibicowskie",
+          "tooltip": "Uwzględnij liczebność i siłę ekipy, wielkość młyna, liczby wyjazdowe i ogólny stopień aktywności, przyjmij, że 5 to marka rozpoznawalna na arenie międzynarodowej, 4 silna ekipa na scenie krajowej, 3 to licząca się grupa, której daleko do czołówki, 2 to skład znający swoje miejsce w szeregu bez siły przebicia, a 1 to grupka działająca od czasu do czasu lokalnie. Nie przywiązuj większej wagi do tych gwiazdek. Są jedynie pomocnicze."
+        },
+        "location": {
+          "header": "Lokalizacja",
+          "tooltip": "Wskaż lokalizację stadionu."
+        },
+        "friendships": {
+          "header": "Zgody",
+          "tooltip": "Wybierz oficjalne i aktualnie istniejące zgody, jeśli klub nie istnieje możesz zasugerować dodanie go.",
+          "placeholder": "Zacznij wpisywać i wybierz kluby..."
+        },
+        "agreements": {
+          "header": "Układy",
+          "tooltip": "Wybierz oficjalne i aktualnie istniejące układy, jeśli klub nie istnieje możesz zasugerować dodanie go.",
+          "placeholder": "Zacznij wpisywać i wybierz kluby..."
+        },
+        "positives": {
+          "header": "Pozytywne relacje",
+          "tooltip": "Wybierz z jakimi innymi klubami klub posiada nieoficjalne pozytywne relacje bądź prywatne kontakty nie będące oficjalnymi zgodami lub układami. Jeśli klub nie istnieje możesz zasugerować dodanie go.",
+          "placeholder": "Zacznij wpisywać i wybierz kluby..."
+        },
+        "satellites": {
+          "header": "Satelity / fankluby",
+          "tooltip": "Wybierz jakie inne kluby (nie miejscowości) można uznać za Fan Cluby bądź satelity. Są to przypadki, w których praktycznie cała ekipa danego klubu jest także zaangażowana w kibicowanie innemu klubowi i jednocześnie nie podlega dyskusji jej podrzędność w hierarchi. Zanim dodasz spróbuj przejrzeć już istniejące przypadki.",
+          "placeholder": "Zacznij wpisywać i wybierz kluby..."
+        },
+        "satelliteOf": {
+          "header": "Jest satelitą / fanklubem",
+          "tooltip": "Wybierz klub nadrzędny, któremu oddana jest praktycznie cała ekipa danego klubu.",
+          "placeholder": "Zacznij wpisywać i wybierz klub..."
+        },
+        "comments": {
+          "header": "Uwagi",
+          "tooltip": "Dopisz wszelkie uwagi bądź sugestie, które mogą pomóc precyzyjnie uwzględnić Twoją sugestię."
+        }
       }
     }
   },
+
+
+
   "en": {
     "translation": {
+      "messageCodes": {
+        "NOT_AUTHORIZED": "You are not logged in.",
+        "NETWORK_ERROR": "Connection problem.",
+        "UNKNOWN_ERROR": "Unknow error.",
+        "INTERNAL": "Internal server error.",
+        "JWT_TOKEN": "Incorrect authorization.",
+        "LOGIN_FAILED": "Login failed.",
+        "USER_NOT_VERIFIED": "You are not verified.",
+        "USER_WITH_EMAIL_EXISTS": "Operation error.",
+        "USER_NOT_EXISTS": "Operation error.",
+        "AUTHORIZATION_TOKEN_EXISTS": "Operation error.",
+        "CLUB_WITH_NANE_EXISTS": "Operation error.",
+        "RELATIONS_NOT_UNIQUE": "Operation error.",
+        "INCOMPLETE_SUGGESTION_COMMENT": "Operation error."
+      },
+      "global": {
+        "errorsOccured": "Errors have occurred:",
+        "chooseImageToUpload": "Choose image to upload",
+        "serverProblem": "Sorry, the server has encountered a problem.",
+        "close": "Close",
+        "login": "Sign in",
+        "logout": "Logout",
+        "register": "Sign up",
+        "suggestNewClub": "Suggest new club",
+        "friendships": "Friendships",
+        "agreements": "Agreements",
+        "positives": "Positive relations",
+        "satellites": "Satellites / Fanclubs",
+        "satelliteOf": "Satellite / Fanclub of",
+        "suggestChange": "Suggest change",
+        "backToMap": "Back to map"
+      },
+      "formErrors": {
+        "email": "Incorrect email address",
+        "required": "Field is required",
+        "passwordsNotMatch": "Passwords are not match",
+        "emailExists": "Provided email already exists in a database. Please select other",
+        "fileSize": "File is being to big",
+        "fileType": "Incorrect file format",
+        "relationsNotUnique": "Relations have to unique"
+      },
       "welcome": {
-        "header": "Welcome"
-      }
-    }
-  },
-  "ru": {
-    "translation": {
-      "welcome": {
-        "header": "Zdrastje"
+        "header": "Welcome!",
+        "paragraph1": "The purpose of the application is to illustrate the relationships between supporter groups around the world. Their level of complexity and often unclear connections mean that, unfortunately, despite our good intentions, the data presented will not always be fully correct. If you see an error - please report it in the suggestion, proposing your own change.",
+        "paragraph2": "Remember that you are creators of that map. It is because of your support and help that this map can stay alive. It doesn't matter if your club is in European cups or is playing in lower local league. If it's fans are active - add it! If it's data is out of date - suggest updating it!",
+        "paragraph3": "The application is still in its early stages. You can always report a problem.",
+        "paragraph4": "The project has been created non-profit.",
+        "copyrights": "© Piotr Ryczek 2019"
+      },
+      "emailConfirm": {
+        "emailVerified": "Email has been verified, login with data supplied during registration.",
+        "login": "Sign in",
+        "emailBeingVerified": "Please wait, your email is being verified..."
+      },
+      "login": {
+        "header": "Login",
+        "success": "You have logged in.",
+        "backToMap": "Back to map",
+        "emailPlaceholder": "Email address...",
+        "passwordPlaceholder": "Password...",
+        "login": "Sign in",
+        "register": "Don't have an account? Register"
+      },
+      "register": {
+        "header": "Registration",
+        "success": "Registration successful, to complete the process click the verification link in the message sent to the provided email.",
+        "emailPlaceholder": "Email...",
+        "passwordPlaceholder": "Password...",
+        "confirmPasswordPlaceholder": "Confirm password...",
+        "register": "Register",
+        "login": "Already have an account? Sign in"
+      },
+      "search": {
+        "lackOfClub": "Missing club? Suggest adding it...",
+        "searchPlaceholder": "Search..."
+      },
+      "suggestion": {
+        "lackOfCredential": "You do not have permission to suggest changes. Most likely, they have been revoked from you as a result of numerous violations.",
+        "needToBeLoggedin": "You must be logged in to be able to suggest changes.",
+        "success": "Your suggestion has been added. We will try to review it as soon as possible. You will be notified by e-mail about whether the suggestion has been accepted or rejected. Thanks!",
+        "welcome": "Try to complete the form as precisely and objectively as possible. For this reason you will help us and all other users. You will be notified by e-mail about whether the suggestion has been accepted or rejected. Thanks!",
+        "createNewClub": "Create new club: ",
+        "addSuggestion": "Add",
+        "name": {
+          "header": "Name",
+          "placeholder": "Name...",
+          "tooltip": "Enter the full name of the club along with the name of the city which club came from."
+        },
+        "logo": {
+          "header": "Logo",
+          "tooltip": "Try to upload a good quality logo without cut edges with a transparent background."
+        },
+        "tier": {
+          "header": "Strength and importance",
+          "tooltip": "Try to estimate strength and importance of the supporters. Take into an account number of fans actively supporting every match, those who are going for away matches, hooligans strength and activity. Assume that 5 means fans are being recognized all over the world, 4 that they are considerate power on the national level, 3 means being far from the top, 2 means knowing their place and 1 being occasionally active on the local level. Do not attach great importance to these stars. They are only auxiliary."
+        },
+        "location": {
+          "header": "Location",
+          "tooltip": "Indicate the location of the stadium."
+        },
+        "friendships": {
+          "header": "Friendships",
+          "tooltip": "Choose only official and still being active friendships. If there is no club you can suggest adding it.",
+          "placeholder": "Start typing and select clubs..."
+        },
+        "agreements": {
+          "header": "Agreements",
+          "tooltip": "Choose only official and still being active agreements. If there are no these kind of relations in your country consider setting up positive relations instead agreements. If there is no club you can suggest adding it.",
+          "placeholder": "Start typing and select clubs..."
+        },
+        "positives": {
+          "header": "Positive relations",
+          "tooltip": "Choose clubs with which club has positive relations or private contacts. If there is no club you can suggest adding it.",
+          "placeholder": "Start typing and select clubs..."
+        },
+        "satellites": {
+          "header": "Satellites / Fanclubs",
+          "tooltip": "Choose satellite clubs (not cities/town) which can be recognized as fanclubs. These are cases in which practically all the supporters of a given club are also involved in supporting another club at the same time and its subordinate status is not disputed. Try to review existing cases before adding.",
+          "placeholder": "Start typing and select clubs..."
+        },
+        "satelliteOf": {
+          "header": "Satellite / Fanclub of",
+          "tooltip": "Choose parent/dominant club which is being supported by all or most of the fans.",
+          "placeholder": "Start typing and select club..."
+        },
+        "comments": {
+          "header": "Comments",
+          "tooltip": "Write any comments or suggestions that can help us accurately consider your suggestion."
+        }
       }
     }
   }

@@ -2,7 +2,7 @@ import Api from 'services/api';
 import history from 'config/history';
 import store from 'config/store';
 
-import { setIsAuthenticated } from 'components/app/app.actions';
+import { setIsAuthenticated, setMessage } from 'components/app/app.actions';
 
 class Auth {
 
@@ -25,20 +25,22 @@ class Auth {
     localStorage.setItem('jwtToken', jwtToken);
     localStorage.setItem('credentials', credentials);
 
-    this.dispatch(setIsAuthenticated(true));
+    this.dispatch(setIsAuthenticated(true, credentials));
   }
 
   logout = async () => {
     this.clearAuth();
   }
 
-  clearAuth = () => {
+  clearAuth = (messageCode= '') => {
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('credentials');
 
     history.push('/');
 
     this.dispatch(setIsAuthenticated(false));
+
+    if (messageCode) this.dispatch(setMessage(messageCode));
   }
 
   hasCredentialLocal = (credential) => {
@@ -47,11 +49,7 @@ class Auth {
     return credentials.includes(credential);
   }
 
-  hasCredentialApi = (credential) => {
-
-  }
-
-  verifyApiError = (error) => {
+  isCredentialError = (error) => {
     const {
       response: {
         data: {
@@ -62,7 +60,7 @@ class Auth {
 
     if (type !== 'NOT_AUTHORIZED') return false;
     
-    this.clearAuth({ type: 'error', code: 'NOT_AUTHORIZED' });
+    this.clearAuth('NOT_AUTHORIZED');
     return true;
   }
 }

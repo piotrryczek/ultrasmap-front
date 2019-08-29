@@ -5,14 +5,14 @@ import { setMessage } from 'components/app/app.actions';
 class ApiError {
   constructor(error) {
     if (!error.response) {
-      store.dispatch(setMessage('error', 'NETWORK_ERROR'));
+      store.dispatch(setMessage('NETWORK_ERROR'));
     } else if (!error.response.data) {
-      store.dispatch(setMessage('error', 'UNKNOWN_ERROR'));
+      store.dispatch(setMessage('UNKNOWN_ERROR'));
     } else {
-      if (!Auth.verifyApiError(error)) {
+      if (!Auth.isCredentialError(error)) {
         const { response: { data: { type } } } = error;
 
-        store.dispatch(setMessage('error', type));
+        store.dispatch(setMessage(type));
       }
     }
   }

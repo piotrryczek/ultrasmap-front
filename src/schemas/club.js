@@ -5,16 +5,16 @@ import { MAX_FILE_SIZE, SUPPORTED_FORMATS } from 'config/config';
 export default yup.object().shape({
   name: yup
     .string()
-    .required(),
+    .required('formErrors.required'),
   newLogo: yup.mixed()
-    .test('fileSize', "File Size is too large", value => !value || (value && value.size <= MAX_FILE_SIZE))
-    .test('fileType', "Unsupported File Format", value => !value || (value && SUPPORTED_FORMATS.includes(value.type))),
+    .test('fileSize', 'formErrors.fileSize', value => !value || (value && value.size <= MAX_FILE_SIZE))
+    .test('fileType', 'formErrors.fileType', value => !value || (value && SUPPORTED_FORMATS.includes(value.type))),
   tier: yup
     .number()
-    .required(),
+    .required('formErrors.required'),
   coordinates: yup
     .array().of(yup.string())
-    .required(),
+    .required('formErrors.required'),
   friendships: yup
     .array().of(yup.string()),
   agreements: yup

@@ -1,4 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { Link } from 'react-router-dom';
@@ -7,16 +8,15 @@ import _uniq from 'lodash/uniq';
 import _get from 'lodash/get';
 
 import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 
 import { DEFAULT_COORDINATES } from 'config/config';
 import Api from 'services/api';
+import Auth from 'services/auth';
 import clubSchema from 'schemas/club';
+import NeedToBeLoggedIn from 'components/mapApp/needToBeLoggedIn/needToBeLoggedIn.component';
 import PageOverlay from 'common/pageOverlay/pageOverlay.component';
-import ButtonLink from 'common/buttonLink/buttonLink.component';
 import SuggestionForm from './suggestionForm';
 
 import { prepareSuggestionFormData, parseRelationsToFormData, parseClubData } from './util';
@@ -26,36 +26,58 @@ function Suggestion(props) {
     editType,
   } = props;
 
+  const { t } = useTranslation();
   const { isAuthenticated } = useSelector(state => ({ isAuthenticated: _get(state, 'app.isAuthenticated', false) }));
 
   const club = _get(props, 'location.state.club', null);
   const clubId = _get(props, 'match.params.clubId', null);
 
-  const [isSend, setIsSend] = useState(false);
-  const [fields, setFields] = useState({
-    newLogo: null,
-    name: '',
-    logo: '',
-    tier: 1,
-    coordinates: DEFAULT_COORDINATES,
-    friendships: [],
-    agreements: [],
-    positives: [],
-    satellites: [],
-    satelliteOf: null,
+  const [state, setState] = useState({
+    isSend: false,
+    isLoading: false,
+    fields: {
+      newLogo: null,
+      name: '',
+      logo: '',
+      tier: 1,
+      coordinates: DEFAULT_COORDINATES,
+      friendships: [],
+      agreements: [],
+      positives: [],
+      satellites: [],
+      satelliteOf: null,
+    }
   });
 
+  const {
+    isSend,
+    isLoading,
+    fields,
+  } = state;
+
   const fetchData = async () => {
+    setState(prevState => ({
+      ...prevState,
+      isLoading: true,
+    }));
+
     const { data: clubData } = await Api.get(`/clubs/${clubId}`);
 
-    setFields(parseClubData(clubData));
+    setState(prevState => ({
+      ...prevState,
+      isLoading: false,
+      fields: parseClubData(clubData),
+    }));
   }
 
   useEffect(() => {
     if (clubId) {
       
       if (club) {
-        setFields(parseClubData(club));
+        setState(prevState => ({
+          ...prevState,
+          fields: parseClubData(club),
+        }));
       } else {
         fetchData();
       }
@@ -138,9 +160,18 @@ function Suggestion(props) {
 
     const formData = prepareSuggestionFormData(data);
 
+    setState(prevState => ({
+      ...prevState,
+      isLoading: true,
+    }));
+
     await Api.post('/suggestions', formData);
 
-    setIsSend(true);
+    setState(prevState => ({
+      ...prevState,
+      isSend: true,
+      isLoading: false,
+    }));
   }, []);
 
   const handleValidate = useCallback(async (values) => {
@@ -166,7 +197,7 @@ function Suggestion(props) {
     const uniqNames = _uniq(allRelationsNames);
     if (allRelations.length > 0 && allRelationsNames.length !== uniqNames.length) {
       Object.assign(errors, {
-        relationsNotUnique: 'Relations have to be unique', // TODO: Translatiom
+        relationsNotUnique: 'formErrors.relationsNotUnique',
       });
     }   
 
@@ -175,6 +206,7 @@ function Suggestion(props) {
         abortEarly: false,
       });
     } catch (error) {
+      
       
       const { inner: schemaErrors } = error;
 
@@ -197,66 +229,42 @@ function Suggestion(props) {
   return (
     <PageOverlay>
       {isAuthenticated ?
-        isSend ? (
-          <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
-            <Box mb={2}>
-              <Typography>Dziękujemy za dodane sugestii. Postaramy się ją przejrzeć jak najszybciej!</Typography>
-            </Box>
-            <Link to="/">
-              <Button
-                variant="contained"
-                color="secondary"
-                size="large"
-                type="submit"
-              >
-                Wróc do mapy
-              </Button>
-            </Link>
-            
-          </Box>
-        ) : (
-          <Formik
-            initialValues={fields}
-            enableReinitialize
-            onSubmit={handleSubmit}
-            validate={handleValidate}
-            render={(props) => (
-              <SuggestionForm
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                {...props}
-                editType={editType}
-                clubId={clubId}
-              />
-            )}
-          />  
-        ) : (
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Typography>Aby proponować zmiany musisz być zalogowany. Ten proces zajmie Ci dosłownie moment.</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Box display="flex" justifyContent="center">
-                <ButtonGroup>
-                  <ButtonLink
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    to="/login"
-                  >
-                    Login
-                  </ButtonLink>
-                  <ButtonLink
-                    variant="contained"
-                    color="secondary"
-                    size="large"
-                    to="/register"
-                  >
-                    Register
-                  </ButtonLink>
-                </ButtonGroup>
+        Auth.hasCredentialLocal('addSuggestion') ?
+          isSend ? (
+            <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
+              <Box mb={2}>
+                <Typography>{t('suggestion.success')}</Typography>
               </Box>
-            </Grid>
-          </Grid>
+              <Link to="/">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  type="submit"
+                >
+                  {t('global.backToMap')}
+                </Button>
+              </Link>
+            </Box>
+          ) : (
+            <Formik
+              initialValues={fields}
+              enableReinitialize
+              onSubmit={handleSubmit}
+              validate={handleValidate}
+              render={(props) => (
+                <SuggestionForm
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  {...props}
+                  isLoading={isLoading}
+                  editType={editType}
+                  clubId={clubId}
+                />
+              )}
+            />
+          ) : (<Typography>{t('suggestion.lackOfCredential')}</Typography>) : 
+        (
+          <NeedToBeLoggedIn header={t('suggestion.needToBeLoggedin')} />
         )}
     </PageOverlay>
   );

@@ -24,11 +24,7 @@ function ApiErrorMessage() {
   const { t } = useTranslation();
   const classes = useStyles({});
 
-  const {
-    messageCode,
-  } = useSelector(state => ({
-    messageCode: state.app.messageCode,
-  }));
+  const messageCode = useSelector(state => state.app.messageCode);
 
   const handleCloseDialog = useCallback(() => {
     dispatch(clearMessage())
@@ -42,12 +38,12 @@ function ApiErrorMessage() {
       onClose={handleCloseDialog}
     >
       <DialogTitle>
-        Przepraszamy, serwer napotkał problem.
+        {t('global.serverProblem')}
       </DialogTitle>
 
       <DialogContent>
         <DialogContentText>
-          {t(messageCode)}
+          {t(`messageCodes.${messageCode}`)}
         </DialogContentText>
       </DialogContent>
       
@@ -58,7 +54,7 @@ function ApiErrorMessage() {
           color="primary"
           size="large"
         >
-          Close
+          {t('global.close')}
         </Button>
       </DialogActions>
     </Dialog>

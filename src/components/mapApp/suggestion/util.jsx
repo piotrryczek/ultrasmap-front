@@ -37,7 +37,7 @@ export const retrieveClubOptionValue = (option) => {
   return clubId;
 };
 
-export const handleFormatCreateLabel = value => `Utwórz nowy klub: ${value}`;
+export const handleFormatCreateLabel = label => value => `${label} ${value}`;
 
 export const prepareSuggestionFormData = ({
   newLogo,
@@ -96,7 +96,7 @@ export const parseClubData = ({
 
 
 
-export const selectStyles = {
+export const selectStyles = isError => ({
   multiValueLabel: base => ({
     ...base,
     height: '36px',
@@ -128,6 +128,7 @@ export const selectStyles = {
     ...base,
     height: '48px',
     lineHeight: '48px',
+    borderColor: isError ? '#ED254E' : 'hsl(0,0%,80%)',
   }),
   input: base => ({
     ...base,
@@ -135,4 +136,4 @@ export const selectStyles = {
     padding: '0px',
     margin: '0px'
   }),
-}
+});

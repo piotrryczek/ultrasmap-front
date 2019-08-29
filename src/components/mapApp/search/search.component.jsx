@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDebouncedCallback } from 'use-debounce';
 import classNames from 'classnames';
 
@@ -8,9 +9,10 @@ import history from 'config/history';
 import { IMAGES_URL } from 'config/config';
 
 import Api from 'services/api';
+import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
 
-// TODO: Loading && keyboard
 function Search(props) {
+  const { t } = useTranslation();
   const { retrieveClub } = props;
   const inputRef = useRef(null);
 
@@ -80,13 +82,6 @@ function Search(props) {
     setNewClub(clubId);
   }
 
-  // const handleClearHovered = useCallback(() => {
-  //   setState(prevState => ({
-  //     ...prevState,
-  //     hoveredClubIndex: null,
-  //   }));
-  // }, []);
-
   const handleChangeHovered = clubIndex => () => {
     setState(prevState => ({
       ...prevState,
@@ -151,66 +146,67 @@ function Search(props) {
       id="search" 
       className={classNames({
         'found-clubs': clubs.length > 0,
-        'is-loading': isLoading,
       })}
       onKeyDown={handleKeyDown}
-      tabIndex="0"
+      role="presentation"
     >
-      <div className="search-input-wrapper">
-        <input
-          ref={inputRef}
-          className="search-input"
-          type="text"
-          placeholder="Search club..."
-          value={search}
-          onChange={handleSearchChange}
-        />
-      </div>
+      <LoadingWrapper isLoading={isLoading} type="small">
+        <div className="search-input-wrapper">
+          <input
+            ref={inputRef}
+            className="search-input"
+            type="text"
+            placeholder={t('search.searchPlaceholder')}
+            value={search}
+            onChange={handleSearchChange}
+          />
+        </div>
 
-      {(clubs.length > 0 || search) && (
-        <ul
-          className="search-clubs"
-        >
-          {clubs.map(({
-            _id: clubId,
-            name,
-            logo,
-          }, index) => (
-            <li
-              key={clubId}
-              onMouseMove={handleChangeHovered(index)}
-              onMouseLeave={handleChangeHovered(null)}
-            >
+        {(clubs.length > 0 || search) && (
+          <ul
+            className="search-clubs"
+          >
+            {clubs.map(({
+              _id: clubId,
+              name,
+              logo,
+            }, index) => (
+              <li
+                key={clubId}
+                onMouseMove={handleChangeHovered(index)}
+                onMouseLeave={handleChangeHovered(null)}
+              >
+                <button
+                  type="button"
+                  className={classNames('search-club', {
+                    'hovered': hoveredClubIndex === index,
+                  })}
+                  onClick={handleChooseClub(clubId)}
+                >
+                  {logo && (
+                    <div className="logo">
+                      <img src={`${IMAGES_URL}/h60/${logo}`} alt="" />
+                    </div>
+                  )}
+                  <p className="name">{name}</p>
+                </button>
+              </li>
+            ))}
+            <li>
               <button
                 type="button"
-                className={classNames('search-club', {
-                  'hovered': hoveredClubIndex === index,
-                })}
-                onClick={handleChooseClub(clubId)}
+                className="search-club"
+                onClick={handleOpenSuggestionWindow}
               >
-                {logo && (
-                  <div className="logo">
-                    <img src={`${IMAGES_URL}/h60/${logo}`} alt="" />
-                  </div>
-                )}
-                <p className="name">{name}</p>
+                <div className="logo icon">
+                  <AddCommentIcon fontSize="large" />
+                </div>
+                <p className="name">{t('search.lackOfClub')}</p>
               </button>
             </li>
-          ))}
-          <li>
-            <button
-              type="button"
-              className="search-club"
-              onClick={handleOpenSuggestionWindow}
-            >
-              <div className="logo icon">
-                <AddCommentIcon fontSize="large" />
-              </div>
-              <p className="name">Brakuje klubu? Zasugeruj dodanie go...</p>
-            </button>
-          </li>
-        </ul>
-      )}
+          </ul>
+        )}
+      </LoadingWrapper>
     </div>
   );
 }

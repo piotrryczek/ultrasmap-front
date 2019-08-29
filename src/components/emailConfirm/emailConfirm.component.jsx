@@ -54,7 +54,7 @@ function EmailConfirm(props) {
         {isConfirmed ? (
           <>
             <Grid item xs={12}>
-              <Typography>Email został zweryfikowany, zaloguj się danymi podanymi podczas rejestracji.</Typography>
+              <Typography>{t('emailConfirm.emailVerified')}</Typography>
             </Grid>
             <Grid item xs={12}>
               <ButtonLink
@@ -63,17 +63,17 @@ function EmailConfirm(props) {
                 size="large"
                 to="/login"
               >
-                Przejdź do logowania
+                {t('emailConfirm.login')}
               </ButtonLink>
             </Grid>
           </>
         ) : apiError ? (
           <Grid item xs={12}>
-            <Errors errors={apiError} />
+            <Errors errors={t(`messageCodes.${apiError}`)} />
           </Grid>
         ) : (
           <Grid item xs={12}>
-            <Typography>Zaczekaj trwa weryfikacja...</Typography>
+            <Typography>{t('emailConfirm.emailBeingVerified')}</Typography>
           </Grid>
         )}
       </Grid>

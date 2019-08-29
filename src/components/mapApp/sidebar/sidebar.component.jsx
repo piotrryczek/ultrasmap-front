@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux';
-import classNames from 'classnames';
 
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -14,9 +13,12 @@ import Button from '@material-ui/core/Button';
 import { IMAGES_URL } from 'config/config';
 
 import ScrollbarsWrapper from 'common/scrollbarsWrapper/scrollbarsWrapper.component';
+import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
 import RelationClubs from './relationClubs/relationClubs.component';
 
 const ClubContent = ({ club, retrieveClub }) => {
+  const { t } = useTranslation();
+
   const {
     name,
     logo,
@@ -47,35 +49,35 @@ const ClubContent = ({ club, retrieveClub }) => {
       </Grid>
       {friendships.length > 0 && (
         <Grid item xs={12}>
-          <h5 className="relations-header friendships-header"><span className="text">Zgody</span></h5>
+          <h5 className="relations-header friendships-header"><span className="text">{t('global.friendships')}</span></h5>
           <RelationClubs clubs={friendships} retrieveClub={retrieveClub} />
         </Grid>
       )}
       
       {agreements.length > 0 && (
         <Grid item xs={12}>
-          <h5 className="relations-header agreements-header"><span className="text">Układy</span></h5>
+          <h5 className="relations-header agreements-header"><span className="text">{t('global.agreements')}</span></h5>
           <RelationClubs clubs={agreements} retrieveClub={retrieveClub} />
         </Grid>
       )}
       
       {positives.length > 0 && (
         <Grid item xs={12}>
-          <h5 className="relations-header positives-header"><span className="text">Pozytywne relacje</span></h5>
+          <h5 className="relations-header positives-header"><span className="text">{t('global.positives')}</span></h5>
           <RelationClubs clubs={positives} retrieveClub={retrieveClub} />
         </Grid>
       )}
       
       {satellites.length > 0 && (
         <Grid item xs={12}>
-          <h5 className="relations-header satellites-header"><span className="text">Satelity / FC</span></h5>
+          <h5 className="relations-header satellites-header"><span className="text">{t('global.satellites')}</span></h5>
           <RelationClubs clubs={satellites} retrieveClub={retrieveClub} />
         </Grid>
       )}
       
       {satelliteOf && (
         <Grid item xs={12}>
-          <h5 className="relations-header satellites-header"><span className="text">Jest satelitą / FC</span></h5>
+          <h5 className="relations-header satellites-header"><span className="text">{t('global.satelliteOf')}</span></h5>
           <button type="button" onClick={handleChangeClub(satelliteOf._id)} className="club-link">
             <div className="logo">
               <img src={`${IMAGES_URL}/h60/${satelliteOf.logo}`} alt="" />
@@ -100,7 +102,7 @@ const ClubContent = ({ club, retrieveClub }) => {
               size="large"
               type="submit"
             >
-              Suggest change
+              {t('global.suggestChange')}
             </Button>
           </Link>
         </Box>
@@ -116,17 +118,13 @@ const Welcome = () => {
   return (
     <>
       <Typography variant="h5" gutterBottom>{t('welcome.header')}</Typography>
-      <Typography gutterBottom>
-        Celem aplikacji jest zobrazowanie relacji między grupami kibicowskimi rozsianymi na całym świecie. Jetem świadomy różnic w specyfice różnych regionów jak i skomplikowania wewnętrznych powiązań więc niestety nie unikniemy pewnych uproszczeń.
-      </Typography>
-      <Typography gutterBottom>
-        Pamiętajcie, że to Wy tworzycie tę mapę. To dzięki Waszym sugestiom ta cała układanka będzie mogła żyć swoim życiem. Nieważne czy Twój klub występuje w europejskich pucharach czy okręgówcę. Jeśli funkcjonuje w kibicowskich klimatach - dodaj go! Jeśli jego dane są nieaktualne - zasugeruj ich aktualizację!
-      </Typography>
-      <Typography gutterBottom>
-        Aplikacja jest nadal w bardzo wczesnej fazie. W razie uwag bądź dostrzeżenia nieprawidłowości w działaniu będę wdzięczny za informacje zwrotne.
-      </Typography>
-      <Typography gutterBottom>
-        Projekt jest non-profit.
+      <Typography gutterBottom>{t('welcome.paragraph1')}</Typography>
+      <Typography gutterBottom>{t('welcome.paragraph2')}</Typography>
+      <Typography gutterBottom>{t('welcome.paragraph3')}</Typography>
+      <Typography gutterBottom>{t('welcome.paragraph4')}</Typography>
+      <Typography variant="caption">
+        {t('welcome.copyrights')}
+        <span className="copyright-email"><a href="mailto:fanaticsmap@gmail.com">fanaticsmap@gmail.com</a></span>
       </Typography>
     </>
   );
@@ -137,25 +135,17 @@ function Sidebar(props) {
     club,
   } = props;
 
-  const {
-    isLoadingClub,
-  } = useSelector(state => ({
-    isLoadingClub: state.app.isLoadingClub,
-  }), shallowEqual);
+  const isLoadingClub = useSelector(state => state.app.isLoadingClub, shallowEqual); // TODO: not sure about shallow equal, check
 
   return (
-    <div
-      id="sidebar"
-      className={classNames('has-scrollbar', {
-        'loading': isLoadingClub,
-      })}
-    >
+    <div id="sidebar" className="has-scrollbar">
       <ScrollbarsWrapper>
-        <div className="inner">
-          {club ? <ClubContent {...props} /> : <Welcome />}
-        </div>
+        <LoadingWrapper type="big" isLoading={isLoadingClub}>
+          <div className="inner">
+            {club ? <ClubContent {...props} /> : <Welcome />}
+          </div>
+        </LoadingWrapper>
       </ScrollbarsWrapper>
-      
     </div>
   );
 }

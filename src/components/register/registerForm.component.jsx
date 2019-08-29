@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Field } from 'formik';
 import { useDebouncedCallback } from 'use-debounce';
 import classNames from 'classnames';
@@ -12,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 
 import Api from 'services/api';
 
+import FieldWrapper from 'common/fieldWrapper/fieldWrapper.component';
 import Errors from 'common/errors/errors.component';
 import ButtonLink from 'common/buttonLink/buttonLink.component';
 
@@ -28,6 +30,7 @@ function RegisterForm({
   },
   setFieldError,
 }) {
+  const { t } = useTranslation();
   const [prevEmail, setPrevEmail] = useState({
     value: '',
     error: null
@@ -38,7 +41,7 @@ function RegisterForm({
       email: emailToCheck,
     });
 
-    const error = ifExists ? 'Email exists' : null;
+    const error = ifExists ? t('formErrors.emailExists') : null;
     if (ifExists) setFieldError('email', error);
     
     setPrevEmail({
@@ -60,53 +63,44 @@ function RegisterForm({
     <form onSubmit={handleSubmit}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Typography variant="h5">Rejestracja</Typography>
+          <Typography variant="h5">{t('register.header')}</Typography>
         </Grid>
         <Grid item xs={12}>
-          <div className="field-wrapper">
-            {touched.email && errors.email && (
-              <p className="error-label">{errors.email}</p>
-            )}
+          <FieldWrapper error={touched.email && t(errors.email)}>
             <Field
               type="email"
               name="email"
               value={email}
-              placeholder="Email..."
+              placeholder={t('register.emailPlaceholder')}
               onChange={handleChange}
               className={classNames('styled-input', { 'error': touched.email && errors.email })}
               validate={handleCheckEmail}
             />
-          </div>
+          </FieldWrapper>
         </Grid>
         <Grid item xs={12}>
-          <div className="field-wrapper">
-            {touched.password && errors.password && (
-              <p className="error-label">{errors.password}</p>
-            )}
+          <FieldWrapper error={touched.password && t(errors.password)}>
             <Field
               type="password"
               name="password"
               value={password}
-              placeholder="Password..."
+              placeholder={t('register.passwordPlaceholder')}
               onChange={handleChange}
               className={classNames('styled-input', { 'error': touched.password && errors.password })}
             />
-          </div>
+          </FieldWrapper>
         </Grid>
         <Grid item xs={12}>
-          <div className="field-wrapper">
-            {touched.confirmPassword && errors.confirmPassword && (
-              <p className="error-label">{errors.confirmPassword}</p>
-            )}
+          <FieldWrapper error={touched.confirmPassword && t(errors.confirmPassword)}>
             <Field
               type="password"
               name="confirmPassword"
               value={confirmPassword}
-              placeholder="Confirm password..."
+              placeholder={t('register.confirmPasswordPlaceholder')}
               onChange={handleChange}
               className={classNames('styled-input', { 'error': touched.confirmPassword && errors.confirmPassword })}
             />
-          </div>
+          </FieldWrapper>
         </Grid>
         <Grid item xs={12}>
           <Box display="flex" justifyContent="center">
@@ -117,7 +111,7 @@ function RegisterForm({
                 size="large"
                 type="submit"
               >
-                Register
+                {t('register.register')}
               </Button>
               <ButtonLink
                 variant="contained"
@@ -126,14 +120,14 @@ function RegisterForm({
                 type="submit"
                 to="/login"
               >
-                Masz już konto? Zaloguj się
+                {t('register.login')}
               </ButtonLink>
             </ButtonGroup>
           </Box>
         </Grid>
         {apiError && (
           <Grid item xs={12}>
-            <Errors errors={apiError} />
+            <Errors errors={t(`messageCodes.${apiError}`)} />
           </Grid>
         )}
       </Grid>
