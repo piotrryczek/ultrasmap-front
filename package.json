@@ -8,6 +8,7 @@
     "@material-ui/lab": "^4.0.0-alpha.24",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
+    "env-cmd": "^9.0.3",
     "formik": "^1.5.8",
     "i18next": "^17.0.12",
     "immutability-helper": "^3.0.1",
@@ -15,7 +16,6 @@
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
-    "react-app-env": "^1.2.3",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.8.6",
     "react-google-maps": "^9.4.5",
@@ -33,9 +33,9 @@
     "yup": "^0.27.0"
   },
   "scripts": {
-    "start": "react-app-env --env-file=./.env start",
-    "build-dev": "react-app-env --env-file=./.env.development build",
-    "build-prod": "react-app-env --env-file=./.env.production build",
+    "start": "env-cmd -f localhost.env react-scripts start",
+    "build-dev": "env-cmd -f development.env react-scripts build",
+    "build-prod": "env-cmd -f production.env react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
