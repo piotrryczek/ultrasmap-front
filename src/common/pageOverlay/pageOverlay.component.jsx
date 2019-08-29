@@ -23,18 +23,20 @@ function PageOverlay({ children }) {
   return (
     <>
       <div className="map-overlay" />
-      <div className="page-over-map has-scrollbar" id="suggestion">
-        <Link to="/" className="page-over-close">
-          <CloseIcon color="primary" />
-        </Link>
-        <ScrollbarsWrapper
-          autoHeight
-          autoHeightMax={windowHeight - 200}
-        >
-          <div className="inner">
-            {children}
-          </div>
-        </ScrollbarsWrapper>
+      <div className="page-over-map-wrapper">
+        <div className="page-over-map has-scrollbar" id="suggestion">
+          <Link to="/" className="page-over-close">
+            <CloseIcon color="primary" />
+          </Link>
+          <ScrollbarsWrapper
+            autoHeight
+            autoHeightMax={windowHeight - 200}
+          >
+            <div className="inner">
+              {children}
+            </div>
+          </ScrollbarsWrapper>
+        </div>
       </div>
     </>
   );

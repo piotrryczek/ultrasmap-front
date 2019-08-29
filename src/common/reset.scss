@@ -423,3 +423,45 @@ td,
 th {
   padding: 0;
 }
+
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  text-decoration: none;
+  outline: none;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+label,
+input[type="submit"],
+button {
+  cursor: pointer;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+img {
+  max-width: 100%!important;;
+  height: auto;
+}
+
+h1 {
+  margin: 0px;
+}
+
+body {
+  font-family: 'Roboto';
+  overflow: hidden;
+}

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import Auth from 'services/auth';
 
-function SuggestAddNewClubButton() {
+function LoginLogoutButton() {
   const { t } = useTranslation();
   const isAuthenticated = useSelector(state => state.app.isAuthenticated);
 
@@ -17,7 +17,7 @@ function SuggestAddNewClubButton() {
     <button
       type="button"
       id="login-logout-button"
-      className="standard-button button-blue"
+      className="standard-button small-button button-blue"
       onClick={handleLogout}
     >
       {t('global.logout')}
@@ -27,7 +27,7 @@ function SuggestAddNewClubButton() {
       <button
         type="button"
         id="login-logout-button"
-        className="standard-button button-green"
+        className="standard-button small-button button-green"
         onClick={handleLogout}
       >
         {t('global.login')}
@@ -36,4 +36,4 @@ function SuggestAddNewClubButton() {
   );
 }
 
-export default SuggestAddNewClubButton;
+export default memo(props => <LoginLogoutButton {...props} />);

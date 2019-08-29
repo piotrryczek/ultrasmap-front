@@ -1,5 +1,6 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef, memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import classNames from 'classnames';
 
@@ -142,73 +143,85 @@ function Search(props) {
   }
 
   return (
-    <div 
-      id="search" 
-      className={classNames({
-        'found-clubs': clubs.length > 0,
-      })}
-      onKeyDown={handleKeyDown}
-      role="presentation"
-    >
-      <LoadingWrapper isLoading={isLoading} type="small">
-        <div className="search-input-wrapper">
-          <input
-            ref={inputRef}
-            className="search-input"
-            type="text"
-            placeholder={t('search.searchPlaceholder')}
-            value={search}
-            onChange={handleSearchChange}
-          />
-        </div>
-
-        {(clubs.length > 0 || search) && (
-          <ul
-            className="search-clubs"
-          >
-            {clubs.map(({
-              _id: clubId,
-              name,
-              logo,
-            }, index) => (
-              <li
-                key={clubId}
-                onMouseMove={handleChangeHovered(index)}
-                onMouseLeave={handleChangeHovered(null)}
-              >
-                <button
-                  type="button"
-                  className={classNames('search-club', {
-                    'hovered': hoveredClubIndex === index,
-                  })}
-                  onClick={handleChooseClub(clubId)}
-                >
-                  {logo && (
-                    <div className="logo">
-                      <img src={`${IMAGES_URL}/h60/${logo}`} alt="" />
-                    </div>
-                  )}
-                  <p className="name">{name}</p>
-                </button>
-              </li>
-            ))}
-            <li>
+    <div id="search-wrapper">
+      <div 
+        id="search" 
+        className={classNames({
+          'found-clubs': clubs.length > 0,
+        })}
+        onKeyDown={handleKeyDown}
+        role="presentation"
+      >
+        <LoadingWrapper isLoading={isLoading} type="small">
+          <div className="search-input-wrapper">
+            <input
+              ref={inputRef}
+              className="search-input"
+              type="text"
+              placeholder={t('search.searchPlaceholder')}
+              value={search}
+              onChange={handleSearchChange}
+            />
+            <Link to="/suggestion">
               <button
                 type="button"
-                className="search-club"
-                onClick={handleOpenSuggestionWindow}
+                id="suggest-add-new-club"
+                className="standard-button button-green small-button"
               >
-                <div className="logo icon">
-                  <AddCommentIcon fontSize="large" />
-                </div>
-                <p className="name">{t('search.lackOfClub')}</p>
+                {t('global.suggestNewClub')}
               </button>
-            </li>
-          </ul>
-        )}
-      </LoadingWrapper>
+            </Link>
+          </div>
+
+          {(clubs.length > 0 || search) && (
+            <ul
+              className="search-clubs"
+            >
+              {clubs.map(({
+                _id: clubId,
+                name,
+                logo,
+              }, index) => (
+                <li
+                  key={clubId}
+                  onMouseMove={handleChangeHovered(index)}
+                  onMouseLeave={handleChangeHovered(null)}
+                >
+                  <button
+                    type="button"
+                    className={classNames('search-club', {
+                      'hovered': hoveredClubIndex === index,
+                    })}
+                    onClick={handleChooseClub(clubId)}
+                  >
+                    {logo && (
+                      <div className="logo">
+                        <img src={`${IMAGES_URL}/h60/${logo}`} alt="" className="h60" />
+                        <img src={`${IMAGES_URL}/h30/${logo}`} alt="" className="h30" />
+                      </div>
+                    )}
+                    <p className="name">{name}</p>
+                  </button>
+                </li>
+              ))}
+              <li>
+                <button
+                  type="button"
+                  className="search-club suggest-new"
+                  onClick={handleOpenSuggestionWindow}
+                >
+                  <div className="logo icon">
+                    <AddCommentIcon fontSize="large" />
+                  </div>
+                  <p className="name">{t('search.lackOfClub')}</p>
+                </button>
+              </li>
+            </ul>
+          )}
+        </LoadingWrapper>
+      </div>
     </div>
   );
 }
 
-export default Search;
+export default memo(props => <Search {...props} />);

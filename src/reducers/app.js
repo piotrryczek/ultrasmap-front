@@ -4,6 +4,7 @@ import {
   SET_MESSAGE,
   SET_IS_AUTHENTICATED,
   SET_IS_LOADING_CLUB,
+  SET_IS_SIDEBAR_OPENED,
 } from 'components/app/app.actions';
 import { DEFAULT_LANGUAGE } from 'config/config';
 
@@ -21,6 +22,7 @@ const initialState = {
   messageCode: '',
   isLoadingClub: false,
   language: localStorage.getItem('language') || DEFAULT_LANGUAGE,
+  isSidebarOpened: window.innerWidth > 800,
 };
 
 const app = (state = initialState, { type, payload }) => {
@@ -46,6 +48,12 @@ const app = (state = initialState, { type, payload }) => {
     case SET_IS_LOADING_CLUB: {
       return update(state, {
         isLoadingClub: { $set: payload },
+      });
+    }
+
+    case SET_IS_SIDEBAR_OPENED: {
+      return update(state, {
+        isSidebarOpened: { $set: payload },
       });
     }
 

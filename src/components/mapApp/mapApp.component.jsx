@@ -24,7 +24,6 @@ function MapApp() {
       <GoogleMap club={club} retrieveClub={retrieveClub} />
       <Sidebar club={club} retrieveClub={retrieveClub} />
     </div>
-    
   );
 }
 

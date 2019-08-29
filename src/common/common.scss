@@ -1,0 +1,179 @@
+@import "./fieldWrapper/fieldWrapper";
+@import "./errors/errors";
+@import "./imageUploader/imageUploader";
+@import "./loadingWrapper/loadingWrapper";
+@import "./pageOverlay/pageOverlay";
+
+.standard-button {
+  display: inline-block;
+  height: 3rem;
+  line-height: 3rem;
+  padding: 0px 1rem;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.25);
+  opacity: 0.7;
+
+  transition: opacity 0.3s;
+
+  &.small-button {
+    height: 2.5rem;
+    line-height: 2.5rem;
+    border-radius: 15px;
+  }
+
+  &.button-green {
+    background: $correctColor;
+    color: white;
+  }
+
+  &.button-blue {
+    background: $standardColor;
+    color: white;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.input-styles {
+  height: 3rem;
+  padding: 0px 1rem;
+  border: 1px solid $borderLightColor;
+  border-radius: $borderRadius;
+  width: 100%;
+  display: block;
+  background: white;
+
+  box-sizing: border-box;
+
+  &.opened {
+    border-radius: $borderRadius $borderRadius 0px 0px;
+  }
+
+  &.error {
+    border-color: $errorColor;
+  }
+}
+
+.styled-input {
+  @extend .input-styles;
+}
+
+.styled-textarea {
+  @extend .input-styles;
+
+  height: 8rem;
+  padding: 1rem;
+  resize: none;
+}
+
+.section-header,
+.relations-header {
+  font-size: 1.25em;
+  color: $textColor;
+  font-weight: normal;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-left: 0.5rem;
+    cursor: pointer;
+  }
+
+  &.error {
+    color: $errorColor;
+  }
+}
+
+.relations-header {
+  position: relative;
+  z-index: 0;
+
+  .text {
+    background: $backgroundColor;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    padding-right: 1rem;
+  }
+
+  &:after {
+    width: 100%;
+    height: 6px;
+    display: block;
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0px;
+  }
+
+  &.friendships-header {
+    &:after {
+      background: $correctColor;
+    }
+  }
+
+  &.agreements-header {
+    &:after {
+      background: $standardColor;
+    }
+  }
+
+  &.positives-header {
+    &:after {
+      background: $additionalColor2;
+    }
+  }
+
+  &.satellites-header {
+    &:after {
+      background: $additionalColor1;
+    }
+  }
+
+  &.satelliteof-header {
+    &:after {
+      background: $additionalColor1;
+    }
+  }
+}
+
+.has-scrollbar {
+  &:hover {
+    .track-vertical {
+      .thumb-vertical {
+        opacity: 1;
+      }
+    }
+  }
+
+  .track-vertical {
+    .thumb-vertical {
+      opacity: 0;
+    }
+  }
+}
+
+.track-vertical {
+  top: 2px;
+  bottom: 2px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.111);
+
+  transition: opacity 0.3s;
+
+  .thumb-vertical {
+    position: relative;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    border-radius: inherit;
+    background-color: rgba(123, 154, 255, 0.418);
+
+    transition: opacity 0.3s;
+  }
+}

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useCallback, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import classNames from 'classnames';
 
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -10,11 +11,16 @@ import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+
 import { IMAGES_URL } from 'config/config';
 
 import ScrollbarsWrapper from 'common/scrollbarsWrapper/scrollbarsWrapper.component';
 import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
-import RelationClubs from './relationClubs/relationClubs.component';
+import RelationClubs from 'components/mapApp/sidebar/relationClubs/relationClubs.component';
+
+import { toggleSidebar } from 'components/app/app.actions';
 
 const ClubContent = ({ club, retrieveClub }) => {
   const { t } = useTranslation();
@@ -131,14 +137,30 @@ const Welcome = () => {
 }
 
 function Sidebar(props) {
+  const dispatch = useDispatch();
+
   const {
     club,
   } = props;
 
-  const isLoadingClub = useSelector(state => state.app.isLoadingClub, shallowEqual); // TODO: not sure about shallow equal, check
+  const { isSidebarOpened, isLoadingClub } = useSelector(state => ({
+    isSidebarOpened: state.app.isSidebarOpened,
+    isLoadingClub: state.app.isLoadingClub,
+  }));
+
+  const handleToggleOpened = useCallback(() => {
+    dispatch(toggleSidebar())
+  }, []);
 
   return (
-    <div id="sidebar" className="has-scrollbar">
+    <div id="sidebar" className={classNames('has-scrollbar', { 'opened': isSidebarOpened })}>
+      <button
+        type="button"
+        onClick={handleToggleOpened}
+        id="scrollbar-toggle"
+      >
+        {isSidebarOpened ? <ChevronRightIcon fontSize="large" htmlColor="#191923" /> : <ChevronLeftIcon fontSize="large" htmlColor="#191923" />}
+      </button>
       <ScrollbarsWrapper>
         <LoadingWrapper type="big" isLoading={isLoadingClub}>
           <div className="inner">
@@ -150,4 +172,4 @@ function Sidebar(props) {
   );
 }
 
-export default Sidebar;
+export default memo(props => <Sidebar {...props} />);

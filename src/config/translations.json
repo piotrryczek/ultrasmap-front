@@ -24,7 +24,7 @@
         "login": "Zaloguj sie",
         "logout": "Wyloguj się",
         "register": "Zarejestruj się",
-        "suggestNewClub": "Zasugeruj nowy klub",
+        "suggestNewClub": "Zasugeruj nowy",
         "friendships": "Zgody",
         "agreements": "Układy",
         "positives": "Pozytywne relacje",
@@ -74,7 +74,7 @@
       },
       "search": {
         "lackOfClub": "Brakuje klubu? Zasugeruj dodanie go...",
-        "searchPlaceholder": "Szukaj..."
+        "searchPlaceholder": "Szukaj klubów..."
       },
       "suggestion": {
         "lackOfCredential": "Nie posiadasz uprawnień aby sugerować zmiany. Najprawdopodobniej zostały Ci one odebrane w efekcie licznych naruszeń.",
@@ -160,7 +160,7 @@
         "login": "Sign in",
         "logout": "Logout",
         "register": "Sign up",
-        "suggestNewClub": "Suggest new club",
+        "suggestNewClub": "Suggest new",
         "friendships": "Friendships",
         "agreements": "Agreements",
         "positives": "Positive relations",
@@ -211,7 +211,7 @@
       },
       "search": {
         "lackOfClub": "Missing club? Suggest adding it...",
-        "searchPlaceholder": "Search..."
+        "searchPlaceholder": "Search clubs..."
       },
       "suggestion": {
         "lackOfCredential": "You do not have permission to suggest changes. Most likely, they have been revoked from you as a result of numerous violations.",

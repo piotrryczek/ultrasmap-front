@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import classNames from 'classnames';
 
 import { languages, DEFAULT_LANGUAGE } from 'config/config';
@@ -55,4 +55,4 @@ function Languages() {
   );
 }
 
-export default Languages;
+export default memo(props => <Languages {...props} />);

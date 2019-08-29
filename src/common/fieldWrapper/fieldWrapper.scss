@@ -1,0 +1,11 @@
+.field-wrapper {
+  position: relative;
+
+  .error-label {
+    position: absolute;
+    font-size: 0.7em;
+    color: $errorColor;
+    top: -1rem;
+    left: 0px;
+  }
+}

@@ -1,119 +1,30 @@
 $sidebarSize: 25rem;
+$sidebarMobileSize: 90%;
 
 @import "./sidebar/sidebar";
+@import "./search/search";
+@import "./languages/languages";
 
 #map-app {
   display: flex;
+  flex-wrap: nowrap;
 
   #map-wrapper {
     height: 100vh;
-    flex: 0 0 calc(100% - #{$sidebarSize});
+    flex: 0 0 100%;
     position: relative;
 
-    #suggest-add-new-club {
-      position: absolute;
-      left: calc(85% + 2rem);
-      top: 1rem;
-      z-index: 3;
+    transition: flex 0.3s;
+
+    &.sidebar-opened {
+      flex: 0 0 calc(100% - #{$sidebarSize});
     }
 
     #login-logout-button {
       position: absolute;
-      left: calc(15% - 2rem);
-      transform: translateX(-100%);
-      top: 1rem;
+      right: $fullSizeMargin;;
+      bottom: $fullSizeMargin;;
       z-index: 3;
-    }
-
-    #search {
-      position: absolute;
-      width: 70%;
-      
-      left: 50%;
-      transform: translateX(-50%);
-      top: 1rem;
-      z-index: 3;
-      background: $backgroundColor;
-      box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.25);
-      border-radius: 20px;
-
-      &.is-loading {
-        &:after {
-          width: 100px;
-          height: 100px;
-          background: url('/assets/loading_horizontal.gif') no-repeat center;
-          background-size: cover;
-          display: block;
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        }
-      }
-
-      .search-input-wrapper {
-        padding: 0px 1.5rem;
-        height: 3rem;
-        
-        .search-input {
-          width: 100%;
-          height: 3rem;
-          border-radius: 20px;
-        }
-      }
-
-      .search-clubs {
-        border-radius: 0px 0px 20px 20px;
-        background: $backgroundColor;
-
-        li {
-          width: 100%;
-          border-top: 1px solid #f0f0f0;
-
-          &:last-child {
-            .search-club {
-              border-radius: 0px 0px 20px 20px;
-            }
-          }
-
-          .search-club {
-            display: block;
-            width: 100%;
-            height: 4rem;
-            background: none;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-
-            &.hovered,
-            &:hover {
-              background-color: $lightHoverBackground;
-            }
-
-            .logo {
-              height: 3rem;
-              flex: 0 0 6rem;
-
-              &.icon {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              }
-
-              img {
-                height: 100%;
-              }
-            }
-
-            .name {
-              color: $textColor;
-              font-size: 1.125em;
-              font-weight: 500;
-            }
-          }
-        }
-      }
     }
 
     .map-overlay {
@@ -124,114 +35,6 @@ $sidebarSize: 25rem;
       left: 0px;
       background: rgba(255, 255, 255, 0.7);
       z-index: 4;
-    }
-
-    .page-over-map {
-      position: absolute;
-      z-index: 5;
-      width: 70%;
-      max-height: calc(100vh - 128px);
-      z-index: 100;
-      background: $backgroundColor;
-      box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.25);
-      border-radius: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 6rem;
-      padding: 2rem 0px;
-      box-sizing: border-box;
-
-      .track-vertical {
-        right: 12px;
-      }
-
-      .page-over-close {
-        position: absolute;
-        top: -1rem;
-        right: -1rem;
-        width: 2.5rem;
-        height: 2.5rem;
-        background: white;
-        border-radius: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 2px -1px 6px 1px rgba(0, 0, 0, 0.25);
-      }
-      
-      .inner {
-        padding: 0px 2rem;
-        height: 100%;
-        overflow: hidden;
-      }
-    }
-  }
-
-  $margin: 0.5rem;
-  #languages-selection {
-    position: absolute;
-    z-index: 5;
-    bottom: 1rem;
-    left: 1rem;
-    opacity: 0.4;
-
-    transition: opacity 0.3s;
-
-    &:hover {
-      opacity: 1;
-    }
-
-    .language {
-      background: none;
-      padding: 0px;
-      box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.25);
-      opacity: 0.7;
-      filter: grayscale(70%);
-
-      transition: opacity 0.3s, filter 0.3s;
-
-      &:hover {
-        opacity: 1;
-        filter: grayscale(0%);
-      }
-
-      &.current {
-        opacity: 1;
-        filter: grayscale(0%);
-      }
-
-      img {
-        display: block;
-      }
-    }
-
-    .languages {
-      padding-left: $margin;
-      pointer-events: none;
-      opacity: 0;
-      right: 0px;
-      position: absolute;
-      bottom: 0px;
-      width: 7rem;
-      transform: translateX(calc(100% - 4rem));
-
-      transition: opacity 0.3s, transform 0.3s;
-
-      &.show {
-        pointer-events: all;
-        opacity: 1;
-        transform: translateX(calc(100%));
-        pointer-events: auto;
-      }
-
-      li {
-        margin-right: $margin;
-        float: left;
-
-        &:last-child {
-          margin-right: $margin;
-        }
-      }
     }
   }
 
@@ -356,8 +159,6 @@ $sidebarSize: 25rem;
 
 .location-search-input {
   @extend .input-styles;
-
-  
 }
 
 .autocomplete-dropdown-container {
@@ -387,6 +188,31 @@ $sidebarSize: 25rem;
     &:last-child {
       border-bottom: 0px;
       border-radius: 0px 0px $borderRadius $borderRadius;
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  #map-app {
+    display: block;
+    width: 100%;
+    
+    #map-wrapper {
+      &.sidebar-opened {
+        flex: 0 0 calc(100% - #{$sidebarMobileSize});
+
+        #search {
+          display: none;
+        }
+
+        #languages-selection {
+          display: none;
+        }
+
+        #login-logout-button {
+          display: none;
+        }
+      }
     }
   }
 }

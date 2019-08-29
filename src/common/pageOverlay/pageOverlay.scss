@@ -1,0 +1,58 @@
+.page-over-map-wrapper {
+  position: absolute;
+  z-index: 5;
+  width: 70%;
+  top: 6rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.page-over-map {
+  max-height: calc(100vh - 128px);
+  z-index: 100;
+  background: $backgroundColor;
+  box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  padding: 2rem 0px;
+  box-sizing: border-box;
+  position: relative;
+
+  .track-vertical {
+    right: 12px;
+  }
+
+  .page-over-close {
+    position: absolute;
+    top: -1rem;
+    right: -1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: white;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px -1px 6px 1px rgba(0, 0, 0, 0.25);
+  }
+  
+  .inner {
+    padding: 0px 2rem;
+    height: 100%;
+    overflow: hidden;
+  }
+}
+
+@media screen and (min-width: 1400px) and (max-width: 1700px) {
+  .page-over-map-wrapper {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .page-over-map-wrapper {
+    width: 100%;
+    padding: 0px 2rem;
+
+    box-sizing: border-box;
+  }
+}
