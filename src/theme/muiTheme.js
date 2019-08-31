@@ -19,7 +19,7 @@ const theme = createMuiTheme({
         fontWeight: 'normal',
         padding: '0.5rem 1rem',
       },
-    },
+    }
   },
 });
 

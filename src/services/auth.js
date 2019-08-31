@@ -1,6 +1,7 @@
 import Api from 'services/api';
 import history from 'config/history';
 import store from 'config/store';
+import i18n from 'config/i18n';
 
 import { setIsAuthenticated, setMessage } from 'components/app/app.actions';
 
@@ -17,6 +18,7 @@ class Auth {
     const {
       data: jwtToken,
       credentials,
+      language,
     } = await Api.post('/users/login', {
       email,
       password,
@@ -24,8 +26,11 @@ class Auth {
 
     localStorage.setItem('jwtToken', jwtToken);
     localStorage.setItem('credentials', credentials);
+    localStorage.setItem('language', language);
 
-    this.dispatch(setIsAuthenticated(true, credentials));
+    i18n.changeLanguage(language);
+
+    this.dispatch(setIsAuthenticated(true, credentials, language));
   }
 
   logout = async () => {

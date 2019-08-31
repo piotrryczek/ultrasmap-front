@@ -19,12 +19,15 @@ export const clearMessage = () => (dispatch) => {
   });
 }
 
-export const setIsAuthenticated = (isAuthenticated, credentials = []) => (dispatch) => {
+export const setIsAuthenticated = (isAuthenticated, credentials = [], language = null) => (dispatch, getState) => {
+  const finalLanguage = language || getState().app.language;
+
   dispatch({
     type: SET_IS_AUTHENTICATED,
     payload: {
       isAuthenticated,
       credentials,
+      language: finalLanguage,
     },
   });
 };

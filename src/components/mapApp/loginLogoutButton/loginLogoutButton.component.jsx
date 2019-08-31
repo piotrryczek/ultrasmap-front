@@ -36,4 +36,4 @@ function LoginLogoutButton() {
   );
 }
 
-export default memo(props => <LoginLogoutButton {...props} />);
+export default memo(LoginLogoutButton);

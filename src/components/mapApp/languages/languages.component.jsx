@@ -1,17 +1,27 @@
 import React, { useState, memo } from 'react';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import { languages, DEFAULT_LANGUAGE } from 'config/config';
+import Api from 'services/api';
 import i18n from 'config/i18n';
 
 //
 function Languages() {
   const [ifShowLanguages, setIfShowLanguages] = useState(false);
+  const isAuthenticated = useSelector(state => state.app.isAuthenticated);
+
 
   const handleChangeLanguage = languageCode => () => {
     localStorage.setItem('language', languageCode);
     i18n.changeLanguage(languageCode);
     setIfShowLanguages(false);
+    
+    if (isAuthenticated) {
+      Api.patch('/users/updateLanguage', {
+        language: languageCode,
+      });
+    }
   }
 
   const handleShowLanguages = () => {
@@ -55,4 +65,4 @@ function Languages() {
   );
 }
 
-export default memo(props => <Languages {...props} />);
+export default memo(Languages);

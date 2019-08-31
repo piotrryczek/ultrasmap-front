@@ -8,7 +8,6 @@ import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import Rating from '@material-ui/lab/Rating';
 
@@ -18,6 +17,9 @@ import Api from 'services/api';
 import { DEFAULT_COORDINATES } from 'config/config';
 import { parseCoordinates } from 'util/helpers';
 
+import { useMobileStyles } from 'theme/useStyles';
+
+import TooltipWrapper from 'common/tooltipWrapper/tooltipWrapper.component';
 import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
 import FieldWrapper from 'common/fieldWrapper/fieldWrapper.component';
 import ImageUploader from 'common/imageUploader/ImageUploader.component';
@@ -57,6 +59,8 @@ function SuggestionForm({
   setFieldValue,
 }) {
   const { t } = useTranslation();
+  const mobileClasses = useMobileStyles({});
+
   const isError = (field) => errors[field] && touched[field];
 
   const getCurrentRelations = () => {
@@ -92,7 +96,6 @@ function SuggestionForm({
     return value;
   }
 
-  // TODO: Reject
   const handleGetPossibleRelations = value => new Promise(async (resolve, reject) => {
     const excluded = getCurrentRelations();
     if (editType === 'edit') excluded.push(clubId);
@@ -129,9 +132,9 @@ function SuggestionForm({
           <Grid item xs={12}>
             <h5 className={classNames('section-header', { 'error': isError('name') })}>
               {t('suggestion.name.header')}
-              <Tooltip placement="right" title={t('suggestion.name.tooltip')}>
+              <TooltipWrapper placement="right" title={t('suggestion.name.tooltip')}>
                 <HelpIcon fontSize="small" color="primary" />
-              </Tooltip>
+              </TooltipWrapper>
             </h5>
             <FieldWrapper error={isError('name') && t(errors.name)}>
               <input
@@ -150,9 +153,9 @@ function SuggestionForm({
           <Grid item xs={12}>
             <h5 className={classNames('section-header', { 'error': errors.newLogo })}>
               {t('suggestion.logo.header')}
-              <Tooltip placement="right" title={t('suggestion.logo.tooltip')}>
+              <TooltipWrapper placement="right" title={t('suggestion.logo.tooltip')}>
                 <HelpIcon fontSize="small" color="primary" />
-              </Tooltip>
+              </TooltipWrapper>
             </h5>
             <FieldWrapper error={t(errors.newLogo)}>
               <Paper>
@@ -169,9 +172,9 @@ function SuggestionForm({
           <Grid item xs={12}>
             <h5 className={classNames('section-header', { 'error': isError('tier') })}>
               {t('suggestion.tier.header')}
-              <Tooltip placement="right" title={t('suggestion.tier.tooltip')}>
+              <TooltipWrapper placement="right" title={t('suggestion.tier.tooltip')}>
                 <HelpIcon fontSize="small" color="primary" />
-              </Tooltip>
+              </TooltipWrapper>
             </h5>
             <Paper>
               <Box p={2} display="block">
@@ -188,9 +191,9 @@ function SuggestionForm({
               className={classNames('section-header', { 'error': isError('coordinates') })}
             >
               {t('suggestion.location.header')}
-              <Tooltip placement="right" title={t('suggestion.location.tooltip')}>
+              <TooltipWrapper placement="right" title={t('suggestion.location.tooltip')}>
                 <HelpIcon fontSize="small" color="primary" />
-              </Tooltip>
+              </TooltipWrapper>
             </h5>
             <Box mb={2}>
               <AddressSearch
@@ -213,9 +216,9 @@ function SuggestionForm({
             >
               <span className="text">
                 {t('suggestion.friendships.header')}
-                <Tooltip placement="right" title={t('suggestion.friendships.tooltip')}>
+                <TooltipWrapper placement="right" title={t('suggestion.friendships.tooltip')}>
                   <HelpIcon fontSize="small" color="primary" />
-                </Tooltip>
+                </TooltipWrapper>
               </span>
             </h5>
             <FieldWrapper error={t(errors.relationsNotUnique)}>
@@ -232,6 +235,7 @@ function SuggestionForm({
                 onBlur={handleBlur}
                 placeholder={t('suggestion.friendships.placeholder')}
                 styles={selectStyles(!!errors.relationsNotUnique)}
+                noOptionsMessage={() => t('suggestion.noOptions')}
               />
             </FieldWrapper>
           </Grid>
@@ -241,9 +245,9 @@ function SuggestionForm({
             >
               <span className="text">
                 {t('suggestion.agreements.header')}
-                <Tooltip placement="right" title={t('suggestion.agreements.tooltip')}>
+                <TooltipWrapper placement="right" title={t('suggestion.agreements.tooltip')}>
                   <HelpIcon fontSize="small" color="primary" />
-                </Tooltip>
+                </TooltipWrapper>
               </span>
             </h5>
             <FieldWrapper error={t(errors.relationsNotUnique)}>
@@ -260,6 +264,7 @@ function SuggestionForm({
                 onBlur={handleBlur}
                 placeholder={t('suggestion.agreements.placeholder')}
                 styles={selectStyles(!!errors.relationsNotUnique)}
+                noOptionsMessage={() => t('suggestion.noOptions')}
               />
             </FieldWrapper>
           </Grid>
@@ -269,9 +274,9 @@ function SuggestionForm({
             >
               <span className="text">
                 {t('suggestion.positives.header')}
-                <Tooltip placement="right" title={t('suggestion.positives.tooltip')}>
+                <TooltipWrapper placement="right" title={t('suggestion.positives.tooltip')}>
                   <HelpIcon fontSize="small" color="primary" />
-                </Tooltip>
+                </TooltipWrapper>
               </span>
             </h5>
             <FieldWrapper error={t(errors.relationsNotUnique)}>
@@ -288,6 +293,7 @@ function SuggestionForm({
                 onBlur={handleBlur}
                 placeholder={t('suggestion.friendships.placeholder')}
                 styles={selectStyles(!!errors.positives)}
+                noOptionsMessage={() => t('suggestion.noOptions')}
               />
             </FieldWrapper>
           </Grid>
@@ -297,9 +303,9 @@ function SuggestionForm({
             >
               <span className="text">
                 {t('suggestion.satellites.header')}
-                <Tooltip placement="right" title={t('suggestion.satellites.tooltip')}>
+                <TooltipWrapper placement="right" title={t('suggestion.satellites.tooltip')}>
                   <HelpIcon fontSize="small" color="primary" />
-                </Tooltip>
+                </TooltipWrapper>
               </span>
             </h5>
             <FieldWrapper error={t(errors.relationsNotUnique)}>
@@ -316,6 +322,7 @@ function SuggestionForm({
                 onBlur={handleBlur}
                 placeholder={t('suggestion.satellites.placeholder')}
                 styles={selectStyles(!!errors.relationsNotUnique)}
+                noOptionsMessage={() => t('suggestion.noOptions')}
               />
             </FieldWrapper>
           </Grid>
@@ -325,9 +332,9 @@ function SuggestionForm({
             >
               <span className="text">
                 {t('suggestion.satelliteOf.header')}
-                <Tooltip placement="right" title={t('suggestion.satelliteOf.tooltip')}>
+                <TooltipWrapper placement="right" title={t('suggestion.satelliteOf.tooltip')}>
                   <HelpIcon fontSize="small" color="primary" />
-                </Tooltip>
+                </TooltipWrapper>
               </span>
             </h5>
             <FieldWrapper error={t(errors.relationsNotUnique)}>
@@ -344,15 +351,16 @@ function SuggestionForm({
                 onBlur={handleBlur}
                 placeholder={t('suggestion.satelliteOf.placeholder')}
                 styles={selectStyles(!!errors.relationsNotUnique)}
+                noOptionsMessage={() => t('suggestion.noOptions')}
               />
             </FieldWrapper>
           </Grid>
           <Grid item xs={12}>
             <h5 className="section-header">
               {t('suggestion.comments.header')}
-              <Tooltip placement="right" title={t('suggestion.comments.tooltip')}>
+              <TooltipWrapper placement="right" title={t('suggestion.comments.tooltip')}>
                 <HelpIcon fontSize="small" color="primary" />
-              </Tooltip>
+              </TooltipWrapper>
             </h5>
             <textarea
               className="styled-textarea"
@@ -364,12 +372,13 @@ function SuggestionForm({
           </Grid>
           <Grid item xs={12}>
             <Box display="flex" justifyContent="center">
-              <ButtonGroup>
+              <ButtonGroup className={mobileClasses.groupButton}>
                 <ButtonLink
                   variant="contained"
                   color="primary"
                   size="large"
                   to="/"
+                  className={mobileClasses.buttonBase}
                 >
                   {t('global.backToMap')}
                 </ButtonLink>
@@ -378,6 +387,7 @@ function SuggestionForm({
                   color="secondary"
                   size="large"
                   type="submit"
+                  className={mobileClasses.buttonBase}
                 >
                   {t('suggestion.addSuggestion')}
                 </Button>

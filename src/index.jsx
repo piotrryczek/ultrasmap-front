@@ -1,10 +1,3 @@
-/*
-TODO:
-- RWD
-- unrelated clubs on the map depending on location, randomly loading more while scrolling
-- viewing suggestions / map with suggestions
-*/
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';

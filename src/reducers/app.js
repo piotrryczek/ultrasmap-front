@@ -37,11 +37,13 @@ const app = (state = initialState, { type, payload }) => {
       const {
         isAuthenticated,
         credentials = [],
+        language,
       } = payload;
 
       return update(state, {
         isAuthenticated: { $set: isAuthenticated },
         credentials: { $set: credentials },
+        language: { $set: language },
       });
     }
 

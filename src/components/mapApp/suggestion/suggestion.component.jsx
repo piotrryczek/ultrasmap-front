@@ -1,22 +1,23 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { Link } from 'react-router-dom';
 
-import _uniq from 'lodash/uniq';
 import _get from 'lodash/get';
+import _uniq from 'lodash/uniq';
 
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+
+
 
 import { DEFAULT_COORDINATES } from 'config/config';
 import Api from 'services/api';
 import Auth from 'services/auth';
 import clubSchema from 'schemas/club';
 import NeedToBeLoggedIn from 'components/mapApp/needToBeLoggedIn/needToBeLoggedIn.component';
-import PageOverlay from 'common/pageOverlay/pageOverlay.component';
 import SuggestionForm from './suggestionForm';
 
 import { prepareSuggestionFormData, parseRelationsToFormData, parseClubData } from './util';
@@ -27,7 +28,7 @@ function Suggestion(props) {
   } = props;
 
   const { t } = useTranslation();
-  const { isAuthenticated } = useSelector(state => ({ isAuthenticated: _get(state, 'app.isAuthenticated', false) }));
+  const isAuthenticated = useSelector(state => state.app.isAuthenticated);
 
   const club = _get(props, 'location.state.club', null);
   const clubId = _get(props, 'match.params.clubId', null);
@@ -226,48 +227,44 @@ function Suggestion(props) {
     throw errors;
   }, []);
 
-  return (
-    <PageOverlay>
-      {isAuthenticated ?
-        Auth.hasCredentialLocal('addSuggestion') ?
-          isSend ? (
-            <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
-              <Box mb={2}>
-                <Typography>{t('suggestion.success')}</Typography>
-              </Box>
-              <Link to="/">
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  size="large"
-                  type="submit"
-                >
-                  {t('global.backToMap')}
-                </Button>
-              </Link>
-            </Box>
-          ) : (
-            <Formik
-              initialValues={fields}
-              enableReinitialize
-              onSubmit={handleSubmit}
-              validate={handleValidate}
-              render={(props) => (
-                <SuggestionForm
-                  // eslint-disable-next-line react/jsx-props-no-spreading
-                  {...props}
-                  isLoading={isLoading}
-                  editType={editType}
-                  clubId={clubId}
-                />
-              )}
+  return isAuthenticated ?
+    Auth.hasCredentialLocal('addSuggestion') ?
+      isSend ? (
+        <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column">
+          <Box mb={2}>
+            <Typography>{t('suggestion.success')}</Typography>
+          </Box>
+          <Link to="/">
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              type="submit"
+            >
+              {t('global.backToMap')}
+            </Button>
+          </Link>
+        </Box>
+      ) : (
+        <Formik
+          initialValues={fields}
+          enableReinitialize
+          onSubmit={handleSubmit}
+          validate={handleValidate}
+          render={(props) => (
+            <SuggestionForm
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...props}
+              isLoading={isLoading}
+              editType={editType}
+              clubId={clubId}
             />
-          ) : (<Typography>{t('suggestion.lackOfCredential')}</Typography>) : 
-        (
-          <NeedToBeLoggedIn header={t('suggestion.needToBeLoggedin')} />
-        )}
-    </PageOverlay>
-  );
+          )}
+        />
+      ) : (<Typography>{t('suggestion.lackOfCredential')}</Typography>) : 
+    (
+      <NeedToBeLoggedIn header={t('suggestion.needToBeLoggedin')} />
+    );
 }
 
 export default Suggestion;

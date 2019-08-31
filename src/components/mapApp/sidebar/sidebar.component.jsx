@@ -15,6 +15,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import { IMAGES_URL } from 'config/config';
+import useWindowHeight from 'hooks/useWindowHeight';
 
 import ScrollbarsWrapper from 'common/scrollbarsWrapper/scrollbarsWrapper.component';
 import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
@@ -48,7 +49,7 @@ const ClubContent = ({ club, retrieveClub }) => {
       <Grid item xs={12}>
         <Paper>
           <div className="main-logo">
-            <img src={`${IMAGES_URL}/h180/${logo}`} alt="" />
+            <img src={`${IMAGES_URL}/h360/${logo}`} alt="" />
             <Rating value={tier} readOnly />
           </div>
         </Paper>
@@ -86,7 +87,7 @@ const ClubContent = ({ club, retrieveClub }) => {
           <h5 className="relations-header satellites-header"><span className="text">{t('global.satelliteOf')}</span></h5>
           <button type="button" onClick={handleChangeClub(satelliteOf._id)} className="club-link">
             <div className="logo">
-              <img src={`${IMAGES_URL}/h60/${satelliteOf.logo}`} alt="" />
+              <img src={`${IMAGES_URL}/h90/${satelliteOf.logo}`} alt="" />
             </div>
             <h5 className="name">{satelliteOf.name}</h5>
           </button>
@@ -138,6 +139,7 @@ const Welcome = () => {
 
 function Sidebar(props) {
   const dispatch = useDispatch();
+  const windowHeight = useWindowHeight();
 
   const {
     club,
@@ -153,7 +155,7 @@ function Sidebar(props) {
   }, []);
 
   return (
-    <div id="sidebar" className={classNames('has-scrollbar', { 'opened': isSidebarOpened })}>
+    <div id="sidebar" className={classNames('has-scrollbar', { 'opened': isSidebarOpened })} style={{ height: `${windowHeight}px` }}>
       <button
         type="button"
         onClick={handleToggleOpened}
@@ -172,4 +174,4 @@ function Sidebar(props) {
   );
 }
 
-export default memo(props => <Sidebar {...props} />);
+export default memo(Sidebar);

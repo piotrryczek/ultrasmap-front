@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import PageOverlay from 'common/pageOverlay/pageOverlay.component';
 import ButtonLink from 'common/buttonLink/buttonLink.component';
 import Errors from 'common/errors/errors.component';
 
@@ -49,35 +48,33 @@ function EmailConfirm(props) {
   }, []);
 
   return (
-    <PageOverlay>
-      <Grid container spacing={3}>
-        {isConfirmed ? (
-          <>
-            <Grid item xs={12}>
-              <Typography>{t('emailConfirm.emailVerified')}</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <ButtonLink
-                variant="contained"
-                color="primary"
-                size="large"
-                to="/login"
-              >
-                {t('emailConfirm.login')}
-              </ButtonLink>
-            </Grid>
-          </>
-        ) : apiError ? (
+    <Grid container spacing={3}>
+      {isConfirmed ? (
+        <>
           <Grid item xs={12}>
-            <Errors errors={t(`messageCodes.${apiError}`)} />
+            <Typography>{t('emailConfirm.emailVerified')}</Typography>
           </Grid>
-        ) : (
           <Grid item xs={12}>
-            <Typography>{t('emailConfirm.emailBeingVerified')}</Typography>
+            <ButtonLink
+              variant="contained"
+              color="primary"
+              size="large"
+              to="/login"
+            >
+              {t('emailConfirm.login')}
+            </ButtonLink>
           </Grid>
-        )}
-      </Grid>
-    </PageOverlay>
+        </>
+      ) : apiError ? (
+        <Grid item xs={12}>
+          <Errors errors={t(`messageCodes.${apiError}`)} />
+        </Grid>
+      ) : (
+        <Grid item xs={12}>
+          <Typography>{t('emailConfirm.emailBeingVerified')}</Typography>
+        </Grid>
+      )}
+    </Grid>
   );
 }
 

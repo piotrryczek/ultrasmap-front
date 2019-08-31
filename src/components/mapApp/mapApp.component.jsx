@@ -5,7 +5,7 @@ import { setIsLoadingClub } from 'components/app/app.actions';
 import Api from 'services/api';
 
 import Sidebar from './sidebar/sidebar.component';
-import GoogleMap from './googleMap/googleMap.component';
+import GoogleMapWrapper from './googleMapWrapper/googleMapWrapper.component';
 
 function MapApp() {
   const [club, setClub] = useState(null);
@@ -21,7 +21,7 @@ function MapApp() {
 
   return (
     <div id="map-app">
-      <GoogleMap club={club} retrieveClub={retrieveClub} />
+      <GoogleMapWrapper club={club} retrieveClub={retrieveClub} />
       <Sidebar club={club} retrieveClub={retrieveClub} />
     </div>
   );

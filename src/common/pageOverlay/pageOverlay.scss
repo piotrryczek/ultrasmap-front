@@ -1,14 +1,16 @@
 .page-over-map-wrapper {
   position: absolute;
-  z-index: 5;
+  top: 0px;
+  z-index: 6;
   width: 70%;
-  top: 6rem;
   left: 50%;
   transform: translateX(-50%);
+  padding: 2rem 0px;
+
+  box-sizing: border-box;
 }
 
 .page-over-map {
-  max-height: calc(100vh - 128px);
   z-index: 100;
   background: $backgroundColor;
   box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.25);
@@ -37,7 +39,6 @@
   
   .inner {
     padding: 0px 2rem;
-    height: 100%;
     overflow: hidden;
   }
 }
@@ -51,8 +52,24 @@
 @media screen and (max-width: 1400px) {
   .page-over-map-wrapper {
     width: 100%;
-    padding: 0px 2rem;
+    left: 0px;
+    transform: none;
+    padding: 2rem;
+  }
+}
 
-    box-sizing: border-box;
+@media screen and (max-width: 800px) {
+  .page-over-map-wrapper {
+    padding: 2rem 1rem;
+  }
+
+  .page-over-map {
+    .inner {
+      padding: 0px 1rem;
+    }
+
+   .track-vertical {
+     right: 5px;
+   }
   }
 }

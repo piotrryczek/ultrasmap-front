@@ -13,8 +13,9 @@ import Api from 'services/api';
 import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
 
 function Search(props) {
-  const { t } = useTranslation();
-  const { retrieveClub } = props;
+  const { retrieveClub, setSearchInputRef } = props;
+
+  const { t } = useTranslation(); 
   const inputRef = useRef(null);
 
   const [state, setState] = useState({
@@ -33,6 +34,7 @@ function Search(props) {
 
   useEffect(() => {
     inputRef.current.focus();
+    setSearchInputRef(inputRef);
   }, []);
 
   const handleSearchChange = useCallback((event) => {
@@ -196,8 +198,7 @@ function Search(props) {
                   >
                     {logo && (
                       <div className="logo">
-                        <img src={`${IMAGES_URL}/h60/${logo}`} alt="" className="h60" />
-                        <img src={`${IMAGES_URL}/h30/${logo}`} alt="" className="h30" />
+                        <img src={`${IMAGES_URL}/h180/${logo}`} alt="" />
                       </div>
                     )}
                     <p className="name">{name}</p>
@@ -224,4 +225,4 @@ function Search(props) {
   );
 }
 
-export default memo(props => <Search {...props} />);
+export default memo(Search);

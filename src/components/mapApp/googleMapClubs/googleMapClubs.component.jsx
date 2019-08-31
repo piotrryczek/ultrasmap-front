@@ -65,7 +65,7 @@ const getAllClubs = club => {
 
 function GoogleMapClubs(props) {
   const mapRef = useRef(null);
-  const { club: currentClub, retrieveClub } = props;
+  const { club: currentClub, retrieveClub, searchInputRef } = props;
 
   const allClubs = currentClub ? getAllClubs(currentClub) : [];
 
@@ -73,12 +73,17 @@ function GoogleMapClubs(props) {
     const { current: map } = mapRef;
     
     const bounds = new window.google.maps.LatLngBounds();
-    allClubs.forEach(club => {
+
+    for (const club of allClubs) {
       bounds.extend(new window.google.maps.LatLng(club.latLng));
-    });
+    }
 
     map.fitBounds(bounds);
   }
+
+  const clearSearchInputFocus = useCallback(() => {
+    searchInputRef.current.blur();
+  }, [])
 
   const handleChangeClub = useCallback(clubId => () => {
     retrieveClub(clubId);
@@ -119,7 +124,7 @@ function GoogleMapClubs(props) {
                 >
                   <div className="name">{name}</div>
                   <div className="logo">
-                    <img src={`${IMAGES_URL}/h30/${logo}`} alt="" />
+                    <img src={`${IMAGES_URL}/h90/${logo}`} alt="" />
                   </div>
                 </button>
               </OverlayView>
@@ -148,8 +153,9 @@ function GoogleMapClubs(props) {
   return (
     <GoogleMap
       ref={mapRef}
+      onDragEnd={clearSearchInputFocus}
       defaultZoom={8}
-      center={{
+      defaultCenter={{
         lat: 51.5017725,
         lng: 20.4335716,
       }}
@@ -169,4 +175,4 @@ function GoogleMapClubs(props) {
   );
 }
 
-export default withGoogleMap(memo(props => <GoogleMapClubs {...props} />));
+export default withGoogleMap(memo(GoogleMapClubs));

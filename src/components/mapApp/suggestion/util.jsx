@@ -108,7 +108,7 @@ export const selectStyles = isError => ({
   }),
   multiValueRemove: base => ({
     ...base,
-    backgroundColor: '#FFFCFF',
+    backgroundColor: '#ffe6e6',
     cursor: 'pointer',
   }),
   option: base => ({
@@ -121,13 +121,13 @@ export const selectStyles = isError => ({
   }),
   container: base => ({
     ...base,
-    height: '48px',
-    lineHeight: '48px',
+    minHeight: '48px',
+    // lineHeight: '48px',
   }),
   control: base => ({
     ...base,
-    height: '48px',
-    lineHeight: '48px',
+    minHeight: '48px',
+    // lineHeight: '48px',
     borderColor: isError ? '#ED254E' : 'hsl(0,0%,80%)',
   }),
   input: base => ({
@@ -136,4 +136,9 @@ export const selectStyles = isError => ({
     padding: '0px',
     margin: '0px'
   }),
+  placeholder: base => ({
+    ...base,
+    whiteSpace: 'nowrap',
+    width: '100%',
+  })
 });

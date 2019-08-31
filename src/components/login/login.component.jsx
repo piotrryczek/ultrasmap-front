@@ -1,6 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import { useSelector } from 'react-redux';
-import PageOverlay from 'common/pageOverlay/pageOverlay.component';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
@@ -16,8 +15,11 @@ import Errors from 'common/errors/errors.component';
 import ButtonLink from 'common/buttonLink/buttonLink.component';
 import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
 
+import { useMobileStyles } from 'theme/useStyles';
+
 function Login() {
   const { t } = useTranslation();
+  const mobileClasses = useMobileStyles({});
 
   const isAuthenticated = useSelector(state => state.app.isAuthenticated);
 
@@ -66,8 +68,6 @@ function Login() {
         ...prevState,
         isLoading: false,
       }));
-
-      // Komunikat o poprawnym logowaniu
     } catch (error) {
       const {
         response: {
@@ -86,87 +86,85 @@ function Login() {
     
   }, [email, password]);
 
-  return (
-    <PageOverlay>
-      {loginBlur && isAuthenticated ? (
+  return loginBlur && isAuthenticated ? (
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <Typography variant="h5">{t('login.header')}</Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography>{t('login.success')}</Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <ButtonLink
+          variant="contained"
+          color="primary"
+          size="large"
+          to="/"
+        >
+          {t('global.backToMap')}
+        </ButtonLink>
+      </Grid>
+    </Grid>
+  ) : (
+    <LoadingWrapper isLoading={isLoading} type="small">
+      <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography variant="h5">{t('login.header')}</Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography>{t('login.success')}</Typography>
+            <input
+              type="email"
+              name="email"
+              value={email}
+              placeholder={t('login.emailPlaceholder')}
+              onChange={handleChange}
+              className={classNames('styled-input', { 'error': apiError })}
+            />
           </Grid>
           <Grid item xs={12}>
-            <ButtonLink
-              variant="contained"
-              color="primary"
-              size="large"
-              to="/"
-            >
-              {t('global.backToMap')}
-            </ButtonLink>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              placeholder={t('login.passwordPlaceholder')}
+              onChange={handleChange}
+              className={classNames('styled-input', { 'error': apiError })}
+            />
           </Grid>
-        </Grid>
-      ) : (
-        <LoadingWrapper isLoading={isLoading} type="small">
-          <form onSubmit={handleSubmit}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Typography variant="h5">{t('login.header')}</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <input
-                  type="email"
-                  name="email"
-                  value={email}
-                  placeholder={t('login.emailPlaceholder')}
-                  onChange={handleChange}
-                  className={classNames('styled-input', { 'error': apiError })}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <input
-                  type="password"
-                  name="password"
-                  value={password}
-                  placeholder={t('login.passwordPlaceholder')}
-                  onChange={handleChange}
-                  className={classNames('styled-input', { 'error': apiError })}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Box display="flex" justifyContent="center">
-                  <ButtonGroup>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      size="large"
-                      type="submit"
-                    >
-                      {t('login.login')}
-                    </Button>
-                    <ButtonLink
-                      variant="contained"
-                      color="primary"
-                      size="large"
-                      type="submit"
-                      to="/register"
-                    >
-                      {t('login.register')}
-                    </ButtonLink>
-                  </ButtonGroup>
-                </Box>
-              </Grid>
-              {apiError && (
-                <Grid item xs={12}>
-                  <Errors errors={t(`messageCodes.${apiError}`)} />
-                </Grid>
-              )}
+          <Grid item xs={12}>
+            <Box display="flex" justifyContent="center">
+              <ButtonGroup className={mobileClasses.groupButton}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  type="submit"
+                  className={mobileClasses.buttonBase}
+                >
+                  {t('login.login')}
+                </Button>
+                <ButtonLink
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  type="submit"
+                  to="/register"
+                  className={mobileClasses.buttonBase}
+                >
+                  {t('login.register')}
+                </ButtonLink>
+              </ButtonGroup>
+            </Box>
+          </Grid>
+          {apiError && (
+            <Grid item xs={12}>
+              <Errors errors={t(`messageCodes.${apiError}`)} />
             </Grid>
-          </form>
-        </LoadingWrapper>
-      )}
-    </PageOverlay>
+          )}
+        </Grid>
+      </form>
+    </LoadingWrapper>
   );
 }
 

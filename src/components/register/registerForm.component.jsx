@@ -4,13 +4,13 @@ import { Field } from 'formik';
 import { useDebouncedCallback } from 'use-debounce';
 import classNames from 'classnames';
 
-
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
+import { useMobileStyles } from 'theme/useStyles';
 import Api from 'services/api';
 
 import FieldWrapper from 'common/fieldWrapper/fieldWrapper.component';
@@ -31,6 +31,7 @@ function RegisterForm({
   setFieldError,
 }) {
   const { t } = useTranslation();
+  const mobileClasses = useMobileStyles({});
   const [prevEmail, setPrevEmail] = useState({
     value: '',
     error: null
@@ -104,12 +105,13 @@ function RegisterForm({
         </Grid>
         <Grid item xs={12}>
           <Box display="flex" justifyContent="center">
-            <ButtonGroup>
+            <ButtonGroup className={mobileClasses.groupButton}>
               <Button
                 variant="contained"
                 color="secondary"
                 size="large"
                 type="submit"
+                className={mobileClasses.buttonBase}
               >
                 {t('register.register')}
               </Button>
@@ -119,6 +121,7 @@ function RegisterForm({
                 size="large"
                 type="submit"
                 to="/login"
+                className={mobileClasses.buttonBase}
               >
                 {t('register.login')}
               </ButtonLink>

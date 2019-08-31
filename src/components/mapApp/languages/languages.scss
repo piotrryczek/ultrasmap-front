@@ -1,67 +1,87 @@
-$margin: 0.5rem;
-  #languages-selection {
-    position: absolute;
-    z-index: 5;
-    bottom: $fullSizeMargin;;
-    left: $fullSizeMargin;;
-    opacity: 0.4;
 
-    transition: opacity 0.3s;
+
+#languages-selection {
+  $margin: 0.5rem;
+  $languageHeight: 30px;
+
+  position: absolute;
+  z-index: 3;
+  bottom: $fullSizeMargin;;
+  left: $fullSizeMargin;;
+  opacity: 0.4;
+
+  transition: opacity 0.3s;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .language {
+    background: none;
+    padding: 0px;
+    box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.25);
+    opacity: 0.7;
+    filter: grayscale(70%);
+    height: $languageHeight;
+
+    transition: opacity 0.3s, filter 0.3s;
 
     &:hover {
       opacity: 1;
+      filter: grayscale(0%);
     }
 
-    .language {
-      background: none;
-      padding: 0px;
-      box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.25);
-      opacity: 0.7;
-      filter: grayscale(70%);
-
-      transition: opacity 0.3s, filter 0.3s;
-
-      &:hover {
-        opacity: 1;
-        filter: grayscale(0%);
-      }
-
-      &.current {
-        opacity: 1;
-        filter: grayscale(0%);
-      }
-
-      img {
-        display: block;
-      }
+    &.current {
+      opacity: 1;
+      filter: grayscale(0%);
     }
 
-    .languages {
-      padding-left: $margin;
-      pointer-events: none;
-      opacity: 0;
-      right: 0px;
-      position: absolute;
-      bottom: 0px;
-      width: 7rem;
-      transform: translateX(calc(100% - 4rem));
+    img {
+      display: block;
+      height: $languageHeight;
+    }
+  }
 
-      transition: opacity 0.3s, transform 0.3s;
+  .languages {
+    padding-left: $margin;
+    pointer-events: none;
+    opacity: 0;
+    right: 0px;
+    position: absolute;
+    bottom: 0px;
+    width: 7rem;
+    transform: translateX(calc(100% - 4rem));
 
-      &.show {
-        pointer-events: all;
-        opacity: 1;
-        transform: translateX(calc(100%));
-        pointer-events: auto;
-      }
+    transition: opacity 0.3s, transform 0.3s;
 
-      li {
-        margin-right: $margin;
-        float: left;
+    &.show {
+      opacity: 1;
+      transform: translateX(calc(100%));
+      pointer-events: auto;
+    }
 
-        &:last-child {
-          margin-right: $margin;
-        }
+    li {
+      margin-right: $margin;
+      float: left;
+
+      &:last-child {
+        margin-right: 0px;
       }
     }
   }
+}
+
+@media screen and (max-width: 800px) {
+  #languages-selection {
+    display: flex;
+    opacity: 0.7;
+
+    .languages {
+      pointer-events: auto !important;
+      opacity: 1;
+      position: static;
+      transform: none !important;
+      width: auto;
+    }
+  }
+}

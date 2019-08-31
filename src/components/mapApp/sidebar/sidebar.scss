@@ -1,5 +1,4 @@
 #sidebar {
-  height: 100vh;
   flex: 0 0 $sidebarSize;
   background-color: $backgroundColor;
   padding: 2rem 0px;
@@ -119,9 +118,14 @@
     top: 0px;
     right: 0px;
     transform: translateX(100%);
+    padding: 1rem 0px;
 
     &.opened {
       transform: translateX(0px);
+    }
+
+    .inner {
+      padding: 0px 1rem;
     }
   }
 }

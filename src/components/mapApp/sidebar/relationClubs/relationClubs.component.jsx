@@ -22,7 +22,7 @@ function RelationClubs(props) {
         <li key={clubId} className="club">
           <button type="button" onClick={handleChangeClub(clubId)} className="club-link">
             <div className="logo">
-              <img src={`${IMAGES_URL}/h60/${logo}`} alt="" />
+              <img src={`${IMAGES_URL}/h180/${logo}`} alt="" />
             </div>
             <h5 className="name">{name}</h5>
           </button>

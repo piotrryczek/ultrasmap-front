@@ -3,7 +3,7 @@
   position: absolute;
   width: 100%;
   top: 1rem;
-  z-index: 3;
+  z-index: 4;
   padding: 0px $fullSizeMargin;;
 
   box-sizing: border-box;
@@ -92,14 +92,6 @@
 
           img {
             height: 100%;
-
-            &.h30 {
-              display: none;
-            }
-
-            &.h60 {
-              display: block;
-            }
           }
         }
 
@@ -132,7 +124,7 @@
   }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 800px) {
   #search {
     .search-clubs {
       li {
@@ -145,14 +137,6 @@
 
             img {
               height: 1.75rem;
-
-              &.h30 {
-                display: block;
-              }
-
-              &.h60 {
-                display: none;
-              }
             }
 
             &.icon {

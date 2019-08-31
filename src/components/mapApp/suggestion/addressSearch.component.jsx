@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import classNames from 'classnames';
 
 function AddressSearch(props) {
   const { onChange } = props;
+  const { t } = useTranslation();
 
   const [address, setAddress] = useState('');
 
@@ -29,7 +31,7 @@ function AddressSearch(props) {
         <div>
           <input
             {...getInputProps({
-              placeholder: 'Search Places ...',
+              placeholder: t('suggestion.searchPlaces'),
               className: classNames('location-search-input', {
                 'opened': loading || suggestions.length > 0,
               }),

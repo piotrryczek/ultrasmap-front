@@ -80,7 +80,7 @@
         "lackOfCredential": "Nie posiadasz uprawnień aby sugerować zmiany. Najprawdopodobniej zostały Ci one odebrane w efekcie licznych naruszeń.",
         "needToBeLoggedin": "Aby móc sugerować zmiany musisz być zalogowany.",
         "success": "Twoja sugestia została dodana. Postaramy się jak najszybciej ją przejrzeć. O tym czy sugestia została zaakceptowana bądź odrzucana zostaniesz poinformowany mailowo. Dzięki!",
-        "welcome": "Postaraj się możliwie precyzyjnie i obiektywnie uzupełnić formularz. Dzięki temu znacznie ułatwisz dalszą pracę, na której skorzystają także wszyscy inni użytkownicy. O tym czy sugestia została zaakceptowana bądź odrzucana zostaniesz poinformowany mailowo. Dzięki!",
+        "welcome": "Postaraj się możliwie precyzyjnie i obiektywnie uzupełnić formularz. Dzięki temu znacznie ułatwisz dalszą pracę, na której skorzystają także wszyscy inni użytkownicy. O tym czy sugestia została zaakceptowana bądź odrzucona zostaniesz poinformowany mailowo. Dzięki!",
         "createNewClub": "Utwórz nowy klub: ",
         "addSuggestion": "Dodaj",
         "name": {
@@ -128,13 +128,12 @@
         "comments": {
           "header": "Uwagi",
           "tooltip": "Dopisz wszelkie uwagi bądź sugestie, które mogą pomóc precyzyjnie uwzględnić Twoją sugestię."
-        }
+        },
+        "noOptions": "Zacznij pisać aby wyszukać kluby...",
+        "searchPlaces": "Wyszukaj miejsca..."
       }
     }
   },
-
-
-
   "en": {
     "translation": {
       "messageCodes": {
@@ -265,7 +264,9 @@
         "comments": {
           "header": "Comments",
           "tooltip": "Write any comments or suggestions that can help us accurately consider your suggestion."
-        }
+        },
+        "noOptions": "Start typing to search clubs...",
+        "searchPlaces": "Search places..."
       }
     }
   }

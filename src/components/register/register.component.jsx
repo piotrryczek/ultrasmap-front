@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 
 import history from 'config/history';
 import Api from 'services/api';
-import PageOverlay from 'common/pageOverlay/pageOverlay.component';
 import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
 import registerSchema from 'schemas/register';
 import RegisterForm from './registerForm.component';
@@ -68,28 +67,23 @@ function Register() {
     }
   }, []);
 
-  return (
-    <PageOverlay>
-      {hasRegistered ? (
-        <Typography>{t('register.success')}</Typography>
-      ) : (
-        <LoadingWrapper isLoading={isLoading} type="small">
-          <Formik
-            initialValues={{
-              email: '',
-              password: '',
-              confirmPassword: '',
-            }}
-            validationSchema={registerSchema}
-            onSubmit={handleFormSubmit}
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            render={(props) => <RegisterForm {...props} apiError={apiError} />}
-          />
-        </LoadingWrapper>
-      )}
-      
-    </PageOverlay>
-  );
+  return hasRegistered ? (
+    <Typography>{t('register.success')}</Typography>
+  ) : (
+    <LoadingWrapper isLoading={isLoading} type="small">
+      <Formik
+        initialValues={{
+          email: '',
+          password: '',
+          confirmPassword: '',
+        }}
+        validationSchema={registerSchema}
+        onSubmit={handleFormSubmit}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        render={(props) => <RegisterForm {...props} apiError={apiError} />}
+      />
+    </LoadingWrapper>
+  )
 }
 
 export default Register;
