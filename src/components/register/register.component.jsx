@@ -6,6 +6,7 @@ import _get from 'lodash/get';
 
 import Typography from '@material-ui/core/Typography';
 
+import { DEFAULT_LANGUAGE } from 'config/config';
 import history from 'config/history';
 import Api from 'services/api';
 import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
@@ -33,6 +34,7 @@ function Register() {
 
   const handleFormSubmit = useCallback(async (values) => {
     const { email, password } = values;
+    const language = localStorage.getItem('language') || DEFAULT_LANGUAGE;
 
     try {
       setState(prevState => ({
@@ -43,6 +45,7 @@ function Register() {
       await Api.post('/users/register', {
         email,
         password,
+        language,
       }, false);
 
       setState(prevState => ({

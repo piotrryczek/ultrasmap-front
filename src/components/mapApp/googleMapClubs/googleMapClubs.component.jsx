@@ -1,9 +1,10 @@
 import React, { useRef, useCallback, memo } from 'react';
 import { GoogleMap, Marker, OverlayView, Polyline, withGoogleMap } from 'react-google-maps';
 import classNames from 'classnames';
+import getDistance from 'geolib/es/getDistance';
 
 import { parseCoordinates } from 'util/helpers';
-import { IMAGES_URL } from 'config/config';
+import { IMAGES_URL, MAP_BOUND_MAXIMUM } from 'config/config';
 
 const getRelationColor = relationType => {
   switch (relationType) {
@@ -70,20 +71,28 @@ function GoogleMapClubs(props) {
   const allClubs = currentClub ? getAllClubs(currentClub) : [];
 
   if (allClubs.length) {
-    const { current: map } = mapRef;
-    
+    const { current: { context: { __SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: map } } } = mapRef; // It's secure
+
+    let boundsCounter = 0;
     const bounds = new window.google.maps.LatLngBounds();
 
     for (const club of allClubs) {
-      bounds.extend(new window.google.maps.LatLng(club.latLng));
+      if (getDistance({ latitude: currentClub.latLng.lat, longitude: currentClub.latLng.lng}, { latitude: club.latLng.lat, longitude: club.latLng.lng }) < MAP_BOUND_MAXIMUM) {
+        bounds.extend(new window.google.maps.LatLng(club.latLng));
+        boundsCounter += 1;
+      }
     }
 
-    map.fitBounds(bounds);
+    if (boundsCounter > 1) {
+      map.fitBounds(bounds);
+    } else {
+      map.setCenter(new window.google.maps.LatLng(allClubs[0].latLng)); 
+    }
   }
 
   const clearSearchInputFocus = useCallback(() => {
     searchInputRef.current.blur();
-  }, [])
+  }, []);
 
   const handleChangeClub = useCallback(clubId => () => {
     retrieveClub(clubId);
@@ -119,12 +128,20 @@ function GoogleMapClubs(props) {
               >
                 <button
                   type="button"
-                  className={classNames('club-marker', relationType)}
+                  className={classNames(
+                    {
+                      'current-club': clubId === currentClub._id,
+                    },
+                    'club-marker',
+                    relationType
+                  )}
                   onClick={handleChangeClub(clubId)}
                 >
                   <div className="name">{name}</div>
-                  <div className="logo">
-                    <img src={`${IMAGES_URL}/h90/${logo}`} alt="" />
+                  <div className="logo-wrapper">
+                    <div className="logo">
+                      <img src={`${IMAGES_URL}/h90/${logo}`} alt="" />
+                    </div>
                   </div>
                 </button>
               </OverlayView>
@@ -153,7 +170,7 @@ function GoogleMapClubs(props) {
   return (
     <GoogleMap
       ref={mapRef}
-      onDragEnd={clearSearchInputFocus}
+      onDragStart={clearSearchInputFocus}
       defaultZoom={8}
       defaultCenter={{
         lat: 51.5017725,

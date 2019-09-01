@@ -9,9 +9,6 @@ export default yup.object().shape({
   newLogo: yup.mixed()
     .test('fileSize', 'formErrors.fileSize', value => !value || (value && value.size <= MAX_FILE_SIZE))
     .test('fileType', 'formErrors.fileType', value => !value || (value && SUPPORTED_FORMATS.includes(value.type))),
-  tier: yup
-    .number()
-    .required('formErrors.required'),
   coordinates: yup
     .array().of(yup.string())
     .required('formErrors.required'),

@@ -57,6 +57,13 @@ $sidebarMobileSize: 90%;
       }
     }
 
+    &.current-club {
+      .name {
+        transform: translate(-50%, -1.5rem);
+        opacity: 1;
+      }
+    }
+
     &.friendship,
     &.agreement,
     &.positive,
@@ -107,18 +114,28 @@ $sidebarMobileSize: 90%;
       transition: transform 0.3s, opacity 0.3s;
     }
 
-    .logo {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .logo-wrapper {
+      border-radius: 100%;
+      display: block;
+      overflow: hidden;
 
-      img {
-        height: 30px;
-        max-width: 100%;
+      .logo {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px;
+
+        box-sizing: border-box;
+  
+        img {
+          max-height: 30px;
+          max-width: 100%;
+        }
       }
     }
+    
   }
 }
 
@@ -154,6 +171,7 @@ $sidebarMobileSize: 90%;
 .css-1hwfws3 {
   padding-top: 0px !important;
   padding-bottom: 0px !important;
+  overflow: visible !important;
 }
 
 .location-search-input {

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import ApiError from 'util/apiError';
-import { reject } from 'q';
 
 class Api {
 

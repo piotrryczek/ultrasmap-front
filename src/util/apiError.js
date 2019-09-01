@@ -1,6 +1,6 @@
 import store from 'config/store';
 import Auth from 'services/auth';
-import { setMessage } from 'components/app/app.actions';
+import { setMessage, setIsLoadingClub } from 'components/app/app.actions';
 
 class ApiError {
   constructor(error) {
@@ -15,6 +15,8 @@ class ApiError {
         store.dispatch(setMessage(type));
       }
     }
+
+    store.dispatch(setIsLoadingClub(false));
   }
 }
 

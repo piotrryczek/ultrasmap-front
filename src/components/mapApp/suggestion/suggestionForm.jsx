@@ -39,6 +39,7 @@ function SuggestionForm({
   isLoading,
   clubId,
   editType,
+  hasChanged,
   values: {
     name,
     logo,
@@ -112,10 +113,6 @@ function SuggestionForm({
     setFieldValue('coordinates', coordinates);
   }, []);
 
-  const handleTierChange = useCallback((event, newValue) => {
-    setFieldValue('tier', newValue);
-  }, []);
-
   const handleLogoChange = useCallback((file) => {
     setFieldValue('newLogo', file);
   }, []);
@@ -168,23 +165,6 @@ function SuggestionForm({
                 </Box>
               </Paper>
             </FieldWrapper>
-          </Grid>
-          <Grid item xs={12}>
-            <h5 className={classNames('section-header', { 'error': isError('tier') })}>
-              {t('suggestion.tier.header')}
-              <TooltipWrapper placement="right" title={t('suggestion.tier.tooltip')}>
-                <HelpIcon fontSize="small" color="primary" />
-              </TooltipWrapper>
-            </h5>
-            <Paper>
-              <Box p={2} display="block">
-                <Rating
-                  name="simple-controlled"
-                  value={tier}
-                  onChange={handleTierChange}
-                />
-              </Box>
-            </Paper>
           </Grid>
           <Grid item xs={12}>
             <h5
@@ -370,6 +350,13 @@ function SuggestionForm({
               value={comment}
             />
           </Grid>
+          {!hasChanged && (
+            <Grid item xs={12}>
+              <Box display="flex" justifyContent="center">
+                <Typography>{t('formErrors.suggestionNoChanges')}</Typography>
+              </Box>
+            </Grid>
+          )}
           <Grid item xs={12}>
             <Box display="flex" justifyContent="center">
               <ButtonGroup className={mobileClasses.groupButton}>
@@ -388,6 +375,7 @@ function SuggestionForm({
                   size="large"
                   type="submit"
                   className={mobileClasses.buttonBase}
+                  disabled={!hasChanged}
                 >
                   {t('suggestion.addSuggestion')}
                 </Button>

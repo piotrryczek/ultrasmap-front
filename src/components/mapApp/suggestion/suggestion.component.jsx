@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { Link } from 'react-router-dom';
+import _isEqual from 'lodash/isEqual';
 
 import _get from 'lodash/get';
 import _uniq from 'lodash/uniq';
@@ -10,8 +11,6 @@ import _uniq from 'lodash/uniq';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
-
 
 import { DEFAULT_COORDINATES } from 'config/config';
 import Api from 'services/api';
@@ -21,6 +20,38 @@ import NeedToBeLoggedIn from 'components/mapApp/needToBeLoggedIn/needToBeLoggedI
 import SuggestionForm from './suggestionForm';
 
 import { prepareSuggestionFormData, parseRelationsToFormData, parseClubData } from './util';
+
+const checkHasChanged = (previousValues, currentValues) => {
+  const {
+    name: prevName,
+    coordinates: prevCoordinates,
+    friendships: prevFriendships,
+    agreements: prevAgreements,
+    positives: prevPositives,
+    satellites: prevSatellites,
+    satelliteOf: prevSatelliteOf,
+  } = previousValues;
+
+  const {
+    name,
+    coordinates,
+    friendships,
+    agreements,
+    positives,
+    satellites,
+    satelliteOf,
+    newLogo,
+  } = currentValues;
+
+  return prevName !== name
+    || newLogo
+    || !_isEqual(prevCoordinates, coordinates)
+    || !_isEqual(prevFriendships.sort(), friendships.sort())
+    || !_isEqual(prevAgreements.sort(), agreements.sort())
+    || !_isEqual(prevPositives.sort(), positives.sort())
+    || !_isEqual(prevSatellites.sort(), satellites.sort())
+    || prevSatelliteOf !== satelliteOf;
+}
 
 function Suggestion(props) {
   const {
@@ -33,6 +64,7 @@ function Suggestion(props) {
   const club = _get(props, 'location.state.club', null);
   const clubId = _get(props, 'match.params.clubId', null);
 
+  const [hasChanged, setHasChanged] = useState(false);
   const [state, setState] = useState({
     isSend: false,
     isLoading: false,
@@ -40,7 +72,6 @@ function Suggestion(props) {
       newLogo: null,
       name: '',
       logo: '',
-      tier: 1,
       coordinates: DEFAULT_COORDINATES,
       friendships: [],
       agreements: [],
@@ -90,7 +121,6 @@ function Suggestion(props) {
       newLogo, // file
       name,
       logo, // url
-      tier,
       coordinates,
       friendships,
       agreements,
@@ -127,7 +157,6 @@ function Suggestion(props) {
       // Club data
       name,
       logo,
-      tier,
       coordinates,
       friendships: friendshipsIds,
       friendshipsToCreate,
@@ -178,6 +207,16 @@ function Suggestion(props) {
   const handleValidate = useCallback(async (values) => {
     const errors = {};
 
+    if (!checkHasChanged(fields, values)) {
+      Object.assign(errors, {
+        noChanges: 'formErrors.suggestionNoChanges',
+      });
+
+      setHasChanged(false);
+    } else {
+      setHasChanged(true);
+    }
+
     const {
       friendships,
       agreements,
@@ -225,7 +264,7 @@ function Suggestion(props) {
     }
 
     throw errors;
-  }, []);
+  }, [hasChanged, fields]);
 
   return isAuthenticated ?
     Auth.hasCredentialLocal('addSuggestion') ?
@@ -258,6 +297,7 @@ function Suggestion(props) {
               isLoading={isLoading}
               editType={editType}
               clubId={clubId}
+              hasChanged={hasChanged}
             />
           )}
         />

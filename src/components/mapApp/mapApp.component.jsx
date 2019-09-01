@@ -11,9 +11,13 @@ function MapApp() {
   const [club, setClub] = useState(null);
   const dispatch = useDispatch();
 
-  const retrieveClub = useCallback(async(clubId) => {
+  const retrieveClub = useCallback(async(clubId = null) => {
     dispatch(setIsLoadingClub(true));
-    const { data: club } = await Api.get(`/clubs/${clubId}`);
+
+    const apiUrlEnding = clubId || 'random';
+
+    const { data: club } = await Api.get(`/clubs/${apiUrlEnding}`);
+
     dispatch(setIsLoadingClub(false));
 
     setClub(club);

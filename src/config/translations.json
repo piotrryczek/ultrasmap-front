@@ -2,7 +2,7 @@
   "pl": {
     "translation": {
       "messageCodes": {
-        "NOT_AUTHORIZED": "Nie jesteś zalogowany.",
+        "NOT_AUTHORIZED": "Nie jesteś zalogowany bądź nie posiadasz uprawnień do wykonania akcji.",
         "NETWORK_ERROR": "Problem z połączeniem.",
         "UNKNOWN_ERROR": "Nieznany błąd.",
         "INTERNAL": "Błąd wewnętrzny serwera.",
@@ -31,7 +31,8 @@
         "satellites": "Satelity / fankluby",
         "satelliteOf": "Jest satelitą / fanklubem",
         "suggestChange": "Zasugeruj zmianę",
-        "backToMap": "Wróc do mapy"
+        "backToMap": "Wróc do mapy",
+        "getRandom": "Losuj"
       },
       "formErrors": {
         "email": "Niepoprawny adres email",
@@ -40,7 +41,8 @@
         "emailExists": "Na podany adres email jest już zarejestrowany użytkownik. Wybierz inny",
         "fileSize": "Plik jest zbyt duży",
         "fileType": "Nieodpowiedni format pliku",
-        "relationsNotUnique": "Relacje muszą być unikalne"
+        "relationsNotUnique": "Relacje muszą być unikalne",
+        "suggestionNoChanges": "Nie dokonałeś żadnych zmian."
       },
       "welcome": {
         "header": "Witaj!",
@@ -48,7 +50,7 @@
         "paragraph2": "Pamiętajcie, że to Wy tworzycie tę mapę. To dzięki Waszym sugestiom ta cała układanka będzie mogła żyć swoim życiem. Nieważne czy Twój klub występuje w europejskich pucharach czy okręgówcę. Jeśli działa w kibicowskich klimatach - dodaj go! Jeśli jego dane są nieaktualne - zasugeruj ich aktualizację! Bez Was to tylko martwa aplikacja.",
         "paragraph3": "Aplikacja jest nadal w bardzo wczesnej fazie. W razie uwag bądź dostrzeżenia nieprawidłowości w działaniu zawsze możesz zgłosić problem.",
         "paragraph4": "Projekt został stworzony non profit i docelowo ma w takiej formie pozostać.",
-        "copyrights": "© Piotr Ryczek 2019"
+        "copyrights": "© 2019"
       },
       "emailConfirm": {
         "emailVerified": "Email został zweryfikowany. Możesz się teraz zalogować za pomocą danych podanych podczas rejestracji",
@@ -137,7 +139,7 @@
   "en": {
     "translation": {
       "messageCodes": {
-        "NOT_AUTHORIZED": "You are not logged in.",
+        "NOT_AUTHORIZED": "You are not logged in or you have not enough credentials to perform action.",
         "NETWORK_ERROR": "Connection problem.",
         "UNKNOWN_ERROR": "Unknow error.",
         "INTERNAL": "Internal server error.",
@@ -166,7 +168,8 @@
         "satellites": "Satellites / Fanclubs",
         "satelliteOf": "Satellite / Fanclub of",
         "suggestChange": "Suggest change",
-        "backToMap": "Back to map"
+        "backToMap": "Back to map",
+        "getRandom": "Random"
       },
       "formErrors": {
         "email": "Incorrect email address",
@@ -175,7 +178,8 @@
         "emailExists": "Provided email already exists in a database. Please select other",
         "fileSize": "File is being to big",
         "fileType": "Incorrect file format",
-        "relationsNotUnique": "Relations have to unique"
+        "relationsNotUnique": "Relations have to unique",
+        "suggestionNoChanges": "You haven not done any changes."
       },
       "welcome": {
         "header": "Welcome!",
@@ -183,7 +187,7 @@
         "paragraph2": "Remember that you are creators of that map. It is because of your support and help that this map can stay alive. It doesn't matter if your club is in European cups or is playing in lower local league. If it's fans are active - add it! If it's data is out of date - suggest updating it!",
         "paragraph3": "The application is still in its early stages. You can always report a problem.",
         "paragraph4": "The project has been created non-profit.",
-        "copyrights": "© Piotr Ryczek 2019"
+        "copyrights": "© 2019"
       },
       "emailConfirm": {
         "emailVerified": "Email has been verified, login with data supplied during registration.",

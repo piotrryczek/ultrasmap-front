@@ -41,7 +41,7 @@ function GoogleMapWrapper(props) {
 
   return (
     <div id="map-wrapper" className={classNames({ 'sidebar-opened': isSidebarOpened })} style={{ height: `${windowHeight}px` }}>
-      <LoadingWrapper type="big" isLoading={isLoadingClub && !isSidebarOpened}>
+      <LoadingWrapper type="big" isLoading={isLoadingClub}>
         <LoginLogoutButton />
         <Search retrieveClub={retrieveClub} setSearchInputRef={setSearchInputRefCallback} />
         <GoogleMapClubs

@@ -8,9 +8,12 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 import ButtonLink from 'common/buttonLink/buttonLink.component';
 
+import { useMobileStyles } from 'theme/useStyles';
+
 function NeedToBeLoggedIn(props) {
   const { header } = props;
 
+  const mobileClasses = useMobileStyles({});
   const { t } = useTranslation()
 
   return (
@@ -20,12 +23,13 @@ function NeedToBeLoggedIn(props) {
       </Grid>
       <Grid item xs={12}>
         <Box display="flex" justifyContent="center">
-          <ButtonGroup>
+          <ButtonGroup className={mobileClasses.groupButton}>
             <ButtonLink
               variant="contained"
               color="primary"
               size="large"
               to="/login"
+              className={mobileClasses.buttonBase}
             >
               {t('global.login')}
             </ButtonLink>
@@ -34,6 +38,7 @@ function NeedToBeLoggedIn(props) {
               color="secondary"
               size="large"
               to="/register"
+              className={mobileClasses.buttonBase}
             >
               {t('global.register')}
             </ButtonLink>

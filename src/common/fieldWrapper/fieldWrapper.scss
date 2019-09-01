@@ -5,7 +5,8 @@
     position: absolute;
     font-size: 0.7em;
     color: $errorColor;
-    top: -1rem;
+    top: -1px;
     left: 0px;
+    transform: translateY(-100%);
   }
 }

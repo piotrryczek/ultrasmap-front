@@ -5,10 +5,12 @@ import { useDebouncedCallback } from 'use-debounce';
 import classNames from 'classnames';
 
 import AddCommentIcon from '@material-ui/icons/AddCommentOutlined';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 import history from 'config/history';
 import { IMAGES_URL } from 'config/config';
 
+import ApiError from 'util/apiError';
 import Api from 'services/api';
 import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
 
@@ -54,13 +56,23 @@ function Search(props) {
         isLoading: true,
       }));
 
-      const { data: clubs } = await Api.get('/clubs', { search: { name: searchValue } });
+      try {
+        const { data: clubs } = await Api.get('/clubs', { search: { name: { value: searchValue, type: 'text' } } }, false);
 
-      setState(prevState => ({
-        ...prevState,
-        clubs,
-        isLoading: false,
-      }));
+        setState(prevState => ({
+          ...prevState,
+          clubs,
+          isLoading: false,
+        }));
+      } catch (error) {
+        setState(prevState => ({
+          ...prevState,
+          isLoading: false,
+        }));
+
+        new ApiError(error);
+      }
+      
     } else {
       setState(prevState => ({
         ...prevState,
@@ -91,6 +103,10 @@ function Search(props) {
       hoveredClubIndex: clubIndex,
     }));
   }
+  
+  const handleClearFocus = useCallback(() => {
+    inputRef.current.blur();
+  }, []);
   
   const handleKeyDown = useCallback((event) => {
     const { keyCode } = event;
@@ -144,83 +160,117 @@ function Search(props) {
     history.push('/suggestion');
   }
 
+  const handleClose = useCallback(() => {
+    setState(prevState => ({
+      ...prevState,
+      hoveredClubIndex: null,
+      clubs: [],
+      search: '',
+    }));
+  }, []);
+
+  const handleGetRandom = useCallback(() => {
+    retrieveClub();
+
+    setState(prevState => ({
+      ...prevState,
+      clubs: [],
+      search: '',
+      hoveredClubIndex: null,
+    }));
+  }, []);
+
   return (
     <div id="search-wrapper">
-      <div 
-        id="search" 
-        className={classNames({
-          'found-clubs': clubs.length > 0,
-        })}
-        onKeyDown={handleKeyDown}
-        role="presentation"
-      >
-        <LoadingWrapper isLoading={isLoading} type="small">
-          <div className="search-input-wrapper">
-            <input
-              ref={inputRef}
-              className="search-input"
-              type="text"
-              placeholder={t('search.searchPlaceholder')}
-              value={search}
-              onChange={handleSearchChange}
-            />
-            <Link to="/suggestion">
-              <button
-                type="button"
-                id="suggest-add-new-club"
-                className="standard-button button-green small-button"
-              >
-                {t('global.suggestNewClub')}
-              </button>
-            </Link>
-          </div>
-
-          {(clubs.length > 0 || search) && (
-            <ul
-              className="search-clubs"
-            >
-              {clubs.map(({
-                _id: clubId,
-                name,
-                logo,
-              }, index) => (
-                <li
-                  key={clubId}
-                  onMouseMove={handleChangeHovered(index)}
-                  onMouseLeave={handleChangeHovered(null)}
-                >
-                  <button
-                    type="button"
-                    className={classNames('search-club', {
-                      'hovered': hoveredClubIndex === index,
-                    })}
-                    onClick={handleChooseClub(clubId)}
-                  >
-                    {logo && (
-                      <div className="logo">
-                        <img src={`${IMAGES_URL}/h180/${logo}`} alt="" />
-                      </div>
-                    )}
-                    <p className="name">{name}</p>
-                  </button>
-                </li>
-              ))}
-              <li>
+      <ClickAwayListener onClickAway={handleClose}>
+        <div 
+          id="search" 
+          className={classNames({
+            'found-clubs': clubs.length > 0,
+          })}
+          onKeyDown={handleKeyDown}
+          role="presentation"
+        >
+          <LoadingWrapper isLoading={isLoading} type="small">
+            <div className="search-input-wrapper">
+              <ClickAwayListener onClickAway={handleClearFocus}>
+                <input
+                  ref={inputRef}
+                  className="search-input"
+                  type="text"
+                  placeholder={t('search.searchPlaceholder')}
+                  value={search}
+                  onChange={handleSearchChange}
+                />
+              </ClickAwayListener>
+              <div id="search-secondary-buttons">
                 <button
                   type="button"
-                  className="search-club suggest-new"
-                  onClick={handleOpenSuggestionWindow}
+                  id="button-get-random"
+                  className="standard-button button-blue small-button"
+                  onClick={handleGetRandom}
                 >
-                  <div className="logo icon">
-                    <AddCommentIcon fontSize="large" />
-                  </div>
-                  <p className="name">{t('search.lackOfClub')}</p>
+                  {t('global.getRandom')}
                 </button>
-              </li>
-            </ul>
-          )}
-        </LoadingWrapper>
-      </div>
+                <Link to="/suggestion">
+                  <button
+                    type="button"
+                    id="button-add-suggestion"
+                    className="standard-button button-green small-button"
+                  >
+                    {t('global.suggestNewClub')}
+                  </button>
+                </Link>
+              </div>
+            </div>
+
+            {(clubs.length > 0 || search) && (
+              <ul
+                className="search-clubs"
+              >
+                {clubs.map(({
+                  _id: clubId,
+                  name,
+                  logo,
+                }, index) => (
+                  <li
+                    key={clubId}
+                    onMouseMove={handleChangeHovered(index)}
+                    onMouseLeave={handleChangeHovered(null)}
+                  >
+                    <button
+                      type="button"
+                      className={classNames('search-club', {
+                        'hovered': hoveredClubIndex === index,
+                      })}
+                      onClick={handleChooseClub(clubId)}
+                    >
+                      {logo && (
+                        <div className="logo">
+                          <img src={`${IMAGES_URL}/h180/${logo}`} alt="" />
+                        </div>
+                      )}
+                      <p className="name">{name}</p>
+                    </button>
+                  </li>
+                ))}
+                <li>
+                  <button
+                    type="button"
+                    className="search-club suggest-new"
+                    onClick={handleOpenSuggestionWindow}
+                  >
+                    <div className="logo icon">
+                      <AddCommentIcon fontSize="large" />
+                    </div>
+                    <p className="name">{t('search.lackOfClub')}</p>
+                  </button>
+                </li>
+              </ul>
+            )}
+          </LoadingWrapper>
+        </div>
+      </ClickAwayListener>
     </div>
   );
 }
