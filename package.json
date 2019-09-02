@@ -37,6 +37,7 @@
     "start": "env-cmd -f localhost.env react-scripts start",
     "build-dev": "env-cmd -f development.env react-scripts build",
     "build-prod": "env-cmd -f production.env react-scripts build",
+    "build-demo": "env-cmd -f demo.env react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
