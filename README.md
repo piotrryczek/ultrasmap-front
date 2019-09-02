@@ -4,6 +4,10 @@ The application visualizes relationships between supporters of sports teams and 
 
 piotrryczek@gmail.com
 
+- API https://github.com/piotrryczek/ultrasmap-api
+- Admin https://github.com/piotrryczek/ultrasmap-admin
+- Frontend https://github.com/piotrryczek/ultrasmap-front
+
 ## FanaticsMap: Frontend (Map)
 Frontend part.
 Live:
