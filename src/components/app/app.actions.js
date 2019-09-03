@@ -1,6 +1,7 @@
 const namespace = 'APP';
 
 export const SET_MESSAGE = `${namespace}_SET_MESSAGE`;
+export const SET_LANGUAGE = `${namespace}_SET_LANGUAGE`;
 export const SET_IS_AUTHENTICATED = `${namespace}_SET_IS_AUTHENTICATED`;
 export const SET_IS_LOADING_CLUB = `${namespace}_SET_IS_LOADING_CLUB`;
 export const SET_IS_SIDEBAR_OPENED = `${namespace}_SET_IS_SIDEBAR_OPENED`;
@@ -17,6 +18,13 @@ export const clearMessage = () => (dispatch) => {
     type: SET_MESSAGE,
     payload: '',
   });
+}
+
+export const setLanguage = language => (dispatch) => {
+  dispatch({
+    type: SET_LANGUAGE,
+    payload: language,
+  })
 }
 
 export const setIsAuthenticated = (isAuthenticated, credentials = [], language = null) => (dispatch, getState) => {
@@ -45,5 +53,19 @@ export const toggleSidebar = () => (dispatch, getState) => {
   dispatch({
     type: SET_IS_SIDEBAR_OPENED,
     payload: !isSidebarOpened,
+  });
+}
+
+export const showSidebar = () => (dispatch) => {
+  dispatch({
+    type: SET_IS_SIDEBAR_OPENED,
+    payload: true,
+  });
+}
+
+export const hideSidebar = () => (dispatch) => {
+  dispatch({
+    type: SET_IS_SIDEBAR_OPENED,
+    payload: false,
   });
 }

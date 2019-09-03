@@ -1,8 +1,9 @@
-import React, { useState, memo } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, memo, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 
-import { languages, DEFAULT_LANGUAGE } from 'config/config';
+import { setLanguage } from 'components/app/app.actions';
+import { languages, DEFAULT_LANGUAGE, USER_LANGUAGE } from 'config/config';
 import Api from 'services/api';
 import i18n from 'config/i18n';
 
@@ -10,11 +11,19 @@ import i18n from 'config/i18n';
 function Languages() {
   const [ifShowLanguages, setIfShowLanguages] = useState(false);
   const isAuthenticated = useSelector(state => state.app.isAuthenticated);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    // If not logged in or localStorage empty set user language depending on browser settings
+    if (!isAuthenticated && !localStorage.getItem('language')) {
+      handleChangeLanguage(USER_LANGUAGE.slice(0, 2));
+    }
+  }, []);
 
   const handleChangeLanguage = languageCode => () => {
-    localStorage.setItem('language', languageCode);
-    i18n.changeLanguage(languageCode);
+    localStorage.setItem('language', languageCode); // localStorage
+    i18n.changeLanguage(languageCode); // i18n
+    dispatch(setLanguage(languageCode)); // Redux
     setIfShowLanguages(false);
     
     if (isAuthenticated) {

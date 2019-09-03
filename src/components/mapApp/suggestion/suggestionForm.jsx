@@ -9,7 +9,6 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
-import Rating from '@material-ui/lab/Rating';
 
 import HelpIcon from '@material-ui/icons/Help';
 
@@ -72,7 +71,7 @@ function SuggestionForm({
       ...satellites,
     ];
 
-    if (satelliteOf) allRelations.push(satelliteOf);
+    if (satelliteOf && !Array.isArray(satelliteOf)) allRelations.push(satelliteOf);
     
     return allRelations.reduce((acc, { __isNew__: isNew, _id: clubId }) => {
       if (!isNew) {
@@ -342,6 +341,7 @@ function SuggestionForm({
                 <HelpIcon fontSize="small" color="primary" />
               </TooltipWrapper>
             </h5>
+            <Typography gutterBottom>{t('suggestion.comments.additional')}</Typography>
             <textarea
               className="styled-textarea"
               name="comment"

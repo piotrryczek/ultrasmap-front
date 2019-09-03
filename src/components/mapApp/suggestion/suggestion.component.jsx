@@ -71,7 +71,10 @@ function Suggestion(props) {
     fields: {
       newLogo: null,
       name: '',
+      transliterationName: '',
+      searchName: '',
       logo: '',
+      tier: '',
       coordinates: DEFAULT_COORDINATES,
       friendships: [],
       agreements: [],
@@ -120,7 +123,10 @@ function Suggestion(props) {
     const {
       newLogo, // file
       name,
+      transliterationName,
+      searchName,
       logo, // url
+      tier,
       coordinates,
       friendships,
       agreements,
@@ -156,7 +162,10 @@ function Suggestion(props) {
       comment,
       // Club data
       name,
+      transliterationName,
+      searchName,
       logo,
+      tier,
       coordinates,
       friendships: friendshipsIds,
       friendshipsToCreate,

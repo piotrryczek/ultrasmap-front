@@ -72,6 +72,8 @@ export const parseRelationsToFormData = clubs => clubs.reduce((acc, club) => {
 
 export const parseClubData = ({
   name,
+  searchName,
+  transliterationName,
   logo,
   tier,
   location,
@@ -83,6 +85,8 @@ export const parseClubData = ({
 }) => ({
   newLogo: null,
   name,
+  searchName,
+  transliterationName,
   logo,
   tier,
   coordinates: location.coordinates,
@@ -93,8 +97,6 @@ export const parseClubData = ({
   satelliteOf,
   comment: '',
 });
-
-
 
 export const selectStyles = isError => ({
   multiValueLabel: base => ({

@@ -45,23 +45,24 @@ $sidebarMobileSize: 90%;
     border-radius: 100%;
     box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.25);
     border-color: rgba(#0D1B2A, $opacity);
+    z-index: 1;
+    position: relative;
 
-    transform: translate(-50%, -50%);
-
-    &:hover {
-      cursor: default;
-      
+    &:hover,
+    &.current-club {
       .name {
-        transform: translate(-50%, -1.5rem);
+        transform: translate(-50%, calc(-100% + 0.25rem));
         opacity: 1;
       }
     }
 
+    &:hover {
+      cursor: default;
+      z-index: 3;
+    }
+
     &.current-club {
-      .name {
-        transform: translate(-50%, -1.5rem);
-        opacity: 1;
-      }
+      z-index: 2;
     }
 
     &.friendship,
@@ -105,13 +106,24 @@ $sidebarMobileSize: 90%;
       pointer-events: none;
       background: white;
       box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.25);
-      font-size: 1.25em;
       border-radius: 10px;
       padding: 0.5rem 1rem;
-      font-weight: bold;
-      color: $textColor;
+      text-align: center;
 
       transition: transform 0.3s, opacity 0.3s;
+
+      .original {
+        display: block;
+        font-size: 1.25em;
+        font-weight: bold;
+        color: $textColor;
+      }
+
+      .transliteration {
+        display: block;
+        font-size: 0.85em;
+        color: $minorTextColor;
+      }
     }
 
     .logo-wrapper {

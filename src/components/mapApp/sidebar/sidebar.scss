@@ -11,6 +11,11 @@
   transition: transform 0.3s;
 
   &.opened {
+
+    #sidebar-toggle-overlay {
+      width: 3rem;
+    }
+
     #scrollbar-toggle {
       svg {
         transform: translateX(0px);
@@ -18,9 +23,22 @@
     }
   }
 
+  #sidebar-toggle-overlay {
+    position: absolute;
+    width: 5rem;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    z-index: 5;
+    transform: translateX(-50%);
+
+    transition: width 0.3s;
+  }
+
   #scrollbar-toggle {
     position: absolute;
     top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     z-index: 100;
     width: 3rem;
@@ -104,12 +122,25 @@
     }
 
     .name {
-      font-size: 1em;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-flow: column;
       flex-grow: 1;
       text-align: left;
-      color: $textColor;
       transform: translateY(-2px);
       font-weight: 500;
+      font-size: 1em;
+
+      .original {
+        font-size: 1em;
+        color: $textColor;
+      }
+
+      .transliteration {
+        font-size: 0.7em;
+        color: $minorTextColor;
+      }
     }
   }
 

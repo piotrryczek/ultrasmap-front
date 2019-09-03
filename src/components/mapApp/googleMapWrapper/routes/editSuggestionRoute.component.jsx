@@ -6,7 +6,7 @@ import Suggestion from 'components/mapApp/suggestion/suggestion.component';
 
 function EditSuggestionRoute() {
   return (
-    <Route path="/suggestion/:clubId" component={routeProps => <PageOverlay><Suggestion {...routeProps} editType="edit" /></PageOverlay>} />
+    <Route exact path="/suggestion/:clubId" component={routeProps => <PageOverlay><Suggestion {...routeProps} editType="edit" /></PageOverlay>} />
   );
 }
 

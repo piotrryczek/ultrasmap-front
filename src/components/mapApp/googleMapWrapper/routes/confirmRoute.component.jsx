@@ -6,7 +6,7 @@ import EmailConfirm from 'components/emailConfirm/emailConfirm.component';
 
 function ConfirmRoute() {
   return (
-    <Route path="/confirm/:verificationCode" component={props => <PageOverlay><EmailConfirm {...props} /></PageOverlay>} />
+    <Route exact path="/confirm/:verificationCode" component={props => <PageOverlay><EmailConfirm {...props} /></PageOverlay>} />
   );
 }
 

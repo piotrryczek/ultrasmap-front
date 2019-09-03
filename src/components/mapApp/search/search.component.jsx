@@ -1,8 +1,10 @@
 import React, { useState, useCallback, useEffect, useRef, memo } from 'react';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import classNames from 'classnames';
+import { isMobile, isTablet } from 'react-device-detect';
 
 import AddCommentIcon from '@material-ui/icons/AddCommentOutlined';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
@@ -14,11 +16,14 @@ import ApiError from 'util/apiError';
 import Api from 'services/api';
 import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
 
+import { setIsLoadingClub } from 'components/app/app.actions';
+
 function Search(props) {
-  const { retrieveClub, setSearchInputRef } = props;
+  const { setSearchInputRef } = props;
 
   const { t } = useTranslation(); 
   const inputRef = useRef(null);
+  const dispatch = useDispatch();
 
   const [state, setState] = useState({
     search: '',
@@ -83,7 +88,10 @@ function Search(props) {
   }, 300);
 
   const setNewClub = (clubId) => {
-    retrieveClub(clubId);
+    history.push({
+      pathname: `/club/${clubId}`,
+      state: { artificialDelay: isMobile || isTablet }
+    });
 
     setState(prevState => ({
       ...prevState,
@@ -169,15 +177,13 @@ function Search(props) {
     }));
   }, []);
 
-  const handleGetRandom = useCallback(() => {
-    retrieveClub();
+  const handleGetRandom = useCallback(async () => {
 
-    setState(prevState => ({
-      ...prevState,
-      clubs: [],
-      search: '',
-      hoveredClubIndex: null,
-    }));
+    dispatch(setIsLoadingClub(true));
+
+    const { data: randomClubId } = await Api.get('/clubs/randomClubId');
+
+    history.push(`/club/${randomClubId}`);
   }, []);
 
   return (
@@ -231,6 +237,7 @@ function Search(props) {
                 {clubs.map(({
                   _id: clubId,
                   name,
+                  transliterationName,
                   logo,
                 }, index) => (
                   <li
@@ -250,7 +257,10 @@ function Search(props) {
                           <img src={`${IMAGES_URL}/h180/${logo}`} alt="" />
                         </div>
                       )}
-                      <p className="name">{name}</p>
+                      <p className="name">
+                        <span className="original">{name}</span>
+                        {transliterationName && (<span className="transliteration">{transliterationName}</span>)}
+                      </p>
                     </button>
                   </li>
                 ))}

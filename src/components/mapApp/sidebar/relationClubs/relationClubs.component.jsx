@@ -5,11 +5,11 @@ import { IMAGES_URL } from 'config/config';
 function RelationClubs(props) {
   const {
     clubs,
-    retrieveClub,
+    goTo,
   } = props;
 
   const handleChangeClub = clubId => () => {
-    retrieveClub(clubId);
+    goTo(clubId);
   }
 
   return (
@@ -17,6 +17,7 @@ function RelationClubs(props) {
       {clubs.map(({
         _id: clubId,
         name,
+        transliterationName,
         logo,
       }) => (
         <li key={clubId} className="club">
@@ -24,7 +25,10 @@ function RelationClubs(props) {
             <div className="logo">
               <img src={`${IMAGES_URL}/h180/${logo}`} alt="" />
             </div>
-            <h5 className="name">{name}</h5>
+            <h5 className="name">
+              <span className="original">{name}</span>
+              <span className="transliteration">{transliterationName}</span>
+            </h5>
           </button>
         </li>
       ))}

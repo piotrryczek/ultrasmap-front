@@ -22,10 +22,6 @@ function GoogleMapWrapper(props) {
   const windowHeight = useWindowHeight();
 
   const {
-    retrieveClub,
-  } = props;
-
-  const {
     isSidebarOpened,
     isLoadingClub,
   } = useSelector(state => ({
@@ -43,11 +39,10 @@ function GoogleMapWrapper(props) {
     <div id="map-wrapper" className={classNames({ 'sidebar-opened': isSidebarOpened })} style={{ height: `${windowHeight}px` }}>
       <LoadingWrapper type="big" isLoading={isLoadingClub}>
         <LoginLogoutButton />
-        <Search retrieveClub={retrieveClub} setSearchInputRef={setSearchInputRefCallback} />
+        <Search setSearchInputRef={setSearchInputRefCallback} />
         <GoogleMapClubs
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...props}
-          googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}&v=3.exp&libraries=geometry,drawing,places`}
           loadingElement={divElMap}
           containerElement={divElMap}
           mapElement={divElMap}

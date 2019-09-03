@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
+import { useSwipeable } from 'react-swipeable'
 
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -14,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
+import history from 'config/history';
 import { IMAGES_URL } from 'config/config';
 import useWindowHeight from 'hooks/useWindowHeight';
 
@@ -21,13 +23,14 @@ import ScrollbarsWrapper from 'common/scrollbarsWrapper/scrollbarsWrapper.compon
 import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
 import RelationClubs from 'components/mapApp/sidebar/relationClubs/relationClubs.component';
 
-import { toggleSidebar } from 'components/app/app.actions';
+import { toggleSidebar, showSidebar, hideSidebar } from 'components/app/app.actions';
 
-const ClubContent = ({ club, retrieveClub }) => {
+const ClubContent = ({ club }) => {
   const { t } = useTranslation();
 
   const {
     name,
+    transliterationName,
     logo,
     tier,
     friendships,
@@ -37,14 +40,15 @@ const ClubContent = ({ club, retrieveClub }) => {
     satelliteOf,
   } = club;
 
-  const handleChangeClub = clubId => () => {
-    retrieveClub(clubId);
-  }
+  const handleGoTo = useCallback((clubId) => {
+    history.push(`/club/${clubId}`)
+  }, []);
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Typography variant="h5" align="center">{name}</Typography>
+        {transliterationName && (<Typography variant="subtitle2" align="center">{transliterationName}</Typography>)}
       </Grid>
       <Grid item xs={12}>
         <Paper>
@@ -57,35 +61,35 @@ const ClubContent = ({ club, retrieveClub }) => {
       {friendships.length > 0 && (
         <Grid item xs={12}>
           <h5 className="relations-header friendships-header"><span className="text">{t('global.friendships')}</span></h5>
-          <RelationClubs clubs={friendships} retrieveClub={retrieveClub} />
+          <RelationClubs clubs={friendships} goTo={handleGoTo} />
         </Grid>
       )}
       
       {agreements.length > 0 && (
         <Grid item xs={12}>
           <h5 className="relations-header agreements-header"><span className="text">{t('global.agreements')}</span></h5>
-          <RelationClubs clubs={agreements} retrieveClub={retrieveClub} />
+          <RelationClubs clubs={agreements} goTo={handleGoTo} />
         </Grid>
       )}
       
       {positives.length > 0 && (
         <Grid item xs={12}>
           <h5 className="relations-header positives-header"><span className="text">{t('global.positives')}</span></h5>
-          <RelationClubs clubs={positives} retrieveClub={retrieveClub} />
+          <RelationClubs clubs={positives} goTo={handleGoTo} />
         </Grid>
       )}
       
       {satellites.length > 0 && (
         <Grid item xs={12}>
           <h5 className="relations-header satellites-header"><span className="text">{t('global.satellites')}</span></h5>
-          <RelationClubs clubs={satellites} retrieveClub={retrieveClub} />
+          <RelationClubs clubs={satellites} goTo={handleGoTo} />
         </Grid>
       )}
       
       {satelliteOf && (
         <Grid item xs={12}>
           <h5 className="relations-header satellites-header"><span className="text">{t('global.satelliteOf')}</span></h5>
-          <button type="button" onClick={handleChangeClub(satelliteOf._id)} className="club-link">
+          <button type="button" onClick={() => { handleGoTo(satelliteOf._id); }} className="club-link">
             <div className="logo">
               <img src={`${IMAGES_URL}/h90/${satelliteOf.logo}`} alt="" />
             </div>
@@ -151,18 +155,38 @@ function Sidebar(props) {
   }));
 
   const handleToggleOpened = useCallback(() => {
-    dispatch(toggleSidebar())
+    dispatch(toggleSidebar());
   }, []);
 
+  const handleSwipeLeft = useCallback(() => {
+    dispatch(showSidebar());
+  }, []);
+
+  const handleSwipeRight = useCallback(() => {
+    dispatch(hideSidebar());
+  }, []);
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: handleSwipeLeft,
+    onSwipedRight: handleSwipeRight,
+  });
+
   return (
-    <div id="sidebar" className={classNames('has-scrollbar', { 'opened': isSidebarOpened })} style={{ height: `${windowHeight}px` }}>
-      <button
-        type="button"
-        onClick={handleToggleOpened}
-        id="scrollbar-toggle"
-      >
-        {isSidebarOpened ? <ChevronRightIcon fontSize="large" htmlColor="#191923" /> : <ChevronLeftIcon fontSize="large" htmlColor="#191923" />}
-      </button>
+    <div
+      id="sidebar"
+      className={classNames('has-scrollbar', { 'opened': isSidebarOpened })} style={{ height: `${windowHeight}px` }}
+      {...swipeHandlers}
+    >
+      <div id="sidebar-toggle-overlay">
+        <button
+          type="button"
+          onClick={handleToggleOpened}
+          id="scrollbar-toggle"
+        >
+          {isSidebarOpened ? <ChevronRightIcon fontSize="large" htmlColor="#191923" /> : <ChevronLeftIcon fontSize="large" htmlColor="#191923" />}
+        </button>
+      </div>
+      
       <ScrollbarsWrapper>
         <LoadingWrapper type="big" isLoading={isLoadingClub}>
           <div className="inner">

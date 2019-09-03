@@ -6,7 +6,7 @@ import Login from 'components/login/login.component';
 
 function LoginRoute() {
   return (
-    <Route path="/login" component={props => <PageOverlay><Login {...props} /></PageOverlay>} />
+    <Route exact path="/login" component={props => <PageOverlay><Login {...props} /></PageOverlay>} />
   );
 }
 

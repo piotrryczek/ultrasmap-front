@@ -1,5 +1,6 @@
 $backgroundColor: #FFFCFF; // #FBFEF9
 $textColor: #191923;
+$minorTextColor: lighten($textColor, 30%);
 $standardColor: #0E79B2; // Agreement
 $errorColor: #ED254E;
 $correctColor: #248232; // Friendship

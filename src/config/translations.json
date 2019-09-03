@@ -128,6 +128,7 @@
           "placeholder": "Zacznij wpisywać i wybierz klub..."
         },
         "comments": {
+          "additional": "Postaraj się podać możliwie jak najwięcej informacji, które pozwolą nam zweryfikować Twoją sugestię. Mogą to być linki do forów, dyskusji czy do komunikatu danej grupy kibicowskiej o nawiązaniu bądź zerwaniu relacji, możesz także napisać, że są to Twoje prywatne źródła. Zależy nam aby dane były poprawne i chcemy dodawać tylko sprawdzone informacje. Jeśli nie będziemy w stanie potwierdzić danych zawartych w sugestii - odrzucimy ją. Pamiętaj też, że spamowanie bądź zaśmiecanie będzie skutkować odebraniem możliwości dodawania sugestii. Dziękujemy!",
           "header": "Uwagi",
           "tooltip": "Dopisz wszelkie uwagi bądź sugestie, które mogą pomóc precyzyjnie uwzględnić Twoją sugestię."
         },
@@ -266,6 +267,7 @@
           "placeholder": "Start typing and select club..."
         },
         "comments": {
+          "additional": "Try to provide as much as possible information to help us verify your suggestion. These can be links to forums, discussions or to the announcement of a given supporter group about establishing or dissolve relationships, you can also write that these are based on your private sources. We want data to be correct and we want to add only checked and confirmed information. If we are unable to confirm the data contained in the suggestion - we will reject it. Also remember that spamming will result revoking your right to add suggestions. Thank you!",
           "header": "Comments",
           "tooltip": "Write any comments or suggestions that can help us accurately consider your suggestion."
         },

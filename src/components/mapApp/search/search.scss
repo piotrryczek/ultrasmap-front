@@ -2,7 +2,7 @@
   position: absolute;
   width: 100%;
   top: 1rem;
-  z-index: 4;
+  z-index: 5; // not sure, was 4
   padding: 0px 20%; // $fullSizeMargin
 
   box-sizing: border-box;
@@ -121,9 +121,21 @@
         }
 
         .name {
-          color: $textColor;
-          font-size: 1.125em;
-          font-weight: 500;
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+          flex-flow: column;
+
+          .original {
+            color: $textColor;
+            font-size: 1.125em;
+            font-weight: 500;
+          }
+
+          .transliteration {
+            color: $minorTextColor;
+            font-size: 0.7em;
+          }
         }
       }
     }

@@ -2,6 +2,7 @@ import update from 'immutability-helper';
 
 import {
   SET_MESSAGE,
+  SET_LANGUAGE,
   SET_IS_AUTHENTICATED,
   SET_IS_LOADING_CLUB,
   SET_IS_SIDEBAR_OPENED,
@@ -30,6 +31,12 @@ const app = (state = initialState, { type, payload }) => {
     case SET_MESSAGE: {
       return update(state, {
         messageCode: { $set: payload },
+      });
+    }
+
+    case SET_LANGUAGE: {
+      return update(state, {
+        language: { $set: payload },
       });
     }
 
