@@ -59,20 +59,21 @@ function Suggestion(props) {
   } = props;
 
   const { t } = useTranslation();
-  const isAuthenticated = useSelector(state => state.app.isAuthenticated);
+  const { isAuthenticated, messageCode } = useSelector(state => ({
+    isAuthenticated: state.app.isAuthenticated,
+    messageCode: state.app.messageCode,
+  }));
 
   const club = _get(props, 'location.state.club', null);
   const clubId = _get(props, 'match.params.clubId', null);
 
-  const [hasChanged, setHasChanged] = useState(false);
   const [state, setState] = useState({
     isSend: false,
     isLoading: false,
+    hasChanged: false,
     fields: {
       newLogo: null,
       name: '',
-      transliterationName: '',
-      searchName: '',
       logo: '',
       tier: '',
       coordinates: DEFAULT_COORDINATES,
@@ -87,8 +88,18 @@ function Suggestion(props) {
   const {
     isSend,
     isLoading,
+    hasChanged,
     fields,
   } = state;
+
+  useEffect(() => { // If error appears
+    if (messageCode) {
+      setState(prevState => ({
+        ...prevState,
+        isLoading: false,
+      }));
+    }
+  }, [messageCode]);
 
   const fetchData = async () => {
     setState(prevState => ({
@@ -123,10 +134,7 @@ function Suggestion(props) {
     const {
       newLogo, // file
       name,
-      transliterationName,
-      searchName,
       logo, // url
-      tier,
       coordinates,
       friendships,
       agreements,
@@ -162,10 +170,7 @@ function Suggestion(props) {
       comment,
       // Club data
       name,
-      transliterationName,
-      searchName,
       logo,
-      tier,
       coordinates,
       friendships: friendshipsIds,
       friendshipsToCreate,
@@ -221,9 +226,15 @@ function Suggestion(props) {
         noChanges: 'formErrors.suggestionNoChanges',
       });
 
-      setHasChanged(false);
+      setState(prevState => ({
+        ...prevState,
+        hasChanged: false,
+      }));
     } else {
-      setHasChanged(true);
+      setState(prevState => ({
+        ...prevState,
+        hasChanged: true,
+      }));
     }
 
     const {

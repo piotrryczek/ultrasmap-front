@@ -10,6 +10,9 @@ import Search from 'components/mapApp/search/search.component';
 import Languages from 'components/mapApp/languages/languages.component';
 import GoogleMapClubs from 'components/mapApp/googleMapClubs/googleMapClubs.component';
 
+import ClubsStatus from 'components/mapApp/clubsStatus/clubsStatus.component';
+import ClubsToggleShow from 'components/mapApp/clubsToggleShow/clubsToggleShow.component';
+
 import LoginRoute from './routes/loginRoute.component';
 import RegisterRoute from './routes/registerRoute.component';
 import NewSuggestionRoute from './routes/newSuggestionRoute.component';
@@ -18,6 +21,10 @@ import ConfirmRoute from './routes/confirmRoute.component';
 
 
 function GoogleMapWrapper(props) {
+  const {
+    club: currentClub,
+  } = props;
+
   const [searchInputRef, setSearchInputRef] = useState(null);
   const windowHeight = useWindowHeight();
 
@@ -40,6 +47,8 @@ function GoogleMapWrapper(props) {
       <LoadingWrapper type="big" isLoading={isLoadingClub}>
         <LoginLogoutButton />
         <Search setSearchInputRef={setSearchInputRefCallback} />
+        <ClubsStatus currentClub={currentClub} />
+        <ClubsToggleShow currentClub={currentClub} />
         <GoogleMapClubs
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...props}

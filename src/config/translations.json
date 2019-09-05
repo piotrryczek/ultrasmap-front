@@ -9,11 +9,11 @@
         "JWT_TOKEN": "Błędna autoryzacja.",
         "LOGIN_FAILED": "Błędne dane logowania.",
         "USER_NOT_VERIFIED": "Nie jesteś zweryfikowany.",
-        "USER_WITH_EMAIL_EXISTS": "Błąd operacji.",
+        "USER_WITH_EMAIL_EXISTS": "Użytkownik o tym adresie email już istnieje.",
         "USER_NOT_EXISTS": "Błąd operacji.",
         "AUTHORIZATION_TOKEN_EXISTS": "Błąd operacji.",
-        "CLUB_WITH_NANE_EXISTS": "Błąd operacji.",
-        "RELATIONS_NOT_UNIQUE": "Błąd operacji.",
+        "CLUB_WITH_NANE_EXISTS": "Klub o tej nazwie już istnieje.",
+        "RELATIONS_NOT_UNIQUE": "Relacje nie są unikalne.",
         "INCOMPLETE_SUGGESTION_COMMENT": "Błąd operacji."
       },
       "global": {
@@ -32,7 +32,9 @@
         "satelliteOf": "Jest satelitą / fanklubem",
         "suggestChange": "Zasugeruj zmianę",
         "backToMap": "Wróc do mapy",
-        "getRandom": "Losuj"
+        "getRandom": "Losuj",
+        "zoomIn": "Przybliż aby przeglądać kluby",
+        "backToViewingClubs": "Wróc do przeglądania klubów"
       },
       "formErrors": {
         "email": "Niepoprawny adres email",
@@ -150,7 +152,7 @@
         "USER_WITH_EMAIL_EXISTS": "Operation error.",
         "USER_NOT_EXISTS": "Operation error.",
         "AUTHORIZATION_TOKEN_EXISTS": "Operation error.",
-        "CLUB_WITH_NANE_EXISTS": "Operation error.",
+        "CLUB_WITH_NANE_EXISTS": "Club with provided name already exists.",
         "RELATIONS_NOT_UNIQUE": "Operation error.",
         "INCOMPLETE_SUGGESTION_COMMENT": "Operation error."
       },
@@ -170,7 +172,9 @@
         "satelliteOf": "Satellite / Fanclub of",
         "suggestChange": "Suggest change",
         "backToMap": "Back to map",
-        "getRandom": "Random"
+        "getRandom": "Random",
+        "zoomIn": "Zoom in to browse clubs",
+        "backToViewingClubs": "Back to browsing clubs"
       },
       "formErrors": {
         "email": "Incorrect email address",

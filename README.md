@@ -14,7 +14,7 @@ Live:
 
 - Demo: http://ultrasmap-demo-front.piotrryczek.pl
 - Developer: http://ultrasmap-front.piotrryczek.pl
-- Production: *soon*
+- Production: https://www.fanaticsmap.pl
 
 ### Build
 ```

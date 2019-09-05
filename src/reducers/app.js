@@ -5,9 +5,11 @@ import {
   SET_LANGUAGE,
   SET_IS_AUTHENTICATED,
   SET_IS_LOADING_CLUB,
+  SET_IS_LOADING_CLUBS,
   SET_IS_SIDEBAR_OPENED,
+  SET_ZOOM,
 } from 'components/app/app.actions';
-import { DEFAULT_LANGUAGE } from 'config/config';
+import { DEFAULT_LANGUAGE, DEFAULT_ZOOM } from 'config/config';
 
 const getCredentialsFromLocalStorage = () => {
   const credentials = localStorage.getItem('credentials');
@@ -22,8 +24,10 @@ const initialState = {
   credentials: getCredentialsFromLocalStorage(),
   messageCode: '',
   isLoadingClub: false,
+  isLoadingClubs: false,
   language: localStorage.getItem('language') || DEFAULT_LANGUAGE,
   isSidebarOpened: window.innerWidth > 800,
+  zoom: DEFAULT_ZOOM,
 };
 
 const app = (state = initialState, { type, payload }) => {
@@ -60,9 +64,21 @@ const app = (state = initialState, { type, payload }) => {
       });
     }
 
+    case SET_IS_LOADING_CLUBS: {
+      return update(state, {
+        isLoadingClubs: { $set: payload },
+      });
+    }
+
     case SET_IS_SIDEBAR_OPENED: {
       return update(state, {
         isSidebarOpened: { $set: payload },
+      });
+    }
+
+    case SET_ZOOM: {
+      return update(state, {
+        zoom: { $set: payload },
       });
     }
 

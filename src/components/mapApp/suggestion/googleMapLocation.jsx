@@ -10,7 +10,7 @@ function GoogleMapLocation(props) {
   const handleDragEnd = useCallback((event) => {
     const { latLng: { lat, lng } } = event;
 
-    setFieldValue('coordinates', [lat(), lng()]);
+    setFieldValue('coordinates', [lng(), lat()]);
   }, []);
 
   return (

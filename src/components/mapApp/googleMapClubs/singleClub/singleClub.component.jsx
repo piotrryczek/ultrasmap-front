@@ -1,11 +1,9 @@
-import React, { memo, useCallback } from 'react';
-import { Marker, OverlayView, Polyline } from 'react-google-maps';
-import classNames from 'classnames';
+import React, { memo } from 'react';
+import { Polyline } from 'react-google-maps';
 import getDistance from 'geolib/es/getDistance';
 
-import history from 'config/history';
-import { IMAGES_URL } from 'config/config';
 import { getMaximumDistance, parseCoordinates } from 'util/helpers';
+import ClubMarker from 'components/mapApp/googleMapClubs/clubMarker/clubMarker.component';
 
 const getRelationColor = relationType => {
   switch (relationType) {
@@ -26,11 +24,6 @@ const getRelationColor = relationType => {
       break;
   }
 };
-
-const getPixelPositionOffset = (width, height) => ({
-  x: -(width / 2),
-  y: -(height / 2),
-});
 
 const enhanceRelations = (clubs, relation) => clubs.map(club => ({
   ...club,
@@ -70,15 +63,11 @@ const getAllClubs = club => {
   return relations;
 }
 
-function Clubs(props) {
+function SingleClub(props) {
   const {
     currentClub,
     forwardRef: mapRef,
   } = props;
-
-  const handleChangeClub = useCallback(clubId => () => {
-    history.push(`/club/${clubId}`)
-  }, [currentClub]);
 
   const allClubs = currentClub ? getAllClubs(currentClub) : [];
 
@@ -112,56 +101,7 @@ function Clubs(props) {
 
   return (
     <>
-      {allClubs.map(club => {
-        const {
-          _id: clubId,
-          latLng,
-          name,
-          transliterationName,
-          logo,
-          relationType,
-        } = club;
-
-        return (
-          <Marker
-            key={clubId}
-            defaultPosition={latLng}
-            icon={{
-              path: window.google.maps.SymbolPath.CIRCLE,
-              scale: 0
-            }}
-          >
-            <OverlayView
-              key={clubId}
-              position={latLng}
-              mapPaneName="overlayMouseTarget"
-              getPixelPositionOffset={getPixelPositionOffset}
-            >
-              <button
-                type="button"
-                className={classNames(
-                  {
-                    'current-club': clubId === currentClub._id,
-                  },
-                  'club-marker',
-                  relationType
-                )}
-                onClick={handleChangeClub(clubId)}
-              >
-                <div className="name">
-                  <span className="original">{name}</span>
-                  {transliterationName && (<span className="transliteration">{transliterationName}</span>)}
-                </div>
-                <div className="logo-wrapper">
-                  <div className="logo">
-                    <img src={`${IMAGES_URL}/h90/${logo}`} alt="" />
-                  </div>
-                </div>
-              </button>
-            </OverlayView>
-          </Marker>
-        )
-      })}
+      {allClubs.map(club => <ClubMarker key={club._id} club={club} currentClub={currentClub} /> )}
       {relations.map(({
         _id: clubId,
         latLng,
@@ -181,4 +121,4 @@ function Clubs(props) {
   )
 }
 
-export default memo(Clubs);
+export default memo(SingleClub);

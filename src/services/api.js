@@ -1,5 +1,6 @@
 import axios from 'axios';
 import ApiError from 'util/apiError';
+import qs from 'qs';
 
 class Api {
 
@@ -21,6 +22,7 @@ class Api {
     if (data) {
       if (dataType === 'query') {
         Object.assign(config, {
+          paramsSerializer: params => qs.stringify(params),
           params: data,
         });
       } else {

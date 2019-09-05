@@ -1,0 +1,37 @@
+.clubs-status {
+  position: absolute;
+  left: 50%;
+  top: 5rem;
+  z-index: 3;
+  opacity: 0;
+  transition: transform 0.3s, opacity 0.3s;
+
+  &.show {
+    opacity: 1 !important;
+  }
+}
+
+#clubs-status-information {
+  font-size: 1em;
+  background: white;
+  padding: 0.55rem 1rem;
+  border-radius: 15px;
+  box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, -3rem);
+
+  &.show {
+    transform: translate(-50%, 0px);
+  }
+}
+
+#clubs-status-loading {
+  width: 100px;
+  height: 40px;
+  background: url('/assets/loading_horizontal.gif') no-repeat center;
+  background-size: cover;
+  pointer-events: none;
+  display: block;
+  opacity: 0;
+}

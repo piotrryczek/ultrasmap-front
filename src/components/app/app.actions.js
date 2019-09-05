@@ -4,7 +4,9 @@ export const SET_MESSAGE = `${namespace}_SET_MESSAGE`;
 export const SET_LANGUAGE = `${namespace}_SET_LANGUAGE`;
 export const SET_IS_AUTHENTICATED = `${namespace}_SET_IS_AUTHENTICATED`;
 export const SET_IS_LOADING_CLUB = `${namespace}_SET_IS_LOADING_CLUB`;
+export const SET_IS_LOADING_CLUBS = `${namespace}_SET_IS_LOADING_CLUBS`;
 export const SET_IS_SIDEBAR_OPENED = `${namespace}_SET_IS_SIDEBAR_OPENED`;
+export const SET_ZOOM = `${namespace}_SET_ZOOM`;
 
 export const setMessage = messageCode => (dispatch) => {
   dispatch({
@@ -47,6 +49,13 @@ export const setIsLoadingClub = isLoadingClub => (dispatch) => {
   });
 };
 
+export const setIsLoadingClubs = isLoadingClubs => (dispatch) => {
+  dispatch({
+    type: SET_IS_LOADING_CLUBS,
+    payload: isLoadingClubs,
+  });
+};
+
 export const toggleSidebar = () => (dispatch, getState) => {
   const { isSidebarOpened } = getState().app;
 
@@ -69,3 +78,10 @@ export const hideSidebar = () => (dispatch) => {
     payload: false,
   });
 }
+
+export const setZoom = zoom => (dispatch) => {
+  dispatch({
+    type: SET_ZOOM,
+    payload: zoom,
+  });
+};

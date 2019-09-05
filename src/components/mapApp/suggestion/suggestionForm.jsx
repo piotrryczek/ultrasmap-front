@@ -42,7 +42,6 @@ function SuggestionForm({
   values: {
     name,
     logo,
-    tier,
     coordinates,
     friendships,
     agreements,

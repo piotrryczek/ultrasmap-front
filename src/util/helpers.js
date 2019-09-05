@@ -2,7 +2,7 @@ import getDistance from 'geolib/es/getDistance';
 
 export const parseCoordinates = (coordinates) => {
   return coordinates.reduce((acc, el, index) => {
-    const property = index === 0 ? 'lat' : 'lng';
+    const property = index === 0 ? 'lng' : 'lat';
     acc[property] = el;
 
     return acc;

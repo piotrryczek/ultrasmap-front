@@ -4,6 +4,8 @@ $sidebarMobileSize: 90%;
 @import "./sidebar/sidebar";
 @import "./search/search";
 @import "./languages/languages";
+@import "./clubsToggleShow/clubsToggleShow";
+@import "./clubsStatus/clubsStatus";
 
 #map-app {
   display: flex;
@@ -65,6 +67,7 @@ $sidebarMobileSize: 90%;
       z-index: 2;
     }
 
+    &.no-relation,
     &.friendship,
     &.agreement,
     &.positive,

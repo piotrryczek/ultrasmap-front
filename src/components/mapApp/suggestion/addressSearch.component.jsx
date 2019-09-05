@@ -18,7 +18,7 @@ function AddressSearch(props) {
     const [result] = await geocodeByAddress(newAddress);
     const { lat, lng } = await getLatLng(result);
 
-    onChange([lat, lng]);
+    onChange([lng, lat]);
   }, []);
 
   return (
