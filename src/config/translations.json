@@ -33,8 +33,20 @@
         "suggestChange": "Zasugeruj zmianę",
         "backToMap": "Wróc do mapy",
         "getRandom": "Losuj",
-        "zoomIn": "Przybliż aby przeglądać kluby",
-        "backToViewingClubs": "Wróc do przeglądania klubów"
+        "zoomIn": "Za dużo klubów jednocześnie. Przybliż bądź przesuń w inny obszar.",
+        "zoomMax": "Przybliż, aby dalej przeglądać kluby.",
+        "zoomMaxMore": "Przekroczyłes najdalszy możliwy poziom oddalenia w jakim funkcjonuje aplikacja. Aby dalej przeglądać kluby przybliż.",
+        "backToViewingClubs": "Wróc do przeglądania klubów",
+        "clubsOnMap": "Na mapie",
+        "aboutProject": "O projekcie"
+      },
+      "ratings": {
+        "label": "znaczenie kibicowskie",
+        "stars1": "grupka działająca od czasu do czasu lokalnie",
+        "stars2": "mniejszy skład znający swoje miejsce w szeregu",
+        "stars3": "liczące się grupa, której daleko do czołówki",
+        "stars4": "silna ekipa licząca się na scenie krajowej",
+        "stars5": "marka rozpoznawalna na arenie międzynarodowej"
       },
       "formErrors": {
         "email": "Niepoprawny adres email",
@@ -136,6 +148,25 @@
         },
         "noOptions": "Zacznij pisać aby wyszukać kluby...",
         "searchPlaces": "Wyszukaj miejsca..."
+      },
+      "about": {
+        "about": "O projekcie",
+        "faq": "FAQ"
+      },
+      "faq": {
+        "header": "Pytania i odpowiedzi",
+        "question1": "Czym są zgody, układy, pozytywne relacje, satelity?",
+        "answer1": "Układ zaczyna się wtedy kiedy dwie grupy zaczynają ze sobą współpracować, zgoda to dalsza forma więzi, w której zazwyczaj partycypują już wszystkie grupy kibicowskie danych drużyn. W rożnych krajach może przyjmować to różną formę. Pozytywne relacje na mapie oznaczają formę sympatyzowania bądź prywatnych kontaktów. Satelity to sytuacja kiedy wszyscy bądź prawie wszyscy kibice danej drużyny kibicują też innej, bardziej znaczącej drużynie. (zostanie uzupełnione w przyszłości",
+        "question2": "Czym są gwiazdki pod herbem klubu?",
+        "answer2": "Oznaczają naszą subiektywną ocenę znaczenia i potencjału jego kibiców. Nakłada się na to średnia frekwencja na meczach u siebie, liczby wyjazdowe, aktywność grup ultras, siła chuliganów czy rozpoznawalność na arenie międzynarodowej. Nie jest to forma rankingu, a pomocnicza informacja, głównie przy okazji przeglądania mniej znanych ekip zza granicy.",
+        "question3": "Znalazłeś błąd w danych na mapie?",
+        "answer3": "Zależy nam aby mapa jak najdokładniej odzwierciedlała rzeczywistość. W przypadku znalezienie błędu skorzystaj z mechanizmu sugestii i wyślij poprawkę. Postaraj się uzupełnić pole `Uwagi` możliwie dokładnie - pomoże nam to w werfyikacji Twojego zgłoszenia. Są też oczywiście sytuacje wyjątkowe - w takich przypadkach przeprowadzamy wewnętrzną debatę i szukamy kompromisu.",
+        "question4": "Dlaczego nie ma kos?",
+        "answer4": "Bo jest ich za dużo. Każdy liczący się klub posiada ich grube kilkadziesiąt. Mapa drastycznie straciłaby na czytelności. Zazwyczaj można przyjąć, że jeśli dwóch klubów nie łączy jakaś pozytywna więź to raczej nie będą za sobą przepadać. W najlepszym przypadku będą do siebie nastawione neutralnie.",
+        "question5": "Jak jest dobierana lokalizacja klubu?",
+        "answer5": "Jest to podstawowy obiekt, na którym dana drużyna rozgrywa swoje mecze (bądź sporadycznie konkretna trybuna jeśli stadion jest wykorzystywany przez więcej niż jeden klub). Jeśli tymczasowo rozgrywa je na innym stadionie z powodu na przykład przebudowy bądź budowy nowego stadionu wtedy nadal mimo wszystko zaznaczamy obiekt pierwotny. Na mapie znajdziecie wyjątki od tej reguły, ale tyczą się one sytuacji raczej ekstremalnych kiedy nic nie wskazuje na to aby w ciągu najbliższej przyszłości klub miał wrócił do gry `u siebie`, taka sytuacja może mieć na przykład miejsce w wyniku trwającego konfliktu zbrojnego.",
+        "question6": "Czy wyświetlanie na mapie jednego klubu nad drugim o czymś świadczy?",
+        "answer6": "Nie, wyłanianie sie na mapie kolejnych klubów odbywa się w sposób losowy więc to, że raz mały klub wyświetli sie ponad innym dużym jest wyłącznie dziełem przypadku."
       }
     }
   },
@@ -173,8 +204,15 @@
         "suggestChange": "Suggest change",
         "backToMap": "Back to map",
         "getRandom": "Random",
-        "zoomIn": "Zoom in to browse clubs",
-        "backToViewingClubs": "Back to browsing clubs"
+        "zoomIn": "Too much clubs at the same time. Zoom in or move to other area.",
+        "zoomMax": "Zoom in to continue browsing clubs.",
+        "zoomMaxMore": "You have zoomed out too far. Pleace zoom in to continue using an application",
+        "backToViewingClubs": "Back to browsing clubs",
+        "clubsOnMap": "On the map",
+        "aboutProject": "About project"
+      },
+      "ratings": {
+        "label": "supporters strength"
       },
       "formErrors": {
         "email": "Incorrect email address",
@@ -277,6 +315,25 @@
         },
         "noOptions": "Start typing to search clubs...",
         "searchPlaces": "Search places..."
+      },
+      "about": {
+        "about": "About project",
+        "faq": "FAQ"
+      },
+      "faq": {
+        "header": "FAQ",
+        "question1": "What are the friendships, agreements, positive relations and satellites?",
+        "answer1": "Soon...",
+        "question2": "What are the stars below club logo?",
+        "answer2": "They are representing our subiective estimation about club's supporters strength and importance. We are taking into account number of fans actively supporting every match, those who are going for away matches, ultras activity and hooligans strength. They are not ranking, they should be treated more as a hint to understand strength of less known groups, mostly in foreign countries.",
+        "question3": "I've found mistake in data, what should I do?",
+        "answer3": "We want data on the map to reflect reality as accurately as possible. If you find a mistake, use the suggestion feature and send us correction. Of course, there are also exceptional situations - in such cases we are debating internally and look for a compromise.",
+        "question4": "Why there are no negative relations?",
+        "answer4": "Because there are too much of them, every significant clubs has more than 20. Map would drastically lose it's readability. It can usually be assumed that if two clubs don't have positive ties, they are unlikely to like each other. At best, they will be neutral.",
+        "question5": "How do we choose club location?",
+        "answer5": "This is the main facility where the team plays its matches. If a club is temporarily playing at another stadium due to, for example, reconstruction or construction of a new stadium, we still mark it's original building. On the map you will find exceptions to this rule, but they relate to rather extreme situations when there is no big chance to change, such a situation may take place, for example, as a result of the ongoing armed conflict.",
+        "question6": "Does displaying on the map one club above another indicate something?",
+        "answer6": "Nope. Appearing logos on the map is being conducted in the random order."
       }
     }
   }

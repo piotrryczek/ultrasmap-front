@@ -12,21 +12,27 @@ import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+import LocationSearchingIcon from '@material-ui/icons/LocationSearching';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import history from 'config/history';
-import { IMAGES_URL } from 'config/config';
+import { IMAGES_URL, ABSOLUTE_MAX_ZOOM } from 'config/config';
 import useWindowHeight from 'hooks/useWindowHeight';
 
 import ScrollbarsWrapper from 'common/scrollbarsWrapper/scrollbarsWrapper.component';
 import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
 import RelationClubs from 'components/mapApp/sidebar/relationClubs/relationClubs.component';
+import RelationClub from 'components/mapApp/sidebar/relationClubs/relationClub.component';
+import ButtonLink from 'common/buttonLink/buttonLink.component';
 
 import { toggleSidebar, showSidebar, hideSidebar } from 'components/app/app.actions';
+import { useButtonIconStyles, useMobileStyles } from 'theme/useStyles';
 
-const ClubContent = ({ club }) => {
+const ClubContent = ({ club, handleGoTo }) => {
   const { t } = useTranslation();
+  const iconClasses = useButtonIconStyles({});
+  const mobileClasses = useMobileStyles({});
 
   const {
     name,
@@ -40,12 +46,23 @@ const ClubContent = ({ club }) => {
     satelliteOf,
   } = club;
 
-  const handleGoTo = useCallback((clubId) => {
-    history.push(`/club/${clubId}`)
-  }, []);
-
   return (
     <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Box display="flex" justifyItems="center" justifyContent="center">
+          <ButtonLink
+            className={mobileClasses.buttonBase}
+            variant="contained"
+            color="primary"
+            size="large"
+            type="button"
+            to="/"
+          >
+            <LocationSearchingIcon fontSize="small" className={iconClasses.leftIcon} />
+            {t('global.backToViewingClubs')}
+          </ButtonLink>
+        </Box>
+      </Grid>
       <Grid item xs={12}>
         <Typography variant="h5" align="center">{name}</Typography>
         {transliterationName && (<Typography variant="subtitle2" align="center">{transliterationName}</Typography>)}
@@ -89,12 +106,10 @@ const ClubContent = ({ club }) => {
       {satelliteOf && (
         <Grid item xs={12}>
           <h5 className="relations-header satellites-header"><span className="text">{t('global.satelliteOf')}</span></h5>
-          <button type="button" onClick={() => { handleGoTo(satelliteOf._id); }} className="club-link">
-            <div className="logo">
-              <img src={`${IMAGES_URL}/h90/${satelliteOf.logo}`} alt="" />
-            </div>
-            <h5 className="name">{satelliteOf.name}</h5>
-          </button>
+          <RelationClub
+            goTo={handleGoTo}
+            club={satelliteOf}
+          />
         </Grid>
       )}
 
@@ -117,27 +132,65 @@ const ClubContent = ({ club }) => {
             </Button>
           </Link>
         </Box>
-        
+      </Grid>
+
+      <Grid item xs={12}>
+        <Box display="flex" justifyContent="center">
+          <ButtonLink
+            variant="contained"
+            color="secondary"
+            size="large"
+            type="button"
+            to="/about"
+          >
+            {t('global.aboutProject')}
+          </ButtonLink>
+        </Box>
       </Grid>
     </Grid>
   );
 }
 
-const Welcome = () => {
+const ClubsContent = ({ clubs, handleGoTo, zoom, isTooMuchClubs }) => {
   const { t } = useTranslation();
 
+  if (zoom < ABSOLUTE_MAX_ZOOM || isTooMuchClubs) {
+    if (zoom < ABSOLUTE_MAX_ZOOM) {
+      return(<Typography>{t('global.zoomMaxMore')}</Typography>);
+    } else {
+      return(<Typography>{t('global.zoomIn')}</Typography>);
+    }
+  }
+
   return (
-    <>
-      <Typography variant="h5" gutterBottom>{t('welcome.header')}</Typography>
-      <Typography gutterBottom>{t('welcome.paragraph1')}</Typography>
-      <Typography gutterBottom>{t('welcome.paragraph2')}</Typography>
-      <Typography gutterBottom>{t('welcome.paragraph3')}</Typography>
-      <Typography gutterBottom>{t('welcome.paragraph4')}</Typography>
-      <Typography variant="caption">
-        {t('welcome.copyrights')}
-        <span className="copyright-email"><a href="mailto:fanaticsmap@gmail.com">fanaticsmap@gmail.com</a></span>
-      </Typography>
-    </>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <h5 className="relations-header no-relation-header">
+          <span className="text">
+            {t('global.clubsOnMap')}
+            <span className="clubs-number">
+              (
+              {clubs.length}
+              )
+            </span>
+          </span>
+        </h5>
+        <RelationClubs clubs={clubs} goTo={handleGoTo} />
+      </Grid>
+      <Grid item xs={12}>
+        <Box display="flex" justifyContent="center">
+          <ButtonLink
+            variant="contained"
+            color="secondary"
+            size="large"
+            type="button"
+            to="/about"
+          >
+            {t('global.aboutProject')}
+          </ButtonLink>
+        </Box>
+      </Grid>
+    </Grid>
   );
 }
 
@@ -147,11 +200,21 @@ function Sidebar(props) {
 
   const {
     club,
+    clubs,
   } = props;
 
-  const { isSidebarOpened, isLoadingClub } = useSelector(state => ({
+  const {
+    isSidebarOpened,
+    isLoadingClub,
+    isLoadingClubs,
+    zoom,
+    isTooMuchClubs,
+  } = useSelector(state => ({
     isSidebarOpened: state.app.isSidebarOpened,
     isLoadingClub: state.app.isLoadingClub,
+    isLoadingClubs: state.app.isLoadingClubs,
+    zoom: state.app.zoom,
+    isTooMuchClubs: state.app.isTooMuchClubs,
   }));
 
   const handleToggleOpened = useCallback(() => {
@@ -171,10 +234,15 @@ function Sidebar(props) {
     onSwipedRight: handleSwipeRight,
   });
 
+  const handleGoTo = useCallback((clubId) => {
+    history.push(`/club/${clubId}`)
+  }, []);
+
   return (
     <div
       id="sidebar"
-      className={classNames('has-scrollbar', { 'opened': isSidebarOpened })} style={{ height: `${windowHeight}px` }}
+      className={classNames('has-scrollbar', { 'opened': isSidebarOpened })}
+      style={{ height: `${windowHeight}px` }}
       {...swipeHandlers}
     >
       <div id="sidebar-toggle-overlay">
@@ -188,9 +256,11 @@ function Sidebar(props) {
       </div>
       
       <ScrollbarsWrapper>
-        <LoadingWrapper type="big" isLoading={isLoadingClub}>
+        <LoadingWrapper type="big" isLoading={isLoadingClub || isLoadingClubs}>
           <div className="inner">
-            {club ? <ClubContent {...props} /> : <Welcome />}
+            {club
+              ? <ClubContent club={club} handleGoTo={handleGoTo} />
+              : <ClubsContent clubs={clubs} handleGoTo={handleGoTo} zoom={zoom} isTooMuchClubs={isTooMuchClubs} />}
           </div>
         </LoadingWrapper>
       </ScrollbarsWrapper>

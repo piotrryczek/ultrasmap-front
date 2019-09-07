@@ -157,6 +157,20 @@ function Login() {
               </ButtonGroup>
             </Box>
           </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" justifyContent="center">
+              <ButtonLink
+                variant="contained"
+                color="secondary"
+                size="large"
+                type="submit"
+                to="/about"
+                className={mobileClasses.buttonBase}
+              >
+                {t('global.aboutProject')}
+              </ButtonLink>
+            </Box>
+          </Grid>
           {apiError && (
             <Grid item xs={12}>
               <Errors errors={t(`messageCodes.${apiError}`)} />

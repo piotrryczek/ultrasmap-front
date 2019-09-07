@@ -8,6 +8,8 @@ import {
   SET_IS_LOADING_CLUBS,
   SET_IS_SIDEBAR_OPENED,
   SET_ZOOM,
+  SET_IS_TOO_MUCH_CLUBS,
+  SET_HOVERED_CLUB_ID,
 } from 'components/app/app.actions';
 import { DEFAULT_LANGUAGE, DEFAULT_ZOOM } from 'config/config';
 
@@ -28,6 +30,8 @@ const initialState = {
   language: localStorage.getItem('language') || DEFAULT_LANGUAGE,
   isSidebarOpened: window.innerWidth > 800,
   zoom: DEFAULT_ZOOM,
+  isTooMuchClubs: false,
+  hoveredClubId: null,
 };
 
 const app = (state = initialState, { type, payload }) => {
@@ -79,6 +83,18 @@ const app = (state = initialState, { type, payload }) => {
     case SET_ZOOM: {
       return update(state, {
         zoom: { $set: payload },
+      });
+    }
+
+    case SET_IS_TOO_MUCH_CLUBS: {
+      return update(state, {
+        isTooMuchClubs: { $set: payload },
+      });
+    }
+
+    case SET_HOVERED_CLUB_ID: {
+      return update(state, {
+        hoveredClubId: { $set: payload },
       });
     }
 

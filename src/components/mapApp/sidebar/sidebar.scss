@@ -77,6 +77,16 @@
       height: 8rem;
       margin-bottom: 1rem;
     }
+
+    .ratings-label {
+      font-size: 0.75em;
+      margin-top: 0.25rem;
+    }
+
+    .ratings-information {
+      font-size: 0.75em;
+      // margin-top: 0.25rem;
+    }
   }
 
   .club-link {
@@ -147,19 +157,6 @@
   .relation-clubs {
     .club {
       
-    }
-  }
-
-  .copyright-email {
-    display: inline-block;
-    margin-left: 0.25rem;
-    
-    a {
-      color: $standardColor;
-
-      &:hover {
-        text-decoration: underline;
-      }
     }
   }
 }

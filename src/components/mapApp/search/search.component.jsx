@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef, memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
 import classNames from 'classnames';
 import { isMobile, isTablet } from 'react-device-detect';
@@ -186,6 +185,10 @@ function Search(props) {
     history.push(`/club/${randomClubId}`);
   }, []);
 
+  const handleGoTo = link => () => {
+    history.push(link);
+  }
+
   return (
     <div id="search-wrapper">
       <ClickAwayListener onClickAway={handleClose}>
@@ -218,15 +221,14 @@ function Search(props) {
                 >
                   {t('global.getRandom')}
                 </button>
-                <Link to="/suggestion">
-                  <button
-                    type="button"
-                    id="button-add-suggestion"
-                    className="standard-button button-green small-button"
-                  >
-                    {t('global.suggestNewClub')}
-                  </button>
-                </Link>
+                <button
+                  type="button"
+                  id="button-add-suggestion"
+                  className="standard-button button-green small-button"
+                  onClick={handleGoTo('/suggestion')}
+                >
+                  {t('global.suggestNewClub')}
+                </button>
               </div>
             </div>
 

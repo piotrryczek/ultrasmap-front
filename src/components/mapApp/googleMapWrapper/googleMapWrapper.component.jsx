@@ -18,7 +18,7 @@ import RegisterRoute from './routes/registerRoute.component';
 import NewSuggestionRoute from './routes/newSuggestionRoute.component';
 import EditSuggestionRoute from './routes/editSuggestionRoute.component';
 import ConfirmRoute from './routes/confirmRoute.component';
-
+import AboutRoute from './routes/aboutRoute.component';
 
 function GoogleMapWrapper(props) {
   const {
@@ -40,7 +40,7 @@ function GoogleMapWrapper(props) {
     setSearchInputRef(ref);
   }, []);
 
-  const divElMap = useMemo(() => <div style={{ height: `${windowHeight}px` }} />, [windowHeight]);
+  // const divElMap = useMemo(() => <div style={{ height: `${windowHeight}px` }} />, [windowHeight]);
 
   return (
     <div id="map-wrapper" className={classNames({ 'sidebar-opened': isSidebarOpened })} style={{ height: `${windowHeight}px` }}>
@@ -52,9 +52,7 @@ function GoogleMapWrapper(props) {
         <GoogleMapClubs
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...props}
-          loadingElement={divElMap}
-          containerElement={divElMap}
-          mapElement={divElMap}
+          windowHeight={windowHeight}
           searchInputRef={searchInputRef}
         />
         <Languages />
@@ -65,6 +63,7 @@ function GoogleMapWrapper(props) {
       <NewSuggestionRoute />
       <EditSuggestionRoute />
       <ConfirmRoute />
+      <AboutRoute />
     </div>
   )
 }

@@ -1,5 +1,3 @@
-import getDistance from 'geolib/es/getDistance';
-
 export const parseCoordinates = (coordinates) => {
   return coordinates.reduce((acc, el, index) => {
     const property = index === 0 ? 'lng' : 'lat';
@@ -9,25 +7,21 @@ export const parseCoordinates = (coordinates) => {
   }, {})
 };
 
-export const getMaximumDistance = (currentClub, clubs) => {
-  const modifier = 2.2;
-  const clubsToCheck = clubs.filter(club => club._id !== currentClub._id);
+export const getAllClubsFromClub = (club) => {
+  const {
+    friendships,
+    agreements,
+    positives,
+    satellites,
+    satelliteOf,
+  } = club;
 
-  const metersSum = clubsToCheck.reduce((acc, club) => {
-    acc += getDistance(
-      {
-        latitude: currentClub.latLng.lat,
-        longitude: currentClub.latLng.lng},
-      {
-        latitude: club.latLng.lat,
-        longitude: club.latLng.lng
-      }
-    );
+  const clubs = [club, ...friendships, ...agreements, ...positives, ...satellites];
+  if (satelliteOf) clubs.push(satelliteOf);
 
-    return acc;
-  }, 0);
+  return clubs;
+}
 
-  const avarageDistance = metersSum / clubsToCheck.length;
+export const enhanceCoordinates = clubs => clubs.map(club => Object.assign(club, { latLng: parseCoordinates(club.location.coordinates) }));
 
-  return avarageDistance * modifier;
-};
+export const sortByTier = (clubA, clubB) => clubA.tier < clubB.tier ? 1 : -1;

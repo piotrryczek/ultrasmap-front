@@ -98,6 +98,11 @@
     position: relative;
     z-index: 2;
     padding-right: 1rem;
+
+    .clubs-number {
+      padding-left: 0.25rem;
+      font-weight: bold;
+    }
   }
 
   &:after {
@@ -109,6 +114,12 @@
     top: 50%;
     transform: translateY(-50%);
     right: 0px;
+  }
+
+  &.no-relation-header {
+    &:after {
+      background: $minorTextColor;
+    }
   }
 
   &.friendships-header {
@@ -191,4 +202,17 @@
   clip-path: polygon(0 0, 100% 0, 100% 100%, 2rem 100%);
 
   transition: opacity 0.3s, transform 0.3s;
+}
+
+.copyright-email {
+  display: inline-block;
+  margin-left: 0.25rem;
+  
+  a {
+    color: $standardColor;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }

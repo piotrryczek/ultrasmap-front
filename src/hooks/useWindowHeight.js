@@ -5,7 +5,7 @@ export default () => {
 
   const [windowHeight, setWindowHeight] = useState(0);
 
-  const handleResize = useCallback((event) => {
+  const handleResize = useCallback(() => {
     setWindowHeight(window.innerHeight);
   }, []);
 

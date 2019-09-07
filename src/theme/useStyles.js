@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-// eslint-disable-next-line import/prefer-default-export
 export const useMobileStyles = makeStyles(theme => ({
   buttonBase: {
     [theme.breakpoints.down('sm')]: {
@@ -16,8 +15,20 @@ export const useMobileStyles = makeStyles(theme => ({
   },
   groupButton: {
     [theme.breakpoints.down('sm')]: {
-      display: 'block',
+      display: 'block !important',
       width: '100%'
     },
   }
+}));
+
+export const useButtonIconStyles = makeStyles(theme => ({
+  leftIcon: {
+    marginRight: theme.spacing(1),
+  },
+}));
+
+export const useTabStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
 }));
