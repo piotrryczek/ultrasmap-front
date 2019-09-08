@@ -54,7 +54,7 @@ function GoogleMapClubs(props) {
     const zoom = googleMapDrawer.map.getZoom();
 
     if (!currentClub && zoom >= ABSOLUTE_MAX_ZOOM) {
-      if (!tooMuchClubs) handleRefreshClubs();
+      handleRefreshClubs();
       searchForClubsInArea();
     }
   }

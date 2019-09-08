@@ -24,6 +24,7 @@ function ClubOverlay({
   this.bounds_ = new google.maps.LatLngBounds(new google.maps.LatLng(latLng), new google.maps.LatLng(latLng));
   this.map_ = map;
   this.clubMarker = null;
+  this.clubId = clubId;
 
   this.setMap(map);
 
@@ -53,7 +54,7 @@ function ClubOverlay({
     });
     clubMarker.querySelector('.logo').appendChild(imgLogo);
 
-    clubMarker.addEventListener('click', () => history.push(`/club/${clubId}`));
+    clubMarker.addEventListener('click', this.goTo);
 
     this.clubMarker = clubMarker;
   
@@ -74,9 +75,14 @@ function ClubOverlay({
   };
 
   this.onRemove = function() {
+    this.clubMarker.removeEventListener('click', this.goTo);
     this.clubMarker.parentNode.removeChild(this.clubMarker);
     this.clubMarker = null;
   };
+
+  this.goTo = () => {
+    history.push(`/club/${this.clubId}`);
+  }
 }
 
 export default ClubOverlay;

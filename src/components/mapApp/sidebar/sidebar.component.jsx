@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
-import { useSwipeable } from 'react-swipeable'
+import { useSwipeable } from 'react-swipeable';
+import { isMobile, isTablet } from 'react-device-detect';
 
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -46,21 +47,28 @@ const ClubContent = ({ club, handleGoTo }) => {
     satelliteOf,
   } = club;
 
+  const handleBackToViewingClubs = useCallback(() => {
+    history.push({
+      pathname: '/',
+      state: { hideSidebar: isMobile || isTablet },
+    });
+  }, []);
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Box display="flex" justifyItems="center" justifyContent="center">
-          <ButtonLink
+          <Button
             className={mobileClasses.buttonBase}
             variant="contained"
             color="primary"
             size="large"
             type="button"
-            to="/"
+            onClick={handleBackToViewingClubs}
           >
             <LocationSearchingIcon fontSize="small" className={iconClasses.leftIcon} />
             {t('global.backToViewingClubs')}
-          </ButtonLink>
+          </Button>
         </Box>
       </Grid>
       <Grid item xs={12}>

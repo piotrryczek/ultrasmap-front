@@ -171,7 +171,7 @@ class GoogleMapDrawer {
           map: this.map,
           isCurrent: club._id === currentClub._id,
           createCallback: (clubMarker) => {
-            clubMarker.classList.add('show');
+            clubMarker.classList.add('immediate-show');
           },
         });
 

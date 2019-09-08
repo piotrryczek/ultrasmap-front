@@ -1,4 +1,4 @@
-import { isMobile } from 'react-device-detect';
+import { isMobile, isTablet } from 'react-device-detect';
 
 export const IMAGES_URL = `${process.env.REACT_APP_API_URL}/images`;
 export const DEFAULT_LANGUAGE = 'pl';
@@ -18,7 +18,7 @@ export const DEFAULT_COORDINATES = [19.3617687, 51.8983513];
 export const ABSOLUTE_MAX_ZOOM = isMobile ? 6 : 6;
 export const DEFAULT_ZOOM = isMobile ? 8 : 9;
 export const MAX_FILE_SIZE = 10 * 1000 * 1024;
-export const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png'];
+export const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 export const USER_LANGUAGE = navigator.languages && navigator.languages[0] || navigator.language || navigator.userLanguage;
-export const MAXIMUM_CLUBS_ON_MAP = isMobile ? 70 : 120;
+export const MAXIMUM_CLUBS_ON_MAP = isMobile ? 40 : isTablet ? 70 : 160;
 export const APPEAR_DELAY = 35;
