@@ -18,7 +18,7 @@ function MapApp(props) {
     club: null,
     clubs: [],
     visibleClubs: [],
-    yetSearchedPolygon: null,
+    yetSearchedPolygons: [],
   });
 
   const {
@@ -26,7 +26,7 @@ function MapApp(props) {
     club,
     clubs,
     visibleClubs,
-    yetSearchedPolygon,
+    yetSearchedPolygons,
   } = state;
 
   const dispatch = useDispatch();
@@ -99,7 +99,7 @@ function MapApp(props) {
     const northEastBounds = bounds.getNorthEast();
     const southWestBounds = bounds.getSouthWest();
 
-    if (checkIfYetSearched(yetSearchedPolygon, bounds)) return false;
+    if (checkIfYetSearched(yetSearchedPolygons, bounds)) return false;
 
     const currentPolygon = new google.maps.Polygon({
       paths: [
@@ -111,9 +111,9 @@ function MapApp(props) {
       ]
     });
 
-    const newSearchedPolygon = yetSearchedPolygon
-      ? mergePolygons(currentPolygon, yetSearchedPolygon)
-      : currentPolygon;
+    const newSearchedPolygons = yetSearchedPolygons.length
+      ? mergePolygons(currentPolygon, yetSearchedPolygons)
+      : [currentPolygon];
 
     const geo = {
       northWest: [southWestBounds.lng(), northEastBounds.lat()],
@@ -135,11 +135,11 @@ function MapApp(props) {
       ...prevState,
       clubs: finalClubs,
       visibleClubs,
-      yetSearchedPolygon: newSearchedPolygon,
+      yetSearchedPolygons: newSearchedPolygons,
     }));
 
     dispatch(setIsLoadingClubs(false));
-  }, [clubs, googleMapDrawer, yetSearchedPolygon]);
+  }, [clubs, googleMapDrawer, yetSearchedPolygons]);
 
 
   const getVisibleClubs = (clubsToCheck, bounds) => {

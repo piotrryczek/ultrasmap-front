@@ -29,8 +29,8 @@ export const enhanceCoordinates = clubs => clubs.map(club => Object.assign(club,
 
 export const sortByTier = (clubA, clubB) => clubA.tier < clubB.tier ? 1 : -1;
 
-export const checkIfYetSearched = (polygon, bounds) => {
-  if (!polygon) return false;
+export const checkIfYetSearched = (polygons, bounds) => {
+  if (!polygons.length) return false;
 
   const northEastBounds = bounds.getNorthEast();
   const southWestBounds = bounds.getSouthWest();
@@ -40,10 +40,10 @@ export const checkIfYetSearched = (polygon, bounds) => {
   const southEastLatLng = new google.maps.LatLng(southWestBounds.lat(), northEastBounds.lng());
   const southWestLatLng = new google.maps.LatLng(southWestBounds.lat(), southWestBounds.lng());
 
-  return google.maps.geometry.poly.containsLocation(northEastLatLng, polygon)
+  return polygons.some((polygon) => google.maps.geometry.poly.containsLocation(northEastLatLng, polygon)
   && google.maps.geometry.poly.containsLocation(northWestLatLng, polygon)
   && google.maps.geometry.poly.containsLocation(southEastLatLng, polygon)
-  && google.maps.geometry.poly.containsLocation(southWestLatLng, polygon);
+  && google.maps.geometry.poly.containsLocation(southWestLatLng, polygon));
 }
 
 const googleMaps2JSTS = (boundaries) => {
@@ -65,21 +65,49 @@ const jsts2googleMaps = (geometry) => {
   return GMcoords;
 }
 
-export const mergePolygons = (polygonA, polygonB) => {
+const recursiveMergePolygons = (polygons) => {
+  if (polygons.length === 1) return polygons;
+
+  const firstPolygon = polygons.shift();
+
+  let hasIntersect = false;
+  const newPolygons =  polygons.reduce((acc, polygon, index, arr) => {
+    if (firstPolygon.intersects(polygon)) { // If polygons are intersecting each other merge them and repeat same process but without currently merged polygon
+      const mergedPolygon = firstPolygon.union(polygon);
+      acc = recursiveMergePolygons([mergedPolygon, ...polygons.filter((_, polIndex) => polIndex !== index)]);
+      hasIntersect = true;
+      arr.splice(1); // Breaking reduce loop
+    } else { // Simply adding to array same polygon
+      acc.push(polygon);
+    }
+    return acc;
+  }, []);
+
+  return hasIntersect ? newPolygons : [firstPolygon, ...newPolygons];
+};
+
+export const mergePolygons = (boundsPolygon, otherPolygons) => {
   const precisionModel = new jsts.geom.PrecisionModel(jsts.geom.PrecisionModel.FLOATING);
   const geometryFactory = new jsts.geom.GeometryFactory(precisionModel);
 
-  const jstsPolygonA = geometryFactory.createPolygon(geometryFactory.createLinearRing(googleMaps2JSTS(polygonA.getPath())));
-  jstsPolygonA.normalize();
-  const jstsPolygonB = geometryFactory.createPolygon(geometryFactory.createLinearRing(googleMaps2JSTS(polygonB.getPath())));
-  jstsPolygonB.normalize();
+  // @ts-ignore
+  const jstsBoundsPolygon = geometryFactory.createPolygon(geometryFactory.createLinearRing(googleMaps2JSTS(boundsPolygon.getPath())));
+  jstsBoundsPolygon.normalize();
+  const jstsPolygons = otherPolygons.map(polygon => {
+    // @ts-ignore
+    const jstsPolygon = geometryFactory.createPolygon(geometryFactory.createLinearRing(googleMaps2JSTS(polygon.getPath())));
+    jstsPolygon.normalize();
 
-  const jstsMergedPolygon = jstsPolygonA.union(jstsPolygonB);
-  const mergedPath = jsts2googleMaps(jstsMergedPolygon);
-
-  const mergedPolygon = new google.maps.Polygon({
-    paths: mergedPath,
+    return jstsPolygon;
   });
 
-  return mergedPolygon;
+  const jstsFinalPolygons = recursiveMergePolygons([jstsBoundsPolygon, ...jstsPolygons]);
+
+  return jstsFinalPolygons.map((jstsPolygon) => {
+    const path = jsts2googleMaps(jstsPolygon);
+    
+    return new google.maps.Polygon({
+      paths: path,
+    });
+  });
 }
