@@ -81,6 +81,26 @@ const ClubContent = ({ club, handleGoTo }) => {
             <img src={`${IMAGES_URL}/h360/${logo}`} alt="" />
             <Rating value={tier} readOnly />
           </div>
+
+          <Box display="flex" justifyItems="center" justifyContent="center" pb={2}>
+            <Link 
+              to={{
+                pathname: `/suggestion/${club._id}`,
+                state: {
+                  club,
+                  hideSidebar: true,
+                }}}
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                type="submit"
+              >
+                {t('global.suggestChange')}
+              </Button>
+            </Link>
+          </Box>
         </Paper>
       </Grid>
       {friendships.length > 0 && (
@@ -120,27 +140,6 @@ const ClubContent = ({ club, handleGoTo }) => {
           />
         </Grid>
       )}
-
-      <Grid item xs={12}>
-        <Box display="flex" justifyContent="center">
-          <Link 
-            to={{
-              pathname: `/suggestion/${club._id}`,
-              state: {
-                club,
-              }}}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              type="submit"
-            >
-              {t('global.suggestChange')}
-            </Button>
-          </Link>
-        </Box>
-      </Grid>
 
       <Grid item xs={12}>
         <Box display="flex" justifyContent="center">

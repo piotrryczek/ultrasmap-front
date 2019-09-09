@@ -38,11 +38,6 @@ $sidebarMobileSize: 90%;
     }
   }
 
-  // @keyframes club-marker-appear {
-  //   from { opacity: 0; }
-  //   to { opacity: 1; }
-  // }
-
   .club-marker {
     $opacity: 0.7;
 
@@ -55,14 +50,17 @@ $sidebarMobileSize: 90%;
     z-index: 1;
     position: relative;
     opacity: 0;
+    transform: scale(0);
 
     &.immediate-show {
       opacity: 1;
+      transform: scale(1);
     }
 
     &.show {
       opacity: 1;
-      transition: opacity 0.3s;
+      transition: transform 0.3s, opacity 0.3s;
+      transform: scale(1);
     }
 
     &.hovered {

@@ -94,7 +94,7 @@
       },
       "suggestion": {
         "lackOfCredential": "Nie posiadasz uprawnień aby sugerować zmiany. Najprawdopodobniej zostały Ci one odebrane w efekcie licznych naruszeń.",
-        "needToBeLoggedin": "Aby móc sugerować zmiany musisz być zalogowany.",
+        "needToBeLoggedin": "Aby móc sugerować zmiany musisz być zalogowany. Jeśli nie posiadasz jeszcze konta zarejestruj się, zajmie to dosłownie dwie minuty.",
         "success": "Twoja sugestia została dodana. Postaramy się jak najszybciej ją przejrzeć. O tym czy sugestia została zaakceptowana bądź odrzucana zostaniesz poinformowany mailowo. Dzięki!",
         "welcome": "Postaraj się możliwie precyzyjnie i obiektywnie uzupełnić formularz. Dzięki temu znacznie ułatwisz dalszą pracę, na której skorzystają także wszyscy inni użytkownicy. O tym czy sugestia została zaakceptowana bądź odrzucona zostaniesz poinformowany mailowo. Dzięki!",
         "createNewClub": "Utwórz nowy klub: ",
