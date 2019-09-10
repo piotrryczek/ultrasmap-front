@@ -12,9 +12,11 @@ function GoogleMapClubs(props) {
     googleMapDrawer,
     setGoogleMapDrawer,
     club: currentClub,
-    searchInputRef, retrieveClubs,
+    searchInputRef,
+    retrieveClubs,
     clubs = [],
     refreshClubs,
+    clearClubs,
     windowHeight,
   } = props;
 
@@ -41,19 +43,20 @@ function GoogleMapClubs(props) {
 
   // Debounced callbacks
   const [searchForClubsInArea] = useDebouncedCallback(() => {
-    retrieveClubs();
-  }, 400);
+    const currentZoom = googleMapDrawer.map.getZoom();
+    if (currentZoom >= ABSOLUTE_MAX_ZOOM) retrieveClubs();
+  }, 400); // 400
 
   const [handleRefreshClubs] = useDebouncedCallback(() => {
-    refreshClubs();
-  }, 100);
+    const currentZoom = googleMapDrawer.map.getZoom();
+    if (currentZoom >= ABSOLUTE_MAX_ZOOM) refreshClubs();
+  }, 100); // 100
 
 
   // Unified method for getting clubs
   const getClubs = () => {
-    const zoom = googleMapDrawer.map.getZoom();
 
-    if (!currentClub && zoom >= ABSOLUTE_MAX_ZOOM) {
+    if (!currentClub) {
       handleRefreshClubs();
       searchForClubsInArea();
     }
@@ -67,7 +70,10 @@ function GoogleMapClubs(props) {
 
   const handleZoomChanged = useCallback((newZoom) => {
     dispatch(setZoom(newZoom));
-  }, []);
+    if (!currentClub && newZoom < ABSOLUTE_MAX_ZOOM) {
+      clearClubs();
+    }
+  }, [googleMapDrawer]);
 
   const handleMapLoaded = useCallback(() => {
     setIsLoaded(true);
@@ -97,7 +103,6 @@ function GoogleMapClubs(props) {
 
     setGoogleMapDrawer(googleMapDrawer);
   }, []);
-
 
   // Google Maps Clubs logic (updating googleMapDrawer)
   useEffect(() => { // Clubs

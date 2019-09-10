@@ -2,6 +2,17 @@
 import history from 'config/history';
 import { IMAGES_URL } from 'config/config';
 
+const getPixelsFromSize = (size) => {
+  switch (size) {
+    case 'xs': return 44;
+    case 's': return 48;
+    case 'm': return 52;
+    case 'l': return 56;
+    case 'xl': return 60;
+    default: return 52;
+  }
+}
+
 ClubOverlay.prototype = new google.maps.OverlayView();
 
 function ClubOverlay({
@@ -9,6 +20,7 @@ function ClubOverlay({
   map,
   createCallback = null,
   isCurrent = false,
+  size = 'm',
 }) {
   const {
     _id: clubId,
@@ -18,7 +30,7 @@ function ClubOverlay({
     logo,
     relationType = 'no-relation',
   } = club;
-
+  this.sizePixels = getPixelsFromSize(size);
   this.createCallback = createCallback;
 
   this.bounds_ = new google.maps.LatLngBounds(new google.maps.LatLng(latLng), new google.maps.LatLng(latLng));
@@ -32,7 +44,7 @@ function ClubOverlay({
     const clubMarker = document.createElement('button');
     clubMarker.style.position = 'absolute';
     clubMarker.setAttribute('type', 'button');
-    clubMarker.classList.add('club-marker', relationType);
+    clubMarker.classList.add('club-marker', relationType, `size-${size}`);
     if (isCurrent) clubMarker.classList.add('current-club');
 
     clubMarker.innerHTML = `
@@ -42,7 +54,6 @@ function ClubOverlay({
       </div>
       <div class="logo-wrapper">
         <div class="logo">
-          <img src="" alt="" />
         </div>
       </div>`;
 
@@ -68,10 +79,8 @@ function ClubOverlay({
     var sw = overlayProjection.fromLatLngToDivPixel(this.bounds_.getSouthWest());
     var ne = overlayProjection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
     
-    this.clubMarker.style.left = `${sw.x - 24}px`;
-    this.clubMarker.style.top = `${ne.y - 24}px`;
-    this.clubMarker.style.width = '48px';
-    this.clubMarker.style.height = '48px';
+    this.clubMarker.style.left = `${sw.x}px`; // - (this.sizePixels / 2)
+    this.clubMarker.style.top = `${ne.y}px`; // - (this.sizePixels / 2)
   };
 
   this.onRemove = function() {
@@ -82,6 +91,21 @@ function ClubOverlay({
 
   this.goTo = () => {
     history.push(`/club/${this.clubId}`);
+  }
+
+  this.updateSize = (size) => {
+    if (!size || !this.clubMarker) return false;
+    this.sizePixels = getPixelsFromSize(size);
+    this.clubMarker.classList.remove('size-xl', 'size-l', 'size-m', 'size-s', 'size-xs');
+    this.clubMarker.classList.add(`size-${size}`);
+  }
+
+  this.disapear = () => {
+    if (!this.clubMarker) return false;
+    this.clubMarker.classList.add('disappear');
+    setTimeout(() => {
+      this.setMap(null);
+    }, 1000);
   }
 }
 
