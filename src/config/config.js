@@ -8,12 +8,10 @@ export const languages = [{
 }, {
   code: 'en',
   flag: 'en.png',
-}, 
-// {
-//   code: 'ru',
-//   flag: 'ru.png',
-// }
-];
+}, {
+  code: 'ru',
+  flag: 'ru.png',
+}];
 export const DEFAULT_COORDINATES = [19.3617687, 51.8983513];
 export const ABSOLUTE_MAX_ZOOM = isMobile ? 6 : 6;
 export const DEFAULT_ZOOM = isMobile ? 8 : 9;

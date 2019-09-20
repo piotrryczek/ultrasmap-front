@@ -17,7 +17,8 @@ import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
 
 import { useMobileStyles } from 'theme/useStyles';
 
-function Login() {
+function Login(props) {
+  const { handleClose } = props;
   const { t } = useTranslation();
   const mobileClasses = useMobileStyles({});
 
@@ -95,14 +96,14 @@ function Login() {
         <Typography>{t('login.success')}</Typography>
       </Grid>
       <Grid item xs={12}>
-        <ButtonLink
+        <Button
           variant="contained"
           color="primary"
           size="large"
-          to="/"
+          onClick={handleClose}
         >
           {t('global.backToMap')}
-        </ButtonLink>
+        </Button>
       </Grid>
     </Grid>
   ) : (

@@ -42,11 +42,12 @@
       },
       "ratings": {
         "label": "znaczenie kibicowskie",
-        "stars1": "grupka działająca od czasu do czasu lokalnie",
-        "stars2": "mniejszy skład znający swoje miejsce w szeregu",
-        "stars3": "liczące się grupa, której daleko do czołówki",
-        "stars4": "silna ekipa licząca się na scenie krajowej",
-        "stars5": "marka rozpoznawalna na arenie międzynarodowej"
+        "stars0": "grupa nieaktywna",
+        "stars1": "od czasu do czasu aktywni",
+        "stars2": "działający lokalnie",
+        "stars3": "przeciętna grupa",
+        "stars4": "krajowa czołówka",
+        "stars5": "rozpoznawani na arenie międzynarodowej"
       },
       "formErrors": {
         "email": "Niepoprawny adres email",
@@ -175,7 +176,7 @@
       "messageCodes": {
         "NOT_AUTHORIZED": "You are not logged in or you have not enough credentials to perform action.",
         "NETWORK_ERROR": "Connection problem.",
-        "UNKNOWN_ERROR": "Unknow error.",
+        "UNKNOWN_ERROR": "Unknown error.",
         "INTERNAL": "Internal server error.",
         "JWT_TOKEN": "Incorrect authorization.",
         "LOGIN_FAILED": "Login failed.",
@@ -212,17 +213,23 @@
         "aboutProject": "About project"
       },
       "ratings": {
-        "label": "supporters strength"
+        "label": "supporters strength",
+        "stars0": "todo: fill",
+        "stars1": "todo: fill",
+        "stars2": "todo: fill",
+        "stars3": "todo: fill",
+        "stars4": "todo: fill",
+        "stars5": "todo: fill"
       },
       "formErrors": {
         "email": "Incorrect email address",
         "required": "Field is required",
         "passwordsNotMatch": "Passwords are not match",
         "emailExists": "Provided email already exists in a database. Please select other",
-        "fileSize": "File is being to big",
+        "fileSize": "File is being too big",
         "fileType": "Incorrect file format",
-        "relationsNotUnique": "Relations have to unique",
-        "suggestionNoChanges": "You haven not done any changes."
+        "relationsNotUnique": "Relations have to be unique",
+        "suggestionNoChanges": "You have not done any changes."
       },
       "welcome": {
         "header": "Welcome!",
@@ -334,6 +341,352 @@
         "answer5": "This is the main facility where the team plays its matches. If a club is temporarily playing at another stadium due to, for example, reconstruction or construction of a new stadium, we still mark it's original building. On the map you will find exceptions to this rule, but they relate to rather extreme situations when there is no big chance to change, such a situation may take place, for example, as a result of the ongoing armed conflict.",
         "question6": "Does displaying on the map one club above another indicate something?",
         "answer6": "Nope. Appearing logos on the map is being conducted in the random order."
+      }
+    }
+  },
+  "ru": {
+    "translation": {
+      "messageCodes": {
+        "NOT_AUTHORIZED": "вы не авторизованы или у вас недостаточно прав для выполнения действия.",
+        "NETWORK_ERROR": "проблема подключения.",
+        "UNKNOWN_ERROR": "Неизвестная ошибка.",
+        "INTERNAL": "Внутренняя ошибка сервера.",
+        "JWT_TOKEN": "Неверная авторизация.",
+        "LOGIN_FAILED": "Ошибка входа.",
+        "USER_NOT_VERIFIED": "Вы не подтверждены.",
+        "USER_WITH_EMAIL_EXISTS": "Ошибка операции.",
+        "USER_NOT_EXISTS": "Ошибка операции.",
+        "AUTHORIZATION_TOKEN_EXISTS": "Ошибка операции.",
+        "CLUB_WITH_NANE_EXISTS": "Клуб с указанным названием уже существует.",
+        "RELATIONS_NOT_UNIQUE": "Ошибка операции.",
+        "INCOMPLETE_SUGGESTION_COMMENT": "Ошибка операции."
+      },
+      "global": {
+        "errorsOccured": "Произошли ошибки:",
+        "chooseImageToUpload": "Выберите изображение для загрузки",
+        "serverProblem": "Извините, на сервере возникла проблема.",
+        "close": "Закрый",
+        "login": "Войти",
+        "logout": "Выйти",
+        "register": "Зарегистрируй",
+        "suggestNewClub": "Предложий новый",
+        "friendships": "Дружбу",
+        "agreements": "Договоры",
+        "positives": "Позитивные отношения",
+        "satellites": "Спутникы",
+        "satelliteOf": "Cпутник",
+        "suggestChange": "Предложий изменение",
+        "backToMap": "Вернись на карте",
+        "getRandom": "Любый",
+        "zoomIn": "Слишком много клубов одновременно. Увеличить или переместить в другый регион.",
+        "zoomMax": "Увеличьте масштаб, чтобы продолжить просмотр клубов.",
+        "zoomMaxMore": "Вы уменьшили масштаб слишком далеко. Пожалуйста, увеличьте масштаб, чтобы продолжить использовать приложение.",
+        "backToViewingClubs": "Вернись к просмотру клубов",
+        "clubsOnMap": "На карте",
+        "aboutProject": "О проекте"
+      },
+      "ratings": {
+        "label": "сила фанатов",
+        "stars0": "...",
+        "stars1": "...",
+        "stars2": "...",
+        "stars3": "...",
+        "stars4": "...",
+        "stars5": "..."
+      },
+      "formErrors": {
+        "email": "Неверный адрес электронной почты",
+        "required": "Обязательное поле",
+        "passwordsNotMatch": "Пароли не совпадают",
+        "emailExists": "Указанная электронная почта уже существует в базе данных. Пожалуйста, выберите другой",
+        "fileSize": "Файл слишком большой",
+        "fileType": "Неверный формат файла",
+        "relationsNotUnique": "Отношения должны быть уникальными",
+        "suggestionNoChanges": "Вы не сделали никаких изменений."
+      },
+      "welcome": {
+        "header": "Добро пожаловать!",
+        "paragraph1": "Цель приложения - проиллюстрировать отношения между группами фанатов по всему миру. Их уровень сложности и зачастую неясные связи означают, что, к сожалению, несмотря на наши благие намерения, представленные данные не всегда будут полностью правильными. Если вы видите ошибку - сообщите об этом в предложении.",
+        "paragraph2": "Помните, что вы являетесь создателями этой карты. Благодаря вашей поддержке эта карта может активно действовать. Неважно, если ваш клуб в европейских кубках или играет в нижней местной лиге. Если фанаты активны - добавьте! Если данные устарели - предложите обновить их!",
+        "paragraph3": "Заявка еще находится на ранней стадии. Вы всегда можете сообщить о проблеме.",
+        "paragraph4": "Проект был создан некоммерческим.",
+        "copyrights": "© 2019"
+      },
+      "emailConfirm": {
+        "emailVerified": "Адрес электронной почты подтвержден, войдите с данными, указанными при регистрации.",
+        "login": "Войти",
+        "emailBeingVerified": "Пожалуйста, подождите, ваша электронная почта проверяется..."
+      },
+      "login": {
+        "header": "Логин",
+        "success": "Операция успешна",
+        "backToMap": "Вернись на карте",
+        "emailPlaceholder": "Адрес электронной почты...",
+        "passwordPlaceholder": "Пароль....",
+        "login": "Войти",
+        "register": "У вас нет аккаунта? Эарегистрируй"
+      },
+      "register": {
+        "header": "Регистрация",
+        "success": "Регистрация прошла успешно, для завершения процесса нажмите ссылку для подтверждения в сообщении, отправленном на указанный адрес электронной почты.",
+        "emailPlaceholder": "Адрес электронной почты...",
+        "passwordPlaceholder": "Пароль...",
+        "confirmPasswordPlaceholder": "Подтвердый Пароль...",
+        "register": "Эарегистрируй",
+        "login": "Уже есть аккаунт? войти"
+      },
+      "search": {
+        "lackOfClub": "Нет клуба? Предложите добавить эго...",
+        "searchPlaceholder": "Поиск клубов..."
+      },
+      "suggestion": {
+        "lackOfCredential": "У вас нет разрешения предлагать изменения. Скорее всего, они были отозваны у вас в результате многочисленных нарушений.",
+        "needToBeLoggedin": "Вы должны войти в систему, чтобы иметь возможность предложить изменения.",
+        "success": "Ваше предложение было добавлено. Мы постараемся рассмотреть его как можно скорее. Вы будете уведомлены по электронной почте о том, было ли предложение принято или отклонено. Спасибо!",
+        "welcome": "Постарайтесь заполнить форму максимально точно и объективно. По этой причине вы поможете нам и всем остальным пользователям. Вы будете уведомлены по электронной почте о том, было ли предложение принято или отклонено. Спасибо!",
+        "createNewClub": "Создай новый клуб:",
+        "addSuggestion": "Добавляй",
+        "name": {
+          "header": "Название",
+          "placeholder": "Название...",
+          "tooltip": "Введите полное название клуба вместе с названием города, из которого пришел клуб."
+        },
+        "logo": {
+          "header": "Герб",
+          "tooltip": "Попробуйте загрузить герб хорошего качества без обрезанных краев с прозрачным фоном."
+        },
+        "tier": {
+          "header": "-",
+          "tooltip": "-"
+        },
+        "location": {
+          "header": "Место нахождения",
+          "tooltip": "Укажите расположение стадиона."
+        },
+        "friendships": {
+          "header": "Дружбу",
+          "tooltip": "Выбирайте только официальные и все еще активные друзья. Если нет клуба, вы можете предложить добавить его.",
+          "placeholder": "Начните печатать и выберите клубы..."
+        },
+        "agreements": {
+          "header": "Договоры",
+          "tooltip": "Выбирайте только официальные и все еще действующие соглашения. Если таких отношений в вашей стране нет, рассмотрите возможность установления позитивных отношений вместо соглашений. Если нет клуба, вы можете предложить добавить его.",
+          "placeholder": "Начните печатать и выберите клубы..."
+        },
+        "positives": {
+          "header": "Позитивные отношения",
+          "tooltip": "Выберите клубы, с которыми клуб имеет позитивные отношения или личные контакты. Если нет клуба, вы можете предложить добавить его.",
+          "placeholder": "Начните печатать и выберите клубы..."
+        },
+        "satellites": {
+          "header": "Спутникы",
+          "tooltip": "Выберите сателлитные клубы (не города / поселки), которые можно распознать как фанклубы. Это случаи, когда практически все сторонники данного клуба одновременно участвуют в поддержке другого клуба, и его подчиненный статус не оспаривается. Попробуйте просмотреть существующие случаи перед добавлением.",
+          "placeholder": "Начните печатать и выберите клубы..."
+        },
+        "satelliteOf": {
+          "header": "Cпутник",
+          "tooltip": "Выберите родительский / доминирующий клуб, который поддерживается всеми или большинством фанатов.",
+          "placeholder": "Начните печатать и выберите клуб..."
+        },
+        "comments": {
+          "additional": "Постарайтесь предоставить как можно больше информации, чтобы помочь нам проверить ваше предложение. Это могут быть ссылки на форумы, обсуждения или объявления определенной группы сторонников об установлении или расторжении отношений. Вы также можете написать, что они основаны на ваших личных источниках. Мы хотим, чтобы данные были правильными, и мы хотим добавить только проверенную и подтвержденную информацию. Если мы не сможем подтвердить данные, содержащиеся в предложении - мы отклоним его. Спасибо!",
+          "header": "Замечания",
+          "tooltip": "Напишите любые замечания или предложения, которые могут помочь нам точно рассмотреть ваше предложение."
+        },
+        "noOptions": "Начните набирать в поисках клубов...",
+        "searchPlaces": "Поиск мест..."
+      },
+      "about": {
+        "about": "О проекте",
+        "faq": "Вопросы-Ответы"
+      },
+      "faq": {
+        "header": "Вопросы-Ответы",
+        "question1": "...",
+        "answer1": "...",
+        "question2": "...",
+        "answer2": "...",
+        "question3": "...",
+        "answer3": "...",
+        "question4": "...",
+        "answer4": "...",
+        "question5": "...",
+        "answer5": "...",
+        "question6": "...",
+        "answer6": "..."
+      }
+    }
+  },
+  "emptyTemplate": {
+    "translation": {
+      "messageCodes": {
+        "NOT_AUTHORIZED": "",
+        "NETWORK_ERROR": "",
+        "UNKNOWN_ERROR": "",
+        "INTERNAL": "",
+        "JWT_TOKEN": "",
+        "LOGIN_FAILED": "",
+        "USER_NOT_VERIFIED": "",
+        "USER_WITH_EMAIL_EXISTS": "",
+        "USER_NOT_EXISTS": "",
+        "AUTHORIZATION_TOKEN_EXISTS": "",
+        "CLUB_WITH_NANE_EXISTS": "",
+        "RELATIONS_NOT_UNIQUE": "",
+        "INCOMPLETE_SUGGESTION_COMMENT": ""
+      },
+      "global": {
+        "errorsOccured": "",
+        "chooseImageToUpload": "",
+        "serverProblem": "",
+        "close": "",
+        "login": "",
+        "logout": "",
+        "register": "",
+        "suggestNewClub": "",
+        "friendships": "",
+        "agreements": "",
+        "positives": "",
+        "satellites": "",
+        "satelliteOf": "",
+        "suggestChange": "",
+        "backToMap": "",
+        "getRandom": "",
+        "zoomIn": "",
+        "zoomMax": "",
+        "zoomMaxMore": "",
+        "backToViewingClubs": "",
+        "clubsOnMap": "",
+        "aboutProject": ""
+      },
+      "ratings": {
+        "label": "",
+        "stars0": "",
+        "stars1": "",
+        "stars2": "",
+        "stars3": "",
+        "stars4": "",
+        "stars5": ""
+      },
+      "formErrors": {
+        "email": "",
+        "required": "",
+        "passwordsNotMatch": "",
+        "emailExists": "",
+        "fileSize": "",
+        "fileType": "",
+        "relationsNotUnique": "",
+        "suggestionNoChanges": ""
+      },
+      "welcome": {
+        "header": "!",
+        "paragraph1": "",
+        "paragraph2": "",
+        "paragraph3": "",
+        "paragraph4": "",
+        "copyrights": ""
+      },
+      "emailConfirm": {
+        "emailVerified": "",
+        "login": "",
+        "emailBeingVerified": ""
+      },
+      "login": {
+        "header": "",
+        "success": "",
+        "backToMap": "",
+        "emailPlaceholder": "",
+        "passwordPlaceholder": "",
+        "login": "",
+        "register": ""
+      },
+      "register": {
+        "header": "",
+        "success": "",
+        "emailPlaceholder": "",
+        "passwordPlaceholder": "",
+        "confirmPasswordPlaceholder": "",
+        "register": "",
+        "login": ""
+      },
+      "search": {
+        "lackOfClub": "",
+        "searchPlaceholder": ""
+      },
+      "suggestion": {
+        "lackOfCredential": "",
+        "needToBeLoggedin": "",
+        "success": "",
+        "welcome": "",
+        "createNewClub": "",
+        "addSuggestion": "",
+        "name": {
+          "header": "",
+          "placeholder": "",
+          "tooltip": ""
+        },
+        "logo": {
+          "header": "",
+          "tooltip": ""
+        },
+        "tier": {
+          "header": "",
+          "tooltip": ""
+        },
+        "location": {
+          "header": "",
+          "tooltip": ""
+        },
+        "friendships": {
+          "header": "",
+          "tooltip": "",
+          "placeholder": ""
+        },
+        "agreements": {
+          "header": "",
+          "tooltip": "",
+          "placeholder": ""
+        },
+        "positives": {
+          "header": "",
+          "tooltip": "",
+          "placeholder": ""
+        },
+        "satellites": {
+          "header": "",
+          "tooltip": "",
+          "placeholder": ""
+        },
+        "satelliteOf": {
+          "header": "",
+          "tooltip": "",
+          "placeholder": ""
+        },
+        "comments": {
+          "additional": "",
+          "header": "",
+          "tooltip": ""
+        },
+        "noOptions": "",
+        "searchPlaces": ""
+      },
+      "about": {
+        "about": "",
+        "faq": ""
+      },
+      "faq": {
+        "header": "",
+        "question1": "",
+        "answer1": "",
+        "question2": "",
+        "answer2": "",
+        "question3": "",
+        "answer3": "",
+        "question4": "",
+        "answer4": "",
+        "question5": "",
+        "answer5": "",
+        "question6": "",
+        "answer6": ""
       }
     }
   }

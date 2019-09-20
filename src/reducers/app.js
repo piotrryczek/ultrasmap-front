@@ -10,6 +10,7 @@ import {
   SET_ZOOM,
   SET_IS_TOO_MUCH_CLUBS,
   SET_HOVERED_CLUB_ID,
+  SET_IS_LOADING_CLUBS_DISABLED,
 } from 'components/app/app.actions';
 import { DEFAULT_LANGUAGE, DEFAULT_ZOOM } from 'config/config';
 
@@ -22,6 +23,7 @@ const getCredentialsFromLocalStorage = () => {
 }
 
 const initialState = {
+  isLoadingClubsDisabled: false,
   isAuthenticated: localStorage.getItem('jwtToken') || false,
   credentials: getCredentialsFromLocalStorage(),
   messageCode: '',
@@ -95,6 +97,12 @@ const app = (state = initialState, { type, payload }) => {
     case SET_HOVERED_CLUB_ID: {
       return update(state, {
         hoveredClubId: { $set: payload },
+      });
+    }
+
+    case SET_IS_LOADING_CLUBS_DISABLED: {
+      return update(state, {
+        isLoadingClubsDisabled: { $set: payload },
       });
     }
 

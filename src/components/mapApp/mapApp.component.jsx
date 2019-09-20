@@ -33,7 +33,8 @@ function MapApp(props) {
   
   const clubIdFromUrl = _get(props, 'match.params.clubId', null);
   const artificialDelay = _get(props, 'location.state.artificialDelay', false);
-  
+
+
   useEffect(() => {
     if (clubIdFromUrl) {
       retrieveClub(clubIdFromUrl);
@@ -47,7 +48,6 @@ function MapApp(props) {
       }));
 
       dispatch(setHoveredClubId(null));
-
       if (shouldHideSidebar) dispatch(hideSidebar());
     }
   }, [clubIdFromUrl]);

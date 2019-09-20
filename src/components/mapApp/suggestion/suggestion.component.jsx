@@ -56,6 +56,7 @@ const checkHasChanged = (previousValues, currentValues) => {
 function Suggestion(props) {
   const {
     editType,
+    handleClose,
   } = props;
 
   const { t } = useTranslation();
@@ -314,6 +315,7 @@ function Suggestion(props) {
             <SuggestionForm
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...props}
+              handleClose={handleClose}
               isLoading={isLoading}
               editType={editType}
               clubId={clubId}

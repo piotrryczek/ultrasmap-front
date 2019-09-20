@@ -89,7 +89,7 @@ function Search(props) {
   const setNewClub = (clubId) => {
     history.push({
       pathname: `/club/${clubId}`,
-      state: { artificialDelay: isMobile || isTablet }
+      state: { artificialDelay: isMobile || isTablet } // only mobile, without smaller screens (window.innerWidth)
     });
 
     setState(prevState => ({

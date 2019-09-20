@@ -29,6 +29,7 @@ function ClubOverlay({
     transliterationName,
     logo,
     relationType = 'no-relation',
+    tier,
   } = club;
   this.sizePixels = getPixelsFromSize(size);
   this.createCallback = createCallback;
@@ -46,6 +47,7 @@ function ClubOverlay({
     clubMarker.setAttribute('type', 'button');
     clubMarker.classList.add('club-marker', relationType, `size-${size}`);
     if (isCurrent) clubMarker.classList.add('current-club');
+    if (tier === 0) clubMarker.classList.add('inactive');
 
     clubMarker.innerHTML = `
       <div class="name">
@@ -89,7 +91,8 @@ function ClubOverlay({
     this.clubMarker = null;
   };
 
-  this.goTo = () => {
+  this.goTo = (event) => {
+    event.stopPropagation();
     history.push(`/club/${this.clubId}`);
   }
 

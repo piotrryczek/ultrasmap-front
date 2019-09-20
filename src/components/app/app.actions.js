@@ -9,6 +9,7 @@ export const SET_IS_SIDEBAR_OPENED = `${namespace}_SET_IS_SIDEBAR_OPENED`;
 export const SET_ZOOM = `${namespace}_SET_ZOOM`;
 export const SET_IS_TOO_MUCH_CLUBS = `${namespace}_SET_IS_TOO_MUCH_CLUBS`;
 export const SET_HOVERED_CLUB_ID = `${namespace}_SET_HOVERED_CLUB_ID`;
+export const SET_IS_LOADING_CLUBS_DISABLED = `${namespace}_SET_IS_LOADING_CLUBS_DISABLED`;
 
 export const setMessage = messageCode => (dispatch) => {
   dispatch({
@@ -99,6 +100,13 @@ export const setHoveredClubId = hoveredClubId => (dispatch) => {
   dispatch({
     type: SET_HOVERED_CLUB_ID,
     payload: hoveredClubId,
+  });
+};
+
+export const setIsLoadingClubsDisabled = isLoadingClubsDisabled => (dispatch) => {
+  dispatch({
+    type: SET_IS_LOADING_CLUBS_DISABLED,
+    payload: isLoadingClubsDisabled,
   });
 };
 

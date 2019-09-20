@@ -50,7 +50,7 @@ const ClubContent = ({ club, handleGoTo }) => {
   const handleBackToViewingClubs = useCallback(() => {
     history.push({
       pathname: '/',
-      state: { hideSidebar: isMobile || isTablet },
+      state: { hideSidebar: isMobile || isTablet || window.innerWidth < 800 },
     });
   }, []);
 
@@ -80,6 +80,7 @@ const ClubContent = ({ club, handleGoTo }) => {
           <div className="main-logo">
             <img src={`${IMAGES_URL}/h360/${logo}`} alt="" />
             <Rating value={tier} readOnly />
+            <Typography variant="caption" display="block">{`(${t(`ratings.stars${tier}`)})`}</Typography>
           </div>
 
           <Box display="flex" justifyItems="center" justifyContent="center" pb={2}>

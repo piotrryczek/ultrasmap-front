@@ -40,6 +40,7 @@ $sidebarMobileSize: 90%;
 
   .club-marker {
     $opacity: 0.7;
+    $animationDelay: 0.1s;
 
     border-width: 3px;
     border-style: solid;
@@ -168,28 +169,33 @@ $sidebarMobileSize: 90%;
       border-radius: 100%;
       display: block;
       overflow: hidden;
+      text-align: center;
 
       .logo {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
         padding: 2px;
-
+        width: 100px;
         box-sizing: border-box;
 
         transition: width 0.3s, height 0.3s;
   
         img {
           max-width: 100%;
-
-          transition: max-height 0.3s;
+          max-height: 100%;
         }
       }
+    }
+
+    &.inactive {
+      filter: grayscale(100%);
     }
 
     /* Sizes */
     &.size-xl {
       $size: 64px;
+      $imgMargin: 14px;
 
       width: $size;
       height: $size;
@@ -211,11 +217,11 @@ $sidebarMobileSize: 90%;
 
       .logo-wrapper {
         .logo {
-          width: calc(#{$size} - 6px);
-          height: calc(#{$size} - 6px);
+          width: calc(#{$size} - #{$imgMargin});
+          height: calc(#{$size} - #{$imgMargin});
 
           img {
-            max-height: calc(#{$size} - 20px);
+            // max-height: calc(#{$size} - 20px);
           }
         }
       }
@@ -223,6 +229,7 @@ $sidebarMobileSize: 90%;
 
     &.size-l {
       $size: 58px;
+      $imgMargin: 13px;
 
       width: $size;
       height: $size;
@@ -244,11 +251,11 @@ $sidebarMobileSize: 90%;
 
       .logo-wrapper {
         .logo {
-          width: calc(#{$size} - 6px);
-          height: calc(#{$size} - 6px);
+          width: calc(#{$size} - #{$imgMargin});
+          height: calc(#{$size} - #{$imgMargin});
 
           img {
-            max-height: calc(#{$size} - 20px);
+            // max-height: calc(#{$size} - 20px);
           }
         }
       }
@@ -257,6 +264,7 @@ $sidebarMobileSize: 90%;
     /* Base */
     &.size-m {
       $size: 52px;
+      $imgMargin: 12px;
 
       width: $size;
       height: $size;
@@ -278,11 +286,11 @@ $sidebarMobileSize: 90%;
 
       .logo-wrapper {
         .logo {
-          width: calc(#{$size} - 6px);
-          height: calc(#{$size} - 6px);
+          width: calc(#{$size} - #{$imgMargin});
+          height: calc(#{$size} - #{$imgMargin});
 
           img {
-            max-height: calc(#{$size} - 20px);
+            // max-height: calc(#{$size} - 20px);
           }
         }
       }
@@ -290,6 +298,7 @@ $sidebarMobileSize: 90%;
 
     &.size-s {
       $size: 46px;
+      $imgMargin: 11px;
 
       width: $size;
       height: $size;
@@ -311,11 +320,11 @@ $sidebarMobileSize: 90%;
 
       .logo-wrapper {
         .logo {
-          width: calc(#{$size} - 6px);
-          height: calc(#{$size} - 6px);
+          width: calc(#{$size} - #{$imgMargin});
+          height: calc(#{$size} - #{$imgMargin});
 
           img {
-            max-height: calc(#{$size} - 20px);
+            // max-height: calc(#{$size} - 20px);
           }
         }
       }
@@ -323,6 +332,7 @@ $sidebarMobileSize: 90%;
 
     &.size-xs {
       $size: 40px;
+      $imgMargin: 10px;
 
       width: $size;
       height: $size;
@@ -344,11 +354,11 @@ $sidebarMobileSize: 90%;
 
       .logo-wrapper {
         .logo {
-          width: calc(#{$size} - 6px);
-          height: calc(#{$size} - 6px);
+          width: calc(#{$size} - #{$imgMargin});
+          height: calc(#{$size} - #{$imgMargin});
 
           img {
-            max-height: calc(#{$size} - 20px);
+            // max-height: calc(#{$size} - 20px);
           }
         }
       }

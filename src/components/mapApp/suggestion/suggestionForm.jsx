@@ -22,7 +22,6 @@ import TooltipWrapper from 'common/tooltipWrapper/tooltipWrapper.component';
 import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
 import FieldWrapper from 'common/fieldWrapper/fieldWrapper.component';
 import ImageUploader from 'common/imageUploader/ImageUploader.component';
-import ButtonLink from 'common/buttonLink/buttonLink.component';
 import GoogleMapLocation from './googleMapLocation';
 import AddressSearch from './addressSearch.component';
 
@@ -35,6 +34,7 @@ import {
 
 
 function SuggestionForm({
+  handleClose,
   isLoading,
   clubId,
   editType,
@@ -359,15 +359,15 @@ function SuggestionForm({
           <Grid item xs={12}>
             <Box display="flex" justifyContent="center">
               <ButtonGroup className={mobileClasses.groupButton}>
-                <ButtonLink
+                <Button
                   variant="contained"
                   color="primary"
                   size="large"
-                  to="/"
+                  onClick={handleClose}
                   className={mobileClasses.buttonBase}
                 >
                   {t('global.backToMap')}
-                </ButtonLink>
+                </Button>
                 <Button
                   variant="contained"
                   color="secondary"

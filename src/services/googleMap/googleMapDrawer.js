@@ -52,10 +52,12 @@ class GoogleMapDrawer {
     google.maps.event.addListener(this.map, 'bounds_changed', this.handleBoundsChanged);
     google.maps.event.addListener(this.map, 'zoom_changed', this.handleZoomChanged);
     google.maps.event.addListener(this.map, 'drag', this.handleClearSearchInputFocus);
+    google.maps.event.addListener(this.map, 'click', this.handleMapClick);
 
     google.maps.event.clearListeners(this.map, 'idle');
   }
 
+  /* Callbacks */
   handleZoomChanged = () => {
     const { zoomChangedCallback } = this.callbacks;
 
@@ -73,6 +75,13 @@ class GoogleMapDrawer {
 
     clearSearchInputFocusCallback();
   }
+
+  handleMapClick = () => {
+    const { clickCallback } = this.callbacks;
+
+    clickCallback();
+  }
+  /* End Callbacks */
 
   setCallback = (callbackName, callback) => {
     this.callbacks[callbackName] = callback;
@@ -120,30 +129,10 @@ class GoogleMapDrawer {
 
     const appearDelay = (20 / clubsToAdd.length) * clubsToAdd.length;
 
-    // _shuffle(clubsToAdd).forEach((club, index) => {
-    //   const overlay = new ClubOverlay({
-    //     club,
-    //     map: this.map,
-    //     size: sizes[`tier${club.tier}`],
-    //     createCallback: (clubMarker) => {
-    //       setTimeout(() => {
-    //         clubMarker.classList.add('show');
-    //       }, appearDelay * index);
-    //     },
-    //   });
-    
-    //   this.clubsOverlays.push({
-    //     clubId: club._id,
-    //     overlay,
-    //   });
-    // });
-
-    // clubsToAdd.sort((clubA, clubB) => clubA.tier > clubB.tier ? -1 : 1);
-
     const clubsToAddSortedAndShuffled = _.chain(clubsToAdd)
       .groupBy('tier')
       .map((value, key) => ({ tier: key, clubs: _shuffle(value) }))
-      .reduce((acc, current) => { const newAcc = [...current.clubs, ...acc]; return newAcc; }, [])
+      .reduce((acc, current) => [...current.clubs, ...acc], [])
       .value();
 
     clubsToAddSortedAndShuffled.forEach((club, index) => {

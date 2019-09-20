@@ -18,6 +18,7 @@
   opacity: 0;
   transform: translate(-50%, -3rem);
   text-align: center;
+  pointer-events: none;
 
   &.show {
     transform: translate(-50%, 0px);
