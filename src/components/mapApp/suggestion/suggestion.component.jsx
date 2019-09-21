@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, memo } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Formik } from 'formik';
@@ -28,6 +28,7 @@ const checkHasChanged = (previousValues, currentValues) => {
     friendships: prevFriendships,
     agreements: prevAgreements,
     positives: prevPositives,
+    enemies: prevEnemies,
     satellites: prevSatellites,
     satelliteOf: prevSatelliteOf,
   } = previousValues;
@@ -38,6 +39,7 @@ const checkHasChanged = (previousValues, currentValues) => {
     friendships,
     agreements,
     positives,
+    enemies,
     satellites,
     satelliteOf,
     newLogo,
@@ -49,6 +51,7 @@ const checkHasChanged = (previousValues, currentValues) => {
     || !_isEqual(prevFriendships.sort(), friendships.sort())
     || !_isEqual(prevAgreements.sort(), agreements.sort())
     || !_isEqual(prevPositives.sort(), positives.sort())
+    || !_isEqual(prevEnemies.sort(), enemies.sort())
     || !_isEqual(prevSatellites.sort(), satellites.sort())
     || prevSatelliteOf !== satelliteOf;
 }
@@ -81,6 +84,7 @@ function Suggestion(props) {
       friendships: [],
       agreements: [],
       positives: [],
+      enemies: [],
       satellites: [],
       satelliteOf: null,
     }
@@ -140,6 +144,7 @@ function Suggestion(props) {
       friendships,
       agreements,
       positives,
+      enemies,
       satellites,
       satelliteOf,
       comment,
@@ -161,6 +166,11 @@ function Suggestion(props) {
     } = parseRelationsToFormData(positives);
 
     const {
+      existingIds: enemiesIds,
+      namesToCreate: enemiesToCreate,
+    } = parseRelationsToFormData(enemies);
+
+    const {
       existingIds: satellitesIds,
       namesToCreate: satellitesToCreate,
     } = parseRelationsToFormData(satellites);
@@ -179,6 +189,8 @@ function Suggestion(props) {
       agreementsToCreate,
       positives: positivesIds,
       positivesToCreate,
+      enemies: enemiesIds,
+      enemiesToCreate,
       satellites: satellitesIds,
       satellitesToCreate,
       satelliteOf: null,
@@ -242,11 +254,12 @@ function Suggestion(props) {
       friendships,
       agreements,
       positives,
+      enemies,
       satellites,
       satelliteOf,
     } = values;
 
-    const allRelations = [...friendships, ...agreements, ...positives, ...satellites];
+    const allRelations = [...friendships, ...agreements, ...positives, ...enemies, ...satellites];
     if (satelliteOf) allRelations.push(satelliteOf);
 
     const allRelationsNames = allRelations.map((club) => {

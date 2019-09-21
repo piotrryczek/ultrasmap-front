@@ -132,6 +132,11 @@
           "tooltip": "Wybierz z jakimi innymi klubami klub posiada nieoficjalne pozytywne relacje bądź prywatne kontakty nie będące oficjalnymi zgodami lub układami. Jeśli klub nie istnieje możesz zasugerować dodanie go.",
           "placeholder": "Zacznij wpisywać i wybierz kluby..."
         },
+        "enemies": {
+          "header": "Wrogowie",
+          "tooltip": "Wybierz wrogów (kosy).",
+          "placeholder": "Zacznij wpisywać i wybierz kluby..."
+        },
         "satellites": {
           "header": "Satelity / fankluby",
           "tooltip": "Wybierz jakie inne kluby (nie miejscowości) można uznać za Fan Cluby bądź satelity. Są to przypadki, w których praktycznie cała ekipa danego klubu jest także zaangażowana w kibicowanie innemu klubowi i jednocześnie nie podlega dyskusji jej podrzędność w hierarchi. Zanim dodasz spróbuj przejrzeć już istniejące przypadki.",
@@ -305,6 +310,11 @@
           "tooltip": "Choose clubs with which club has positive relations or private contacts. If there is no club you can suggest adding it.",
           "placeholder": "Start typing and select clubs..."
         },
+        "enemies": {
+          "header": "Enemies",
+          "tooltip": "Choose clubs with which club is being hostile.",
+          "placeholder": "Start typing and select clubs..."
+        },
         "satellites": {
           "header": "Satellites / Fanclubs",
           "tooltip": "Choose satellite clubs (not cities/town) which can be recognized as fanclubs. These are cases in which practically all the supporters of a given club are also involved in supporting another club at the same time and its subordinate status is not disputed. Try to review existing cases before adding.",
@@ -476,6 +486,11 @@
         "positives": {
           "header": "Позитивные отношения",
           "tooltip": "Выберите клубы, с которыми клуб имеет позитивные отношения или личные контакты. Если нет клуба, вы можете предложить добавить его.",
+          "placeholder": "Начните печатать и выберите клубы..."
+        },
+        "enemies": {
+          "header": "Противники",
+          "tooltip": "Выберите врагов клуба.",
           "placeholder": "Начните печатать и выберите клубы..."
         },
         "satellites": {

@@ -140,6 +140,12 @@
     }
   }
 
+  &.enemies-header {
+    &:after {
+      background: $additionalColor3;
+    }
+  }
+
   &.satellites-header {
     &:after {
       background: $additionalColor1;
