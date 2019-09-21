@@ -99,7 +99,7 @@ function SuggestionForm({
     const excluded = getCurrentRelations();
     if (editType === 'edit') excluded.push(clubId);
 
-    const { data: clubs } = await Api.get('/clubs/possibleRelations', {
+    const { data: clubs } = await Api.post('/clubs/possibleRelations', {
       searchName: value,
       excluded: excluded,
     });
