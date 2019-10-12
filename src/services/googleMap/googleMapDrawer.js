@@ -129,8 +129,13 @@ class GoogleMapDrawer {
 
     const appearDelay = (20 / clubsToAdd.length) * clubsToAdd.length;
 
-    const clubsToAddSortedAndShuffled = _.chain(clubsToAdd)
-      .groupBy('tier')
+    const clubsToAddRoundedTier = clubsToAdd.map(club => ({
+      ...club,
+      roundedTier: Math.round(club.tier),
+    }))
+
+    const clubsToAddSortedAndShuffled = _.chain(clubsToAddRoundedTier)
+      .groupBy('roundedTier')
       .map((value, key) => ({ tier: key, clubs: _shuffle(value) }))
       .reduce((acc, current) => [...current.clubs, ...acc], [])
       .value();

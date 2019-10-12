@@ -14,7 +14,7 @@ export const languages = [{
 }];
 export const DEFAULT_COORDINATES = [19.3617687, 51.8983513];
 export const ABSOLUTE_MAX_ZOOM = isMobile ? 6 : 6;
-export const DEFAULT_ZOOM = isMobile ? 8 : 9;
+export const DEFAULT_ZOOM = isMobile ? 7 : 8;
 export const MAX_FILE_SIZE = 10 * 1000 * 1024;
 export const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 export const USER_LANGUAGE = navigator.languages && navigator.languages[0] || navigator.language || navigator.userLanguage;
