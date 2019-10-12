@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, memo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDebouncedCallback } from 'use-debounce';
+import { isMobile, isTablet } from 'react-device-detect';
 
 import { DEFAULT_ZOOM, DEFAULT_COORDINATES, MAXIMUM_CLUBS_ON_MAP, ABSOLUTE_MAX_ZOOM } from 'config/config';
 import { setZoom, setIsTooMuchClubs } from 'components/app/app.actions';
+
+import history from 'config/history';
 
 import GoogleMapDrawer from 'services/googleMap/googleMapDrawer';
 
@@ -12,9 +15,11 @@ function GoogleMapClubs(props) {
     googleMapDrawer,
     setGoogleMapDrawer,
     club: currentClub,
-    searchInputRef, retrieveClubs,
+    searchInputRef,
+    retrieveClubs,
     clubs = [],
     refreshClubs,
+    clearClubs,
     windowHeight,
   } = props;
 
@@ -25,10 +30,12 @@ function GoogleMapClubs(props) {
     zoom,
     isTooMuchClubs,
     hoveredClubId,
+    isLoadingClubsDisabled,
   } = useSelector(state => ({
     zoom: state.app.zoom,
     isTooMuchClubs: state.app.isTooMuchClubs,
     hoveredClubId: state.app.hoveredClubId,
+    isLoadingClubsDisabled: state.app.isLoadingClubsDisabled,
   }));
 
   const tooMuchClubs = clubs.length > MAXIMUM_CLUBS_ON_MAP;
@@ -41,33 +48,46 @@ function GoogleMapClubs(props) {
 
   // Debounced callbacks
   const [searchForClubsInArea] = useDebouncedCallback(() => {
-    retrieveClubs();
-  }, 400);
+    const currentZoom = googleMapDrawer.map.getZoom();
+    if (currentZoom >= ABSOLUTE_MAX_ZOOM) retrieveClubs();
+  }, 400); // 400
 
   const [handleRefreshClubs] = useDebouncedCallback(() => {
-    refreshClubs();
-  }, 100);
+    const currentZoom = googleMapDrawer.map.getZoom();
+    if (currentZoom >= ABSOLUTE_MAX_ZOOM) refreshClubs();
+  }, 100); // 100
 
 
   // Unified method for getting clubs
   const getClubs = () => {
-    const zoom = googleMapDrawer.map.getZoom();
-
-    if (!currentClub && zoom >= ABSOLUTE_MAX_ZOOM) {
+    if (!currentClub && !isLoadingClubsDisabled) {
       handleRefreshClubs();
       searchForClubsInArea();
     }
   }
 
-
   // Main Callbacks for Google Map map
   const handleBoundsChanged = useCallback(() => {
     if (isLoaded) getClubs();
-  }, [isLoaded, currentClub, tooMuchClubs, clubs, googleMapDrawer]);  
+  }, [isLoaded, isLoadingClubsDisabled, currentClub, tooMuchClubs, clubs, googleMapDrawer]);  
 
   const handleZoomChanged = useCallback((newZoom) => {
     dispatch(setZoom(newZoom));
-  }, []);
+    if (!currentClub && newZoom < ABSOLUTE_MAX_ZOOM) {
+      clearClubs();
+    }
+  }, [googleMapDrawer]);
+
+  const handleMapClick = useCallback(() => {
+    if (
+      currentClub
+      && !(isMobile || isTablet || window.innerWidth < 800) // on mobile disable
+    ) {
+      history.push({
+        pathname: '/',
+      });
+    }
+  }, [googleMapDrawer, currentClub]);
 
   const handleMapLoaded = useCallback(() => {
     setIsLoaded(true);
@@ -88,6 +108,7 @@ function GoogleMapClubs(props) {
         initialZoom: DEFAULT_ZOOM,
       },
       {
+        clickCallback: handleMapClick,
         boundsChangedCallback: handleBoundsChanged,
         zoomChangedCallback: handleZoomChanged,
         mapLoadedCallback: handleMapLoaded,
@@ -97,7 +118,6 @@ function GoogleMapClubs(props) {
 
     setGoogleMapDrawer(googleMapDrawer);
   }, []);
-
 
   // Google Maps Clubs logic (updating googleMapDrawer)
   useEffect(() => { // Clubs
@@ -123,12 +143,16 @@ function GoogleMapClubs(props) {
 
   // Update callbacks
   useEffect(() => {
+    if (googleMapDrawer) googleMapDrawer.setCallback('clickCallback', handleMapClick);
+  }, [handleMapClick]);
+
+  useEffect(() => {
     if (googleMapDrawer) googleMapDrawer.setCallback('zoomChangedCallback', handleZoomChanged);
   }, [handleZoomChanged]);
 
   useEffect(() => {
     if (googleMapDrawer) googleMapDrawer.setCallback('boundsChangedCallback', handleBoundsChanged);
-  }, [currentClub, zoom, tooMuchClubs, clubs]); // zoom?
+  }, [currentClub, zoom, tooMuchClubs, clubs, isLoadingClubsDisabled]); // zoom?
 
   useEffect(() => {
     if (googleMapDrawer) googleMapDrawer.setCallback('clearSearchInputFocusCallback', handleClearSearchInputFocus);

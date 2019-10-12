@@ -12,7 +12,8 @@ function RelationClub({ club, goTo }) {
     _id: clubId,
     name,
     logo,
-    transliterationName
+    transliterationName,
+    // tier,
   } = club;
 
   const handleChangeClub = () => {
@@ -42,6 +43,9 @@ function RelationClub({ club, goTo }) {
         <span className="original">{name}</span>
         {transliterationName && <span className="transliteration">{transliterationName}</span>}
       </h5>
+      {/* <div className="tier">
+        {tier}
+      </div> */}
     </button>
   );
 }

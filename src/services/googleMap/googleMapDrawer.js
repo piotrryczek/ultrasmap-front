@@ -1,8 +1,11 @@
 /* global google */
 import _intersection from 'lodash/intersection';
+import _ from 'lodash';
 import _get from 'lodash/get';
 import getDistance from 'geolib/es/getDistance';
 import _shuffle from 'lodash/shuffle';
+
+import { getClubsSizes, getRoundedTier } from 'util/helpers';
 
 // import { APPEAR_DELAY } from 'config/config';
 
@@ -49,10 +52,12 @@ class GoogleMapDrawer {
     google.maps.event.addListener(this.map, 'bounds_changed', this.handleBoundsChanged);
     google.maps.event.addListener(this.map, 'zoom_changed', this.handleZoomChanged);
     google.maps.event.addListener(this.map, 'drag', this.handleClearSearchInputFocus);
+    google.maps.event.addListener(this.map, 'click', this.handleMapClick);
 
     google.maps.event.clearListeners(this.map, 'idle');
   }
 
+  /* Callbacks */
   handleZoomChanged = () => {
     const { zoomChangedCallback } = this.callbacks;
 
@@ -71,6 +76,13 @@ class GoogleMapDrawer {
     clearSearchInputFocusCallback();
   }
 
+  handleMapClick = () => {
+    const { clickCallback } = this.callbacks;
+
+    clickCallback();
+  }
+  /* End Callbacks */
+
   setCallback = (callbackName, callback) => {
     this.callbacks[callbackName] = callback;
   }
@@ -82,6 +94,9 @@ class GoogleMapDrawer {
   }
 
   updateClubs = (clubs) => {
+    const zoom = this.map.getZoom();
+    const sizes = getClubsSizes(zoom);
+
     if (this.currentClub) {
       this.currentClub = null;
       this.clearClubsOverlays();
@@ -94,16 +109,37 @@ class GoogleMapDrawer {
     );
 
     const clubsToAdd = clubs.filter(club => !sameClubsIds.includes(club._id));
-    const clubsToRemove = this.clubs.filter(club => !sameClubsIds.includes(club._id));
+    const {
+      clubsToRemove,
+      clubsToStay,
+    } = this.clubs.reduce((acc, club) => {
+      if (sameClubsIds.includes(club._id)) {
+        acc.clubsToStay.push(club);
+      } else {
+        acc.clubsToRemove.push(club);
+      }
+
+      return acc;
+    }, {
+      clubsToRemove: [],
+      clubsToStay: [],
+    });
 
     this.clubs = clubs;
 
     const appearDelay = (20 / clubsToAdd.length) * clubsToAdd.length;
 
-    _shuffle(clubsToAdd).forEach((club, index) => {
+    const clubsToAddSortedAndShuffled = _.chain(clubsToAdd)
+      .groupBy('tier')
+      .map((value, key) => ({ tier: key, clubs: _shuffle(value) }))
+      .reduce((acc, current) => [...current.clubs, ...acc], [])
+      .value();
+
+    clubsToAddSortedAndShuffled.forEach((club, index) => {
       const overlay = new ClubOverlay({
         club,
         map: this.map,
+        size: sizes[`tier${getRoundedTier(club.tier)}`],
         createCallback: (clubMarker) => {
           setTimeout(() => {
             clubMarker.classList.add('show');
@@ -120,7 +156,15 @@ class GoogleMapDrawer {
     clubsToRemove.forEach((club) => {
       const clubOverlay = this.clubsOverlays.find(clubOverlay => clubOverlay.clubId === club._id);
 
-      if (clubOverlay) clubOverlay.overlay.setMap(null);
+      if (clubOverlay) clubOverlay.overlay.disapear();
+    });
+
+    clubsToStay.forEach((club) => {
+      const clubOverlay = this.clubsOverlays.find(clubOverlay => clubOverlay.clubId === club._id);
+
+      if (clubOverlay) {
+        clubOverlay.overlay.updateSize(sizes[`tier${getRoundedTier(club.tier)}`]);
+      }
     });
 
     const clubsToRemoveIds = clubsToRemove.map(mapToId);

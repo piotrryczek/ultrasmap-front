@@ -6,7 +6,15 @@ import _uniqBy from 'lodash/uniqBy';
 import delay from 'delay';
 
 import { setIsLoadingClub, setIsLoadingClubs, setHoveredClubId, hideSidebar } from 'components/app/app.actions';
-import { getAllClubsFromClub, sortByTier, enhanceCoordinates, checkIfYetSearched, mergePolygons } from 'util/helpers';
+import {
+  getAllClubsFromClub,
+  sortByTier,
+  enhanceCoordinates,
+  checkIfYetSearched,
+  mergePolygons,
+  getClubsSizes,
+  getRoundedTier,
+} from 'util/helpers';
 import Api from 'services/api';
 
 import Sidebar from './sidebar/sidebar.component';
@@ -33,7 +41,8 @@ function MapApp(props) {
   
   const clubIdFromUrl = _get(props, 'match.params.clubId', null);
   const artificialDelay = _get(props, 'location.state.artificialDelay', false);
-  
+
+
   useEffect(() => {
     if (clubIdFromUrl) {
       retrieveClub(clubIdFromUrl);
@@ -47,7 +56,6 @@ function MapApp(props) {
       }));
 
       dispatch(setHoveredClubId(null));
-
       if (shouldHideSidebar) dispatch(hideSidebar());
     }
   }, [clubIdFromUrl]);
@@ -61,8 +69,9 @@ function MapApp(props) {
 
   const refreshClubs = useCallback(() => {
     const bounds = googleMapDrawer.map.getBounds();
+    const zoom = googleMapDrawer.map.getZoom();
 
-    const visibleClubs = getVisibleClubs(clubs, bounds);
+    const visibleClubs = getVisibleClubs(clubs, bounds, zoom);
     
     visibleClubs.sort(sortByTier);
 
@@ -93,8 +102,16 @@ function MapApp(props) {
     }));
   }, [artificialDelay, clubs]);
 
+  const clearClubs = useCallback(async () => {
+    setState((prevState) => ({
+      ...prevState,
+      visibleClubs: [],
+    }));
+  }, [googleMapDrawer]);
+
   const retrieveClubs = useCallback(async () => {
     const bounds = googleMapDrawer.map.getBounds();
+    const zoom = googleMapDrawer.map.getZoom();
 
     const northEastBounds = bounds.getNorthEast();
     const southWestBounds = bounds.getSouthWest();
@@ -128,7 +145,7 @@ function MapApp(props) {
 
     const finalClubs = _uniqBy([...clubs, ...enhanceCoordinates(retrieveClubs)], club => club._id);
 
-    const visibleClubs = getVisibleClubs(finalClubs, bounds)
+    const visibleClubs = getVisibleClubs(finalClubs, bounds, zoom);
     visibleClubs.sort(sortByTier);
 
     setState((prevState) => ({
@@ -142,8 +159,11 @@ function MapApp(props) {
   }, [clubs, googleMapDrawer, yetSearchedPolygons]);
 
 
-  const getVisibleClubs = (clubsToCheck, bounds) => {
-    return clubsToCheck.filter(club => bounds.contains(club.latLng));
+  const getVisibleClubs = (clubsToCheck, bounds, zoom) => {
+    const clubsWithinBounds = clubsToCheck.filter(club => bounds.contains(club.latLng));
+    const sizes = getClubsSizes(zoom);
+
+    return clubsWithinBounds.filter(club => sizes[`tier${getRoundedTier(club.tier)}`]);
   }
 
   return (
@@ -153,6 +173,7 @@ function MapApp(props) {
         club={club}
         retrieveClubs={retrieveClubs}
         refreshClubs={refreshClubs}
+        clearClubs={clearClubs}
         setGoogleMapDrawer={setGoogleMapDrawer}
         googleMapDrawer={googleMapDrawer}
       />

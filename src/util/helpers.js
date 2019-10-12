@@ -111,3 +111,84 @@ export const mergePolygons = (boundsPolygon, otherPolygons) => {
     });
   });
 }
+
+export const getClubsSizes = (zoom) => {
+  switch (zoom) {
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6: {
+      return {
+        ['tier5']: 's',
+        ['tier4']: 'xs'
+      };
+    }
+
+    case 7: {
+      return {
+        ['tier5']: 'm',
+        ['tier4']: 's',
+        ['tier3']: 'xs',
+      };
+    }
+
+    case 8: {
+      return {
+        ['tier5']: 'l',
+        ['tier4']: 'm',
+        ['tier3']: 's',
+        ['tier2']: 'xs',
+      };
+    }
+
+    case 9: {
+      return {
+        ['tier5']: 'xl',
+        ['tier4']: 'l',
+        ['tier3']: 'm',
+        ['tier2']: 's',
+        ['tier1']: 'xs',
+        ['tier0']: 'xs',
+      };
+    }
+
+    case 10: {
+      return {
+        ['tier5']: 'xl',
+        ['tier4']: 'l',
+        ['tier3']: 'm',
+        ['tier2']: 's',
+        ['tier1']: 's',
+        ['tier0']: 's',
+      };
+    }
+
+    case 11:
+    default: {
+      return {
+        ['tier5']: 'xl',
+        ['tier4']: 'l',
+        ['tier3']: 'm',
+        ['tier2']: 'm',
+        ['tier1']: 's',
+        ['tier0']: 's',
+      };
+    }
+    
+  }
+};
+
+export const getRoundedTier = (tier) => {
+  const roundedTier = Math.round(tier);
+
+  return roundedTier < 1 ? 1 : roundedTier;
+};
+
+export const getRoundedTierForLabel = (tier) => {
+  if (tier < 0.2) return 0;
+  if (tier < 0.5) return 1;
+  
+  return Math.round(tier);
+};

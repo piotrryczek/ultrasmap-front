@@ -13,16 +13,20 @@ import GoogleMapClubs from 'components/mapApp/googleMapClubs/googleMapClubs.comp
 import ClubsStatus from 'components/mapApp/clubsStatus/clubsStatus.component';
 import ClubsToggleShow from 'components/mapApp/clubsToggleShow/clubsToggleShow.component';
 
-import LoginRoute from './routes/loginRoute.component';
-import RegisterRoute from './routes/registerRoute.component';
-import NewSuggestionRoute from './routes/newSuggestionRoute.component';
-import EditSuggestionRoute from './routes/editSuggestionRoute.component';
-import ConfirmRoute from './routes/confirmRoute.component';
-import AboutRoute from './routes/aboutRoute.component';
+import PageOverlayRoute from 'common/pageOverlayRoute/pageOverlayRoute.component';
+
+import Login from 'components/login/login.component';
+import Register from 'components/register/register.component';
+import Suggestion from 'components/mapApp/suggestion/suggestion.component';
+import EmailConfirm from 'components/emailConfirm/emailConfirm.component';
+import About from 'components/about/about.component';
 
 function GoogleMapWrapper(props) {
   const {
     club: currentClub,
+    clearClubs,
+    retrieveClubs,
+    refreshClubs,
   } = props;
 
   const [searchInputRef, setSearchInputRef] = useState(null);
@@ -40,7 +44,29 @@ function GoogleMapWrapper(props) {
     setSearchInputRef(ref);
   }, []);
 
-  // const divElMap = useMemo(() => <div style={{ height: `${windowHeight}px` }} />, [windowHeight]);
+  const pageOverlayRoutes = useMemo(() => [
+    {
+      path: '/login',
+      component: Login,
+    }, {
+      path: '/register',
+      component: Register,
+    }, {
+      path: '/suggestion',
+      component: Suggestion,
+      editType: 'new',
+    }, {
+      path: '/suggestion/:clubId',
+      component: Suggestion,
+      editType: 'edit',
+    }, {
+      path: '/confirm/:verificationCode',
+      component: EmailConfirm,
+    }, {
+      path: '/about',
+      component: About,
+    }
+  ], []);
 
   return (
     <div id="map-wrapper" className={classNames({ 'sidebar-opened': isSidebarOpened })} style={{ height: `${windowHeight}px` }}>
@@ -58,12 +84,21 @@ function GoogleMapWrapper(props) {
         <Languages />
       </LoadingWrapper>
 
-      <LoginRoute />
-      <RegisterRoute />
-      <NewSuggestionRoute />
-      <EditSuggestionRoute />
-      <ConfirmRoute />
-      <AboutRoute />
+      {pageOverlayRoutes.map(({
+        path,
+        component,
+        ...rest
+      }) => (
+        <PageOverlayRoute
+          {...rest}
+          key={path}
+          path={path}
+          component={component}
+          clearClubs={clearClubs}
+          retrieveClubs={retrieveClubs}
+          refreshClubs={refreshClubs}
+        />
+      ))}
     </div>
   )
 }

@@ -3,19 +3,17 @@ import { useTranslation } from 'react-i18next';
 
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-// import ButtonGroup from '@material-ui/core/ButtonGroup';
-// import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import ButtonLink from 'common/buttonLink/buttonLink.component';
 import { useTabStyles } from 'theme/useStyles';
 
-function About() {
+function About(props) {
+  const { handleClose } = props;
   const { t } = useTranslation();
   const tabClasses = useTabStyles({});
-
 
   const [currentPage, setCurrentPage] = useState('about');
   
@@ -80,14 +78,14 @@ function About() {
       
       <Grid item xs={12}>
         <Box display="flex" justifyContent="center">
-          <ButtonLink
+          <Button
             variant="contained"
             color="primary"
             size="large"
-            to="/"
+            onClick={handleClose}
           >
             {t('global.backToMap')}
-          </ButtonLink>
+          </Button>
         </Box>
       </Grid>
     </Grid>

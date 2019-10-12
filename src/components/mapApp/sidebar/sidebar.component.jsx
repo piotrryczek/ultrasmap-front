@@ -19,6 +19,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import history from 'config/history';
 import { IMAGES_URL, ABSOLUTE_MAX_ZOOM } from 'config/config';
+import { getRoundedTierForLabel } from 'util/helpers';
 import useWindowHeight from 'hooks/useWindowHeight';
 
 import ScrollbarsWrapper from 'common/scrollbarsWrapper/scrollbarsWrapper.component';
@@ -50,11 +51,11 @@ const ClubContent = ({ club, handleGoTo }) => {
   const handleBackToViewingClubs = useCallback(() => {
     history.push({
       pathname: '/',
-      state: { hideSidebar: isMobile || isTablet },
+      state: { hideSidebar: isMobile || isTablet || window.innerWidth < 800 },
     });
   }, []);
 
-  const roundedTier = Math.round(tier);
+  const roundedTierForLabel = getRoundedTierForLabel(tier);
 
   return (
     <Grid container spacing={2}>
@@ -81,7 +82,8 @@ const ClubContent = ({ club, handleGoTo }) => {
         <Paper>
           <div className="main-logo">
             <img src={`${IMAGES_URL}/h360/${logo}`} alt="" />
-            <Rating value={roundedTier} readOnly />
+            <Rating value={roundedTierForLabel} readOnly />
+            <Typography variant="caption" display="block">{`(${t(`ratings.stars${roundedTierForLabel}`)})`}</Typography>
           </div>
 
           <Box display="flex" justifyItems="center" justifyContent="center" pb={2}>

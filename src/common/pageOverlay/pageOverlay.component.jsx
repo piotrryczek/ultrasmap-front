@@ -1,23 +1,32 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import CloseIcon from '@material-ui/icons/Close';
 
 import useWindowHeight from 'hooks/useWindowHeight';
 import ScrollbarsWrapper from 'common/scrollbarsWrapper/scrollbarsWrapper.component';
 
-import { toggleSidebar } from 'components/app/app.actions';
+import { hideSidebar, setIsLoadingClubsDisabled } from 'components/app/app.actions';
 
-function PageOverlay({ children }) {
+function PageOverlay(props) {
+  const {
+    children,
+    clearClubs,
+    handleClose,
+  } = props;
+
   const dispatch = useDispatch();
   const windowHeight = useWindowHeight();
   const windowMargin = window.innerWidth > 800 ? 160 : 128;
 
-  const isSidebarOpened = useSelector(state => state.app.isSidebarOpened);
+  const initCallback = useCallback(async () => {
+    await dispatch(setIsLoadingClubsDisabled(true));
+    dispatch(hideSidebar());
+    clearClubs();
+  }, []);
 
   useEffect(() => {
-    if (isSidebarOpened && window.innerWidth < 1400) dispatch(toggleSidebar());
+    initCallback();
   }, []);
   
   return (
@@ -25,9 +34,13 @@ function PageOverlay({ children }) {
       <div className="map-overlay" style={{ height: `${windowHeight}px` }} />
       <div className="page-over-map-wrapper" style={{ height: `${windowHeight}px` }}>
         <div className="page-over-map has-scrollbar" id="suggestion">
-          <Link to="/" className="page-over-close">
+          <button
+            type="button"
+            className="page-over-close"
+            onClick={handleClose}
+          >
             <CloseIcon color="primary" />
-          </Link>
+          </button>
           <ScrollbarsWrapper
             autoHeight
             autoHeightMax={windowHeight - windowMargin}

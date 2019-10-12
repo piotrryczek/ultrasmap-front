@@ -22,7 +22,6 @@ import TooltipWrapper from 'common/tooltipWrapper/tooltipWrapper.component';
 import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
 import FieldWrapper from 'common/fieldWrapper/fieldWrapper.component';
 import ImageUploader from 'common/imageUploader/ImageUploader.component';
-import ButtonLink from 'common/buttonLink/buttonLink.component';
 import GoogleMapLocation from './googleMapLocation';
 import AddressSearch from './addressSearch.component';
 
@@ -35,6 +34,7 @@ import {
 
 
 function SuggestionForm({
+  handleClose,
   isLoading,
   clubId,
   editType,
@@ -46,6 +46,7 @@ function SuggestionForm({
     friendships,
     agreements,
     positives,
+    enemies,
     satellites,
     satelliteOf,
     comment = '',
@@ -67,6 +68,7 @@ function SuggestionForm({
       ...friendships,
       ...agreements,
       ...positives,
+      ...enemies,
       ...satellites,
     ];
 
@@ -277,6 +279,35 @@ function SuggestionForm({
           </Grid>
           <Grid item xs={12}>
             <h5
+              className={classNames('relations-header enemies-header', { 'error': errors.relationsNotUnique })}
+            >
+              <span className="text">
+                {t('suggestion.enemies.header')}
+                <TooltipWrapper placement="right" title={t('suggestion.enemies.tooltip')}>
+                  <HelpIcon fontSize="small" color="primary" />
+                </TooltipWrapper>
+              </span>
+            </h5>
+            <FieldWrapper error={t(errors.relationsNotUnique)}>
+              <AsyncCreatableSelect
+                isMulti
+                name="enemies"
+                closeMenuOnSelect={false}
+                formatOptionLabel={retrieveClubOptionLabel}
+                getOptionValue={retrieveClubOptionValue}
+                formatCreateLabel={handleFormatCreateLabel(t('suggestion.createNewClub'))}
+                loadOptions={handleGetPossibleRelations}
+                value={enemies}
+                onChange={handleSelectChange('enemies')}
+                onBlur={handleBlur}
+                placeholder={t('suggestion.enemies.placeholder')}
+                styles={selectStyles(!!errors.enemies)}
+                noOptionsMessage={() => t('suggestion.noOptions')}
+              />
+            </FieldWrapper>
+          </Grid>
+          <Grid item xs={12}>
+            <h5
               className={classNames('relations-header satellites-header', { 'error': errors.relationsNotUnique })}
             >
               <span className="text">
@@ -359,15 +390,15 @@ function SuggestionForm({
           <Grid item xs={12}>
             <Box display="flex" justifyContent="center">
               <ButtonGroup className={mobileClasses.groupButton}>
-                <ButtonLink
+                <Button
                   variant="contained"
                   color="primary"
                   size="large"
-                  to="/"
+                  onClick={handleClose}
                   className={mobileClasses.buttonBase}
                 >
                   {t('global.backToMap')}
-                </ButtonLink>
+                </Button>
                 <Button
                   variant="contained"
                   color="secondary"
