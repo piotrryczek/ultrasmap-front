@@ -54,6 +54,8 @@ const ClubContent = ({ club, handleGoTo }) => {
     });
   }, []);
 
+  const roundedTier = Math.round(tier);
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -79,7 +81,7 @@ const ClubContent = ({ club, handleGoTo }) => {
         <Paper>
           <div className="main-logo">
             <img src={`${IMAGES_URL}/h360/${logo}`} alt="" />
-            <Rating value={tier} readOnly />
+            <Rating value={roundedTier} readOnly />
           </div>
 
           <Box display="flex" justifyItems="center" justifyContent="center" pb={2}>
