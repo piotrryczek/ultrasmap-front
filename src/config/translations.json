@@ -38,7 +38,11 @@
         "zoomMaxMore": "Przekroczyłes najdalszy możliwy poziom oddalenia w jakim funkcjonuje aplikacja. Aby dalej przeglądać kluby przybliż.",
         "backToViewingClubs": "Wróc do przeglądania klubów",
         "clubsOnMap": "Na mapie",
-        "aboutProject": "O projekcie"
+        "aboutProject": "O projekcie",
+        "upcomingMatch": "Nadchodzący mecz z",
+        "noUpcomingMatch": "Nie posiadamy żadnego meczu tego klubu w najbliższym czasie.",
+        "checkFanaticsCalendar": "Przeglądaj najciekawsze kibicowsko spotkania dzięki naszej aplikacji:",
+        "fanaticsCalendar": "Kalendarz Fanatyka"
       },
       "ratings": {
         "label": "znaczenie kibicowskie",
@@ -215,7 +219,11 @@
         "zoomMaxMore": "You have zoomed out too far. Pleace zoom in to continue using an application",
         "backToViewingClubs": "Back to browsing clubs",
         "clubsOnMap": "On the map",
-        "aboutProject": "About project"
+        "aboutProject": "About project",
+        "upcomingMatch": "Upcoming match with",
+        "noUpcomingMatch": "We don't have any matches of this club anytime soon.",
+        "checkFanaticsCalendar": "Browse the most interesting football fans matches by our application:",
+        "fanaticsCalendar": "Fanatics Calendar"
       },
       "ratings": {
         "label": "supporters strength",
@@ -393,7 +401,11 @@
         "zoomMaxMore": "Вы уменьшили масштаб слишком далеко. Пожалуйста, увеличьте масштаб, чтобы продолжить использовать приложение.",
         "backToViewingClubs": "Вернись к просмотру клубов",
         "clubsOnMap": "На карте",
-        "aboutProject": "О проекте"
+        "aboutProject": "О проекте",
+        "upcomingMatch": "Предстоящий матч с",
+        "noUpcomingMatch": "У нас нет матчей этого клуба в ближайшее время.",
+        "checkFanaticsCalendar": "Самые интересные матчи футбольных фанатов по нашему приложению:",
+        "fanaticsCalendar": "Календарь Фанатиков"
       },
       "ratings": {
         "label": "сила фанатов",

@@ -157,6 +157,14 @@
       background: $additionalColor1;
     }
   }
+
+  &.upcoming-match-header {
+    font-weight: bold;
+
+    &:after {
+      background: black;
+    }
+  }
 }
 
 .has-scrollbar {

@@ -178,9 +178,116 @@
     }
   }
 
+  .match {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: none;
+    width: 100%;
+    padding: 0.5rem 0px;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+
+    &:after {
+      @extend .clipped-hover;
+    }
+
+    &.has-link {
+      cursor: pointer;
+
+      &:hover {
+        &:after {
+          opacity: 1;
+          transform: translateX(0px);
+        }
+  
+        .tier {
+          background: white;
+        }
+      }
+    }
+    
+
+    &.upcoming-match {
+      margin-bottom: 1rem;
+    }
+
+    .logo,
+    .name {
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo {
+      flex: 0 0 4rem;
+      padding: 0px 0.25rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      box-sizing: border-box;
+      
+      img {
+        max-height: 2.5rem;
+      }
+
+      .no-logo {
+        font-size: 30px;
+        font-weight: bold;
+      }
+    }
+
+    .name {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-flow: column;
+      flex-grow: 1;
+      text-align: left;
+      font-weight: 500;
+      font-size: 1em;
+
+      .original {
+        font-size: 1em;
+        color: $textColor;
+      }
+
+      .transliteration {
+        font-size: 0.7em;
+        color: $minorTextColor;
+      }
+    }
+  }
+
   .relation-clubs {
     .club {
       
+    }
+  }
+  
+  #loading-matches {
+    width: 100px;
+    height: 40px;
+    background: url('/assets/loading_horizontal.gif') no-repeat center;
+    background-size: cover;
+    pointer-events: none;
+    display: block;
+    margin: 0px auto;
+  }
+
+  #fanatics-calendar-link {
+    display: block;
+    margin: 0px auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 50%;
+    box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 100%;
+
+    img {
+      display: block;
     }
   }
 }

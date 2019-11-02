@@ -1,4 +1,4 @@
-import React, { useCallback, memo } from 'react';
+import React, { useCallback, useState, memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,7 +9,7 @@ import { isMobile, isTablet } from 'react-device-detect';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
-import Rating from '@material-ui/lab/Rating';
+// import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
@@ -17,16 +17,20 @@ import LocationSearchingIcon from '@material-ui/icons/LocationSearching';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
+import Api from 'services/api';
 import history from 'config/history';
 import { IMAGES_URL, ABSOLUTE_MAX_ZOOM } from 'config/config';
-import { getRoundedTierForLabel } from 'util/helpers';
+// import { getRoundedTierForLabel } from 'util/helpers';
 import useWindowHeight from 'hooks/useWindowHeight';
 
 import ScrollbarsWrapper from 'common/scrollbarsWrapper/scrollbarsWrapper.component';
 import LoadingWrapper from 'common/loadingWrapper/loadingWrapper.component';
 import RelationClubs from 'components/mapApp/sidebar/relationClubs/relationClubs.component';
 import RelationClub from 'components/mapApp/sidebar/relationClubs/relationClub.component';
+import UpcomingMatch from 'components/mapApp/sidebar/upcomingMatch/upcomingMatch.component';
 import ButtonLink from 'common/buttonLink/buttonLink.component';
+
+
 
 import { toggleSidebar, showSidebar, hideSidebar } from 'components/app/app.actions';
 import { useButtonIconStyles, useMobileStyles } from 'theme/useStyles';
@@ -36,11 +40,59 @@ const ClubContent = ({ club, handleGoTo }) => {
   const iconClasses = useButtonIconStyles({});
   const mobileClasses = useMobileStyles({});
 
+  const [state, setState] = useState({
+    isLoadingMatches: true,
+    upcomingMatch: null,
+  });
+
+  const {
+    isLoadingMatches,
+    upcomingMatch,
+  } = state;
+
+  const retrieveMatches = useCallback(async () => {
+    const { data: matches } = await Api.get('/matches', {
+      filters: {
+        clubs: [club._id],
+        dateFrom: Date.now(),
+      },
+      sort: {
+        date: 'ascending'
+      }
+    });
+
+    const upcomingMatch = matches.find((match) => {
+      const {
+        homeClub,
+        isHomeClubReserve,
+        isAwayClubReserve,
+      } = match;
+
+      const isHome = homeClub && homeClub._id === club._id;
+      return isHome ? !isHomeClubReserve : !isAwayClubReserve;
+    });
+
+    setState({
+      isLoadingMatches: false,
+      upcomingMatch,
+    });
+  }, [club]);
+
+  useEffect(() => {
+    setState({
+      upcomingMatch: null,
+      isLoadingMatches: true,
+    });
+
+    retrieveMatches();
+  }, [club]);
+
   const {
     name,
     transliterationName,
+    country,
     logo,
-    tier,
+    // tier,
     friendships,
     agreements,
     positives,
@@ -55,7 +107,7 @@ const ClubContent = ({ club, handleGoTo }) => {
     });
   }, []);
 
-  const roundedTierForLabel = getRoundedTierForLabel(tier);
+  // const roundedTierForLabel = getRoundedTierForLabel(tier);
 
   return (
     <Grid container spacing={2}>
@@ -82,8 +134,8 @@ const ClubContent = ({ club, handleGoTo }) => {
         <Paper>
           <div className="main-logo">
             <img src={`${IMAGES_URL}/h360/${logo}`} alt="" />
-            <Rating value={roundedTierForLabel} readOnly />
-            <Typography variant="caption" display="block">{`(${t(`ratings.stars${roundedTierForLabel}`)})`}</Typography>
+            {/* <Rating value={roundedTierForLabel} readOnly /> */}
+            {/* <Typography variant="caption" display="block">{`(${t(`ratings.stars${roundedTierForLabel}`)})`}</Typography> */}
           </div>
 
           <Box display="flex" justifyItems="center" justifyContent="center" pb={2}>
@@ -142,6 +194,29 @@ const ClubContent = ({ club, handleGoTo }) => {
             goTo={handleGoTo}
             club={satelliteOf}
           />
+        </Grid>
+      )}
+      
+      {country && country.name === 'Polska' && (
+        <Grid item xs={12}>
+          <h5 className="relations-header upcoming-match-header"><span className="text">{t('global.upcomingMatch')}</span></h5>
+
+          {isLoadingMatches && (
+            <div id="loading-matches" />
+          )}
+
+          {upcomingMatch && <UpcomingMatch currentClub={club} match={upcomingMatch} goTo={handleGoTo} />}
+
+          {!isLoadingMatches && !upcomingMatch && (
+            <Typography gutterBottom>{t('global.noUpcomingMatch')}</Typography>
+          )}
+
+          <Typography align="center" gutterBottom>{t('global.checkFanaticsCalendar')}</Typography>
+          <Typography align="center" variant="h5">{t('global.fanaticsCalendar')}</Typography>
+
+          <a href="https://play.google.com/store/apps/details?id=com.piotrryczek.fanaticscalendar" target="_blank" rel="noopener noreferrer" id="fanatics-calendar-link">
+            <img src="/assets/fanatics_calendar.png" alt="" />
+          </a>
         </Grid>
       )}
 
